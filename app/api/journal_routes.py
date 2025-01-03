@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from app.models import db, JournalEntry, Comment
+from app.models import db, JournalEntry, Comment, Like
 from app.forms import JournalEntryForm
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -141,6 +141,11 @@ def get_user_journal():
     return jsonify([entry.to_dict() for entry in journal_entries])
 
 
+
+
+
+
+
 @journal_routes.route('/<int:journal_id>/comments', methods=['POST'])
 @login_required
 def add_comment(journal_id):
@@ -165,3 +170,95 @@ def add_comment(journal_id):
     db.session.commit()
 
     return jsonify(comment.to_dict()), 201
+
+
+@journal_routes.route('/<int:journal_id>/comments')
+@login_required
+def get_entry_comments(journal_id):
+    journal_entry = JournalEntry.query.get(journal_id)
+
+    if not journal_entry:
+        return jsonify({'error': 'Journal entry not found'}), 404
+
+    comments = Comment.query.filter_by(journal_entry_id=journal_id).all()
+
+    if not comments:
+        return jsonify({'error': 'No comments found for this journal entry'}), 404
+    
+    return jsonify([comment.to_dict() for comment in comments]), 200
+
+
+@journal_routes.route('/comments/<int:comment_id>', methods=['PUT'])
+@login_required
+def update_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+
+    if not comment:
+        return jsonify({'error': 'Comment not found'}), 404
+    
+    if comment.user_id != current_user.id:
+        return jsonify({'error': 'You can only edit your own comments'}), 403
+    
+    data = request.get_json()
+    content = data.get('content')
+
+    if not content:
+        return jsonify({'error': 'Content in required'}), 400
+    
+    comment.content = content
+    db.session.commit()
+
+    return jsonify({'message': 'Comment updated successfully', 'comment': comment.to_dict()}), 200
+
+
+@journal_routes.route('/comments/<int:comment_id>', methods=['DELETE'])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+
+    if not comment:
+        return jsonify({'error': 'Comment not found'}), 404
+    
+    if comment.user_id != current_user.id:
+        return jsonify({'error': 'You can only delete your own comments'}), 403
+    
+    db.session.delete(comment)
+    db.session.commit()
+
+    return jsonify({'message': 'Comment deleted successfully'}), 200
+
+
+@journal_routes.route('/<int:id>/like', methods=['POST'])
+@login_required
+def like_journal_entry(id):
+    journal_entry = JournalEntry.query.get(id)
+
+    if not journal_entry:
+        return jsonify({'error': 'Journal entry not found'}), 404
+    
+    existing_like = Like.query.filter_by(user_id=current_user.id, journal_entry_id=id).first()
+
+    if existing_like:
+        return jsonify({'error': 'You have already liked this entry'}), 400
+    
+    like = Like(user_id=current_user.id, journal_entry_id=id)
+    db.session.add(like)
+    db.session.commit()
+
+    return jsonify({'message': 'Journal entry liked successfully', 'like': like.to_dict()}), 201
+
+
+@journal_routes.route('/<int:journal_entry_id>/like', methods=['DELETE'])
+@login_required
+def unlike_journal_entry(journal_entry_id):
+    # Find the Like entry in the database
+    like = Like.query.filter_by(user_id=current_user.id, journal_entry_id=journal_entry_id).first()
+
+    if not like:
+        return jsonify({'error': 'Like not found or already removed'}), 404
+
+    # Remove the Like entry
+    db.session.delete(like)
+    db.session.commit()
+
+    return jsonify({'message': 'Like removed successfully'})

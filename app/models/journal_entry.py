@@ -26,6 +26,12 @@ class JournalEntry(db.Model):
         cascade='all, delete-orphan'
     )
 
+    likes = db.relationship(
+        'Like',
+        back_populates='journal_entry',
+        cascade='all, delete-orphan'
+    )
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -36,5 +42,6 @@ class JournalEntry(db.Model):
             'mood': self.mood,
             'timestamp': self.timestamp,
             'photo_url': self.photo_url,
-            'comments': [comment.to_dict() for comment in self.comments]
+            'comments': [comment.to_dict() for comment in self.comments],
+            'like_count': len(self.likes)
         }
