@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from app.models import db, JournalEntry
+from app.models import db, JournalEntry, Comment
 from app.forms import JournalEntryForm
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -27,14 +27,11 @@ def post_journal():
         accomplishments = form.accomplishments.data
         weather = form.weather.data
         mood = form.mood.data
-        date = form.date.data
+        date = form.date.data  
         photo = form.photo.data
 
         if date:
-            try:
-                timestamp = datetime.strptime(date, '%Y-%m-%d')
-            except ValueError:
-                return jsonify({'error': 'Invalid date format, use YYYY-MM-DD'}), 400
+            timestamp = date
         else:
             timestamp = db.func.current_timestamp()
 
@@ -142,3 +139,29 @@ def get_user_journal():
         return jsonify({'error': 'No journal entries found'}), 404
 
     return jsonify([entry.to_dict() for entry in journal_entries])
+
+
+@journal_routes.route('/<int:journal_id>/comments', methods=['POST'])
+@login_required
+def add_comment(journal_id):
+    journal_entry = JournalEntry.query.get(journal_id)
+
+    if not journal_entry:
+        return jsonify({'error': 'Journal entry not found'}), 404
+    
+    data = request.get_json()
+    content = data.get('content')
+
+    if not content:
+        return jsonify({'error': 'Content is required for the comment'}), 400
+    
+    comment = Comment(
+        content=content,
+        user_id=current_user.id,
+        journal_entry_id=journal_id
+    )
+
+    db.session.add(comment)
+    db.session.commit()
+
+    return jsonify(comment.to_dict()), 201

@@ -14,9 +14,16 @@ class JournalEntry(db.Model):
     mood = db.Column(db.String(50), nullable=True)
     timestamp = db.Column(db.DateTime, nullable=False, default=None)
     photo_url = db.Column(db.String(255), nullable=True)
+    
     user = db.relationship(
         'User',
         back_populates='journal_entries'
+    )
+
+    comments = db.relationship(
+        'Comment',
+        back_populates='journal_entry',
+        cascade='all, delete-orphan'
     )
 
     def to_dict(self):
@@ -28,5 +35,6 @@ class JournalEntry(db.Model):
             'weather': self.weather,
             'mood': self.mood,
             'timestamp': self.timestamp,
-            'photo_url': self.photo_url
+            'photo_url': self.photo_url,
+            'comments': [comment.to_dict() for comment in self.comments]
         }
