@@ -29,6 +29,12 @@ class User(db.Model, UserMixin):
         cascade='all, delete-orphan'
     )
 
+    comments = db.relationship(
+        'Comment',
+        back_populates='user',
+        cascade='all, delete-orphan'
+    )
+
 
     @property
     def password(self):
@@ -51,5 +57,6 @@ class User(db.Model, UserMixin):
             'admin': self.admin,
             'pokemon_collection': [entry.to_dict() for entry in self.pokemon_collection],
             'journal_entries': [entry.to_dict() for entry in self.journal_entries],
+            'comments': [entry.to_dict() for entry in self.comments],
             'profile_picture': self.profile_picture
         }
