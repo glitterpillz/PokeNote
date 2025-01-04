@@ -153,7 +153,7 @@ All endpoints that require a current admin to be logged in
 
    ```json
    {
-      "message": "Authentication required"
+      "message": "Unauthorized. Admin privileges required."
    }
 
 
@@ -175,6 +175,9 @@ All endpoints that require authentication and the current user foes not have the
       }
       ```
 
+
+
+## AUTH ROUTES
 
 ### Get the Current User
 
@@ -326,11 +329,11 @@ Logs in a user with valid credentials and returns the current user's details
 
       ```json
       {
-      "message": "Bad Request",
-      "errors": {
-         "credential": "Email or username is required",
-         "password": "Password is required"
-      }
+         "message": "Bad Request",
+         "errors": {
+            "credential": "Email or username is required",
+            "password": "Password is required"
+         }
       }
       ```
 
@@ -398,8 +401,8 @@ Creates a new user, logs them in as the current user, and returns their user det
       {
          "message": "User already exists",
          "errors": {
-            "email": "User with that email already exists",
-            "username": "User with that username already exists"
+            "email": "Email address is already in use",
+            "username": "Username is already in use"
          }
       }
       ```
@@ -415,8 +418,8 @@ Creates a new user, logs them in as the current user, and returns their user det
       {
          "message": "Bad Request",
          "errors": {
-            "email": "Invalid email",
-            "username": "Username is required",
+            "email": "Invalid email address",
+            "username": "This field is required",
             "password": "Password is required",
             "fname": "First Name is required",
             "lname": "Last Name is required",
@@ -475,11 +478,24 @@ Retrieves the account data of the current user
 
       ```json
       {
-         "message": "User logged out"
+         "user": {
+            "admin": false,
+            "comments": [],
+            "email": "demo@example.com",
+            "fname": "Demo",
+            "id": 2,
+            "journal_entries": [],
+            "lname": "User",
+            "pokemon_collection": [],
+            "profile_picture": "example.jpg",
+            "received_messages": [],
+            "sent_messages": [],
+            "username": "demo"
+         }
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 ### Update User Account
@@ -544,12 +560,12 @@ Allows the user to update their account information
       {
          "message": "Bad Request",
          "errors": {
-            "email": "Invalid email",
+            "email": "Invalid email address",
          }
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 ### Delete User Account
@@ -579,7 +595,164 @@ Allows the current user to delete their own account
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
+
+
+### Admin Delete User Account
+
+If the current user's admin property is TRUE, the admin can remove any user's account
+
+- Require Authentication: true
+- Require Authorization: true
+- Request
+
+   - Method: DELETE
+   - Route path: /api/auth/account/:id
+   - Headers:
+      - Content-Type: application/json
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "User account with ID 6 has been deleted successfully."
+      }
+      ```
+
+- Error response: Authentication required
+
+
+
+## USER ROUTES
+
+### Admin Get all Users
+
+If the current user's admin property is TRUE, the admin can view details of all user accounts
+
+- Require Authentication: true
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/users
+   - Headers:
+      - Content-Type: application/json
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "users": [
+            {
+               "user": {
+                  "admin": true,
+                  "comments": [],
+                  "email": "admin@example.com",
+                  "fname": "Admin",
+                  "id": 1,
+                  "journal_entries": [],
+                  "lname": "User",
+                  "pokemon_collection": [],
+                  "profile_picture": null,
+                  "received_messages": [],
+                  "sent_messages": [],
+                  "username": "admin"
+               }
+            }
+         ]
+      }
+      ```
+
+- Error response: Authentication required
+
+
+### Admin Get User by ID
+
+If the current user's admin property is TRUE, the admin can view details of any user's account
+
+- Require Authentication: true
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/users/:id
+   - Headers:
+      - Content-Type: application/json
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "user": {
+            "admin": false,
+            "comments": [],
+            "email": "demo@example.com",
+            "fname": "Demo",
+            "id": 2,
+            "journal_entries": [],
+            "lname": "User",
+            "pokemon_collection": [],
+            "profile_picture": "",
+            "received_messages": [],
+            "sent_messages": [],
+            "username": "demouser"
+         }
+      }
+      ```
+
+- Error response: Authentication required
+
+
+### Get User Profile
+
+Returns the public profile of a user by user ID
+
+- Require Authentication: false
+- Require Authorization: false
+- Request
+
+   - Method: GET
+   - Route path: /api/users/:id/profile
+   - Headers:
+      - Content-Type: application/json
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "fname": "Demo",
+         "id": 2,
+         "journal_entries": [],
+         "lname": "User",
+         "pokemon_collection": [],
+         "profile_picture": "example.jpg",
+         "username": "demouser"
+      }
+      ```
 
 
 
@@ -697,7 +870,7 @@ Adds a pokemon to the current user's pokemon collection
 
 - Successful response
 
-   - Status Code: 200
+   - Status Code: 201
    - Headers:
       - Content-Type: application/json
    - Body:
@@ -708,7 +881,7 @@ Adds a pokemon to the current user's pokemon collection
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 ### Search Pokemon by ID or name query
@@ -838,7 +1011,7 @@ Returns the current user's collection of pokemon
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 
@@ -908,7 +1081,7 @@ Returns all instances of a pokemon which appear in the current user's pokemon co
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 ### Update User Pokemon
@@ -988,7 +1161,7 @@ Allows the current user to update a pokemon in their collection by collection id
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 ### Delete User Pokemon
@@ -1029,7 +1202,7 @@ Allows the current user to delete a pokemon from their collection by collection 
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 
@@ -1056,7 +1229,7 @@ Returns the current user's Journal
 
       ```json
       {
-         "Journal": [
+         [
             {
                "accomplishments": "",
                "comments": [],
@@ -1073,7 +1246,7 @@ Returns the current user's Journal
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 ### Post Journal Entry
@@ -1137,7 +1310,7 @@ Posts an entry to the current user's Journal
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 ### Get Journal Entry by ID
@@ -1174,7 +1347,7 @@ Returns the current user's journal entry base on entry ID
       }
       ```
 
-Error Response: Login Required
+Error Response: Unauthorized
 
 
 ### Update Journal Entry
@@ -1254,7 +1427,7 @@ Allows the current user to edit a journal entry by entry ID
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized
 
 
 ### Delete Journal Entry
@@ -1295,4 +1468,4 @@ Allows the current user to delete a journal entry by entry ID
       }
       ```
 
-- Error Response: Login Required
+- Error Response: Unauthorized

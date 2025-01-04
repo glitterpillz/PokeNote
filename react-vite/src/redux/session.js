@@ -24,6 +24,21 @@ export const restoreUser = createAsyncThunk(
   }
 );
 
+
+export const getUserById = createAsyncThunk(
+  "session/getUserById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`/api/users/${id}`);
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || "User couldn't be found")
+    }
+  }
+)
+
+
 export const login = createAsyncThunk(
   "session/login",
   async ({ email, password }, { rejectWithValue }) => {
@@ -46,50 +61,47 @@ export const login = createAsyncThunk(
   }
 );
 
-// export const signup = createAsyncThunk(
-//   "session/signup",
-//   async (
-//     {
-//       username,
-//       email,
-//       password,
-//       fname,
-//       lname,
-//       admin,
-//       pokemon_collection,
-//       profile_picture
-//     },
-//     { rejectWithValue }
-//   ) => {
-//     try {
-//       const res = await fetch("/api/auth/signup", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({
-//           username,
-//           email,
-//           password,
-//           fname,
-//           lname,
-//           admin,
-//           pokemon_collection,
-//           profile_picture
-//         }),
-//       });
-//       console.log("res:", res);
-//       const data = await res.json();
+export const signup = createAsyncThunk(
+  "session/signup",
+  async (
+    {
+      username,
+      email,
+      password,
+      fname,
+      lname,
+      admin,
+      profile_picture,
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          fname,
+          lname,
+          admin,
+          profile_picture,
+        }),
+      });
+      const data = await res.json();
 
-//       if (!res.ok) {
-//         return rejectWithValue(data);
-//       }
+      if (!res.ok) {
+        return rejectWithValue(data);
+      }
 
-//       console.log("data:", data);
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error.message || "Signup failed");
-//     }
-//   }
-// );
+      return data; // Return user data to be used in the reducer
+    } catch (error) {
+      return rejectWithValue(error.message || "Signup failed");
+    }
+  }
+);
+
 
 
 export const logout = createAsyncThunk(
@@ -134,18 +146,18 @@ const sessionSlice = createSlice({
         state.loading = false;
         state.user = action.payload;
       })
-      // .addCase(signup.pending, (state) => {
-      //   state.loading = true;
-      //   state.errors = null;
-      // })
-      // .addCase(signup.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.errors = action.payload;
-      // })
-      // .addCase(signup.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.user = action.payload;
-      // })
+      .addCase(signup.pending, (state) => {
+        state.loading = true;
+        state.errors = null;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload; // Set user in state upon signup success
+      })
       .addCase(logout.pending, (state) => {
         state.loading = true;
         state.errors = null;
