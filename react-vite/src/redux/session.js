@@ -1,79 +1,165 @@
-const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
-const setUser = (user) => ({
-  type: SET_USER,
-  payload: user
+const initialState = {
+  user: null,
+  loading: false,
+  errors: null,
+};
+
+export const restoreUser = createAsyncThunk(
+  "session/restoreUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await fetch("/api/auth/session");
+      const data = await res.json();
+
+      if (!res.ok) {
+        return rejectWithValue(data);
+      }
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || "Trouble getting current user");
+    }
+  }
+);
+
+export const login = createAsyncThunk(
+  "session/login",
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw { errors: data.errors || { general: "Invalid login credentials"} };
+      }
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || "Login failed");
+    }
+  }
+);
+
+// export const signup = createAsyncThunk(
+//   "session/signup",
+//   async (
+//     {
+//       username,
+//       email,
+//       password,
+//       fname,
+//       lname,
+//       admin,
+//       pokemon_collection,
+//       profile_picture
+//     },
+//     { rejectWithValue }
+//   ) => {
+//     try {
+//       const res = await fetch("/api/auth/signup", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//           username,
+//           email,
+//           password,
+//           fname,
+//           lname,
+//           admin,
+//           pokemon_collection,
+//           profile_picture
+//         }),
+//       });
+//       console.log("res:", res);
+//       const data = await res.json();
+
+//       if (!res.ok) {
+//         return rejectWithValue(data);
+//       }
+
+//       console.log("data:", data);
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue(error.message || "Signup failed");
+//     }
+//   }
+// );
+
+
+export const logout = createAsyncThunk(
+  "session/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      await fetch("/api/auth/logout");
+      return;
+    } catch (error) {
+      return rejectWithValue(error.message || "Logout failed");
+    }
+  }
+);
+
+const sessionSlice = createSlice({
+  name: "session",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(restoreUser.pending, (state) => {
+        state.loading = true;
+        state.errors = null;
+      })
+      .addCase(restoreUser.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      })
+      .addCase(restoreUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.errors = null;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      // .addCase(signup.pending, (state) => {
+      //   state.loading = true;
+      //   state.errors = null;
+      // })
+      // .addCase(signup.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.errors = action.payload;
+      // })
+      // .addCase(signup.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.user = action.payload;
+      // })
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+        state.errors = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+      });
+  },
 });
 
-const removeUser = () => ({
-  type: REMOVE_USER
-});
 
-export const thunkAuthenticate = () => async (dispatch) => {
-	const response = await fetch("/api/auth/");
-	if (response.ok) {
-		const data = await response.json();
-		if (data.errors) {
-			return;
-		}
-
-		dispatch(setUser(data));
-	}
-};
-
-export const thunkLogin = (credentials) => async dispatch => {
-  const response = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials)
-  });
-
-  if(response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages
-  } else {
-    return { server: "Something went wrong. Please try again" }
-  }
-};
-
-export const thunkSignup = (user) => async (dispatch) => {
-  const response = await fetch("/api/auth/signup", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
-  });
-
-  if(response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages
-  } else {
-    return { server: "Something went wrong. Please try again" }
-  }
-};
-
-export const thunkLogout = () => async (dispatch) => {
-  await fetch("/api/auth/logout");
-  dispatch(removeUser());
-};
-
-const initialState = { user: null };
-
-function sessionReducer(state = initialState, action) {
-  switch (action.type) {
-    case SET_USER:
-      return { ...state, user: action.payload };
-    case REMOVE_USER:
-      return { ...state, user: null };
-    default:
-      return state;
-  }
-}
-
-export default sessionReducer;
+export default sessionSlice.reducer;
