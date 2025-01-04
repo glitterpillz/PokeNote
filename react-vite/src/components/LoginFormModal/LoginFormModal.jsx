@@ -1,8 +1,69 @@
+// import { useState } from "react";
+// import { useDispatch } from "react-redux";
+// import { useModal } from "../../context/Modal";
+// import * as sessionActions from "../../redux/session";
+// import login from "./LoginForm.module.css";
+
+// function LoginFormModal() {
+//   const dispatch = useDispatch();
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [errors, setErrors] = useState({});
+//   const { closeModal } = useModal();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     const serverResponse = await dispatch(
+//       sessionActions.login({ email, password })
+//     );
+
+//     if (serverResponse.type === "session/login/rejected") {
+//       setErrors(serverResponse);
+//     } else {
+//       closeModal();
+//     }
+//   };
+
+//   return (
+//     <div className={login.loginModalContainer}>
+//       <h1 className={login.h1}>Log In</h1>
+//       <form onSubmit={handleSubmit}>
+//         <label>
+//           Email
+//           <input
+//             type="text"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             required
+//           />
+//         </label>
+//         {errors.payload?.email && <p>{errors.payload?.email}</p>}
+//         <label>
+//           Password
+//           <input
+//             type="password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//             required
+//           />
+//         </label>
+//         {errors.payload?.password && <p>{errors.payload?.password}</p>}
+//         <button type="submit" className={login.loginSubmit}>
+//           Submit
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default LoginFormModal;
+
 import { useState } from "react";
-import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./LoginForm.css";
+import * as sessionActions from "../../redux/session";
+import login from "./LoginForm.module.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -15,22 +76,20 @@ function LoginFormModal() {
     e.preventDefault();
 
     const serverResponse = await dispatch(
-      thunkLogin({
-        email,
-        password,
-      })
+      sessionActions.login({ email, password })
     );
 
-    if (serverResponse) {
+    if (serverResponse.type === "session/login/rejected") {
       setErrors(serverResponse);
     } else {
+      // navigate("/");
       closeModal();
     }
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className={login.loginModalContainer}>
+      <h1 className={login.h1}>Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Email
@@ -41,7 +100,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.payload?.email && <p>{errors.payload?.email}</p>}
         <label>
           Password
           <input
@@ -51,10 +110,12 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        {errors.payload?.password && <p>{errors.payload?.password}</p>}
+        <button type="submit" className={login.loginSubmit}>
+          Submit
+        </button>
       </form>
-    </>
+    </div>
   );
 }
 

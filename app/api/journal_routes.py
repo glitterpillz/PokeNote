@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from app.models import db, JournalEntry, Comment, Like
+from app.models import db, JournalEntry, Like
 from app.forms import JournalEntryForm
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -143,7 +143,6 @@ def get_user_journal():
 
 
 
-
 @journal_routes.route('/<int:id>/like', methods=['POST'])
 @login_required
 def like_journal_entry(id):
@@ -167,13 +166,11 @@ def like_journal_entry(id):
 @journal_routes.route('/<int:journal_entry_id>/like', methods=['DELETE'])
 @login_required
 def unlike_journal_entry(journal_entry_id):
-    # Find the Like entry in the database
     like = Like.query.filter_by(user_id=current_user.id, journal_entry_id=journal_entry_id).first()
 
     if not like:
         return jsonify({'error': 'Like not found or already removed'}), 404
 
-    # Remove the Like entry
     db.session.delete(like)
     db.session.commit()
 
