@@ -1321,8 +1321,8 @@ Returns the current user's journal entry base on entry ID
 - Require Authorization: true
 - Request
 
-   - Method: POST
-   - Route path: /api/journal/1
+   - Method: GET
+   - Route path: /api/journal/:id
    - Body: None
 
 - Successful response
@@ -1422,7 +1422,7 @@ Allows the current user to edit a journal entry by entry ID
       {
          "message": "Bad Request",
          "errors": {
-            "content": "Journal entry content is required"
+            "content": "This field is required"
          }
       }
       ```
@@ -1464,7 +1464,500 @@ Allows the current user to delete a journal entry by entry ID
 
       ```json
       {
-         "message": "Pokemon not found"
+         "message": "Journal entry not found"
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+### Like Journal Entry
+
+Allows the current user to "like" any user's journal entry post, including their own
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: POST
+   - Route path: /api/journal/:id/like
+   - Body: None
+
+- Successful response
+
+   - Status Code: 201
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "like": {
+            "id": 1,
+            "journal_entry_id": 1,
+            "user_id": 2
+         },
+         "message": "Journal entry liked successfully"
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "message": "Journal entry not found"
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+### Unlike Journal Entry
+
+Allows the current user to remove their existing like from a posted journal entry
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: DELETE
+   - Route path: /api/journal/:id/like
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Like removed successfully"
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "message": "Like not found or already removed"
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+
+## DIRECT MESSAGE ROUTES
+
+### Send Direct Message
+
+Allows the current user to send direct messages to other users
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: POST
+   - Route path: /api/messages/send
+   - Body: 
+
+      ```json
+      {
+         "receiver": "demo2",
+         "content": "message content"
+      }
+      ```
+
+- Successful response
+
+   - Status Code: 201
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Message sent successfully",
+         "sent_message": {
+            "content": "message content",
+            "id": 1,
+            "receiver": "demo2",
+            "receiver_id": 2,
+            "sender": "demo",
+            "sender_id": 1,
+            "timestamp": "2025-01-04T19:05:38.124930"
+         }
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "error": "User with username \"demo\" not found"
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "error": "Receiver username and content are required"
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+### Get User Inbox
+
+Returns the current user's received messages
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/messages/inbox
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      [
+         {
+            "content": "message content",
+            "id": 1,
+            "receiver": "demo2",
+            "receiver_id": 2,
+            "sender": "demo",
+            "sender_id": 1,
+            "timestamp": "timestamp"
+         }
+      ]
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "error": "No messages found for User 1."
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+### Get User Sent Box
+
+Returns the current user's sent messages
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/messages/sent
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      [
+         {
+            "content": "message content",
+            "id": 1,
+            "receiver": "demo2",
+            "receiver_id": 2,
+            "sender": "demo",
+            "sender_id": 1,
+            "timestamp": "timestamp"
+         }
+      ]
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "error": "No messages found for User 2."
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+
+## COMMENTS ROUTES
+
+### Post a Comment
+
+Allows the current user to post a comment to a user's journal entry, including their own
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: POST
+   - Route path: /api/comments/:journal_id
+   - Body: 
+
+      ```json
+      {
+         "content": "comment content"
+      }
+      ```
+
+- Successful response
+
+   - Status Code: 201
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "content": "comment content",
+         "id": 1,
+         "journal_entry_id": 1,
+         "timestamp": "timestamp",
+         "user_id": 2
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "error": "Journal entry not found"
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "error": "Content is required for the comment"
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+### Get Comments by Entry ID
+
+Returns the comments of a journal entry by entry ID
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/comments/:journal_id
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "content": "comment content",
+         "id": 1,
+         "journal_entry_id": 1,
+         "timestamp": "timestamp",
+         "user_id": 2
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "error": "Journal entry not found"
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "error": "Content is required for the comment"
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+### Update Comment
+
+Allows the current user to edit their posted comment by comment ID
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: PUT
+   - Route path: /api/comments/:id
+   - Body: None
+      
+      ```json
+      {
+         "content": "updated comment content"
+      }
+      ```
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "comment": {
+            "content": "updated comment content",
+            "id": 1,
+            "journal_entry_id": 1,
+            "timestamp": "timestamp",
+            "user_id": 2
+         },
+         "message": "Comment updated successfully"
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "error": "Comment not found"
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "error": "Content is required"
+      }
+      ```
+
+- Error Response: Unauthorized
+
+
+### Delete Comment
+
+Allows the current user to delete a comment from a journal entry post
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: DELETE
+   - Route path: /api/comments/:id
+   - Headers:
+      - Content-Type: application/json
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Comment deleted successfully"
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "error": "Comment not found"
       }
       ```
 
