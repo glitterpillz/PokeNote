@@ -2,6 +2,7 @@ from flask import Blueprint,jsonify, request
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
+from app.forms import UpdateAccountForm
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
@@ -85,45 +86,63 @@ def get_account():
     if not user:
         return {'error': 'User not found'}, 404
     
-    return jsonify({'user': user.to_dict()})
+    return jsonify(user.to_dict())
 
 
 @auth_routes.route('/account', methods=['PUT'])
 @login_required
 def update_account():
-    data = request.get_json()
-    user = User.query.get(current_user.id)
-    if not user:
-        return {'error': 'User not found'}, 404
-    
-    user.username = data.get('username', user.username)
-    user.email = data.get('email', user.email)
-    user.fname = data.get('fname', user.fname)
-    user.lname = data.get('lname', user.lname)
-    user.profile_picture = data.get('profile_picture', user.profile_picture)
+    form = UpdateAccountForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    form.current_user_id = current_user.id  # Set the current user's ID for custom validation
 
-    try:
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        return {'error': 'Failed to update account information', 'details': str(e)}, 400
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+        if not user:
+            return {'error': 'User not found'}, 404
 
-    return jsonify({'message': 'Account updated successfully', 'user': user.to_dict()})
+        user.username = form.data.get('username', user.username)
+        user.email = form.data.get('email', user.email)
+        user.fname = form.data.get('fname', user.fname)
+        user.lname = form.data.get('lname', user.lname)
+        user.profile_picture = form.data.get('profile_picture', user.profile_picture)
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return {'error': 'Failed to update account information', 'details': str(e)}, 400
+
+        return jsonify({'message': 'Account updated successfully', 'user': user.to_dict()})
+
+    return form.errors, 400
 
 
-@auth_routes.route('/account', methods=['DELETE'])
+@auth_routes.route('/account/<int:user_id>', methods=['DELETE'])
 @login_required
-def delete_account():
-    user = User.query.get(current_user.id)
+def delete_account(user_id=None):
+    """
+    Deletes the account of the user with the given ID, or the current user's account if no ID is provided.
+    """
+    if user_id is None:
+        user = User.query.get(current_user.id)
+    else:
+        if not current_user.admin:
+            return {'error': 'Unauthorized. Admin privileges required.'}, 403
+        user = User.query.get(user_id)
+    
     if not user:
         return {'error': 'User not found'}, 404
-    
+
     try:
         db.session.delete(user)
         db.session.commit()
     except Exception as e:
         db.session.rollback()
         return {'error': 'Failed to delete account', 'details': str(e)}, 400
-    
-    logout_user()
-    return jsonify({'message': 'Account deleted successfully'})
+
+    if user.id == current_user.id:
+        logout_user()
+        return jsonify({'message': 'Your account has been deleted successfully.'})
+
+    return jsonify({'message': f"User account with ID {user.id} has been deleted successfully."})
