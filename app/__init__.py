@@ -9,6 +9,8 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.pokemon_routes import pokemon_routes
 from .api.journal_routes import journal_routes
+from .api.comment_routes import comment_routes
+from .api.message_routes import message_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -32,6 +34,8 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(pokemon_routes, url_prefix='/api/pokemon')
 app.register_blueprint(journal_routes, url_prefix='/api/journal')
+app.register_blueprint(comment_routes, url_prefix='/api/comments')
+app.register_blueprint(message_routes, url_prefix='/api/messages')
 db.init_app(app)
 Migrate(app, db)
 

@@ -7,7 +7,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 auth_routes = Blueprint('auth', __name__)
 
 
-@auth_routes.route('/')
+@auth_routes.route('/session')
 def authenticate():
     """
     Authenticates a user.
@@ -75,6 +75,9 @@ def unauthorized():
     return {'errors': {'message': 'Unauthorized'}}, 401
 
 
+
+
+
 @auth_routes.route('/account')
 @login_required
 def get_account():
@@ -124,85 +127,3 @@ def delete_account():
     
     logout_user()
     return jsonify({'message': 'Account deleted successfully'})
-
-
-@auth_routes.route('/collection')
-@login_required
-def get_user_collection():
-    user = User.query.get(current_user.id)
-    if not user:
-        return {'error': 'User not found'}, 404
-    
-    return jsonify({'pokemon_collection': [entry.to_dict() for entry in user.pokemon_collection]})
-
-
-@auth_routes.route('/collection/<int:pokemon_id>')
-@login_required
-def get_user_pokemon(pokemon_id):
-    user_pokemon = UserPokemon.query.filter_by(user_id=current_user.id, pokemon_id=pokemon_id).first()
-    if not user_pokemon:
-        return {'error': 'Pokémon not found in your collection'}, 404
-
-    return jsonify({'pokemon': user_pokemon.to_dict()})
-    
-
-@auth_routes.route('/collection/<int:pokemon_id>', methods=['PUT'])
-@login_required
-def update_user_pokemon(pokemon_id):
-    """
-    Updates the nickname, level, and stats of a user's Pokémon.
-    """
-    # Find the user-specific Pokémon instance (UserPokemon)
-    user_pokemon = UserPokemon.query.filter_by(user_id=current_user.id, pokemon_id=pokemon_id).first()
-
-    if not user_pokemon:
-        return jsonify({'error': 'Pokémon not found in your collection'}), 404
-
-    # Get the data sent by the user
-    data = request.get_json()
-
-    # Update nickname and level
-    nickname = data.get('nickname', user_pokemon.nickname)
-    level = data.get('level', user_pokemon.level)
-    user_pokemon.nickname = nickname
-    user_pokemon.level = level
-
-    # Optionally, update stats if provided
-    stats_data = data.get('stats', [])
-    for stat_data in stats_data:
-        stat_name = stat_data.get('stat_name')
-        stat_value = stat_data.get('stat_value')
-        if stat_name and stat_value is not None:
-            # Try to find the existing stat for this Pokémon and stat name
-            stat = PokemonStat.query.filter_by(pokemon_id=pokemon_id, stat_name=stat_name).first()
-
-            if stat:
-                # If the stat exists, update its value
-                stat.stat_value = stat_value
-            else:
-                # If the stat does not exist, create a new stat record
-                new_stat = PokemonStat(pokemon_id=pokemon_id, stat_name=stat_name, stat_value=stat_value)
-                db.session.add(new_stat)
-
-    # Commit the changes to the database
-    try:
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': 'Failed to update Pokémon', 'details': str(e)}), 400
-
-    return jsonify({'message': 'Pokémon updated successfully', 'pokemon': user_pokemon.to_dict()})
-
-
-
-@auth_routes.route('/collection/<int:pokemon_id>', methods=['DELETE'])
-@login_required
-def delete_user_pokemon(pokemon_id):
-    user_pokemon = UserPokemon.query.filter_by(user_id=current_user.id, pokemon_id=pokemon_id).first()
-    if not user_pokemon:
-        return {'error': 'Pokémon not found in your collection'}, 404
-    
-    db.session.delete(user_pokemon)
-    db.session.commit()
-
-    return jsonify({'message': 'Pokémon deleted successfully'})
