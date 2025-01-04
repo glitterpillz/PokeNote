@@ -129,4 +129,1170 @@ main, always keeping it up to date.
 
 [Render.com]: https://render.com/
 [Dashboard]: https://dashboard.render.com/
-# Pokedex2
+
+
+## Pokedex Schema Design
+
+![alt text](image.png)
+
+## API Documentation
+
+## USER / ADMIN AUTHENTICATION OR AUTHORIZATION
+
+### All endpoints that require authentication
+
+All endpoints that require a current admin to be logged in
+
+- Request: endpoints that require authentication
+- Error Response: Require authentication
+
+   - Status Code: 401
+   - Headers:
+      -content-Type: application/json
+   -Body:
+
+   ```json
+   {
+      "message": "Authentication required"
+   }
+
+
+### All endpoints that require proper authorization
+
+All endpoints that require authentication and the current user foes not have the correct role or permissions
+
+- Request: endpoints that require proper authorization
+- Error Response: Require authorization
+
+   - Status Code: 403
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "message": "Unauthorized"
+      }
+      ```
+
+
+### Get the Current User
+
+Returns all details of the user that is currently logged in
+
+- Require Authentication: false
+- Request:
+
+   - Method: GET
+   - Route path: /api/auth/session
+   - Body: none
+
+- Successful Response when there is user logged in
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+   
+      ```json
+      {
+         "user": {
+            "id": 2,
+            "username": "demo",
+            "email": "demo@example.com",
+            "fname": "Demo",
+            "lname": "User",
+            "admin": false,
+            "profile_picture": "example.jpg",
+            "pokemon_collection": [],
+            "journal_entries": [],
+            "comments": [],
+            "likes": 1,
+            "sent_messages": [],
+            "received_messages": []
+         }
+      }
+      ```
+
+- Successful Response when there is an admin logged in
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+   
+      ```json
+      {
+         "user": {
+            "id": 2,
+            "username": "admin",
+            "email": "admin@example.com",
+            "fname": "Admin",
+            "lname": "User",
+            "admin": true,
+            "profile_picture": "example.jpg",
+            "pokemon_collection": [],
+            "journal_entries": [],
+            "comments": [],
+            "likes": 1,
+            "sent_messages": [],
+            "received_messages": []
+         }
+      }
+      ```
+
+- Successful response when there is no user logged in
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application.json
+   -Body:
+
+      ```json
+      {
+         "errors": {
+            "message": "Unauthorized"
+         }
+      }
+      ```
+
+
+### Log In a User
+
+Logs in a user with valid credentials and returns the current user's details
+
+- Require Authentication: false
+- Request
+
+   - Method: POST
+   - Route path: /api/auth/login
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "credentials": "demo@example.com",
+         "password": "secret password"
+      }
+      ```
+
+- Successful Response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+   
+      ```json
+      {
+         "user": {
+            "id": 2,
+            "username": "demo",
+            "email": "demo@example.com",
+            "fname": "Demo",
+            "lname": "User",
+            "admin": false,
+            "profile_picture": "example.jpg",
+            "pokemon_collection": [],
+            "journal_entries": [],
+            "comments": [],
+            "likes": 1,
+            "sent_messages": [],
+            "received_messages": []
+         }
+      }
+      ```
+
+- Error Response: Invalid credentials
+
+   - Status Code: 401
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+      "message": "Invalid credentials"
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+      "message": "Bad Request",
+      "errors": {
+         "credential": "Email or username is required",
+         "password": "Password is required"
+      }
+      }
+      ```
+
+
+### Sign Up a User
+
+Creates a new user, logs them in as the current user, and returns their user details
+
+- Require Authentication: false
+- Request
+
+   - Method: POST
+   - Route path: /api/auth/signup
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "username": "demo2",
+         "email": "demo2@example.com",
+         "password": "secret password",
+         "fname": "Demo",
+         "lname": "User",
+         "admin": false,  // true if admin
+         "profile_picture": "example.jpg"
+      }
+      ```
+
+- Successful Response
+
+   - Status Code: 201
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "user": {
+            "id": 2,
+            "username": "demo2",
+            "email": "demo2@example.com",
+            "fname": "Demo",
+            "lname": "User",
+            "admin": false,
+            "profile_picture": "example.jpg",
+            "pokemon_collection": [],
+            "journal_entries": [],
+            "comments": [],
+            "likes": 1,
+            "sent_messages": [],
+            "received_messages": []
+         }
+      }
+      ```
+
+- Error response: if user already exists with the specified email or username
+
+   - Status Code: 500
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "User already exists",
+         "errors": {
+            "email": "User with that email already exists",
+            "username": "User with that username already exists"
+         }
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Bad Request",
+         "errors": {
+            "email": "Invalid email",
+            "username": "Username is required",
+            "password": "Password is required",
+            "fname": "First Name is required",
+            "lname": "Last Name is required",
+         }
+      }
+      ```
+
+
+### Logout a User
+
+Logs out the current user
+
+- Require Authentication: false
+- Request
+
+   - Method: GET
+   - Route path: /api/auth/logout
+   - Headers:
+      - Content-Type: application/json
+   - Body: None
+
+- Successful Response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "User logged out"
+      }
+      ```
+
+
+### Get User Account Details
+
+Retrieves the account data of the current user
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/auth/account
+   - Headers:
+      - Content-Type: application/json
+   - Body: None
+
+- Successful Response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "User logged out"
+      }
+      ```
+
+- Error Response: Login Required
+
+
+### Update User Account
+
+Allows the user to update their account information
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: PUT
+   - Route path: /api/auth/account
+   - Headers:
+      - Content-Type: application/json
+   - Body: 
+
+      ```json
+      {
+         "username": "username",
+         "email": "email",
+         "fname": "fname",
+         "lname": "lname",
+         "profile_picture": "example.jpg"
+      }
+      ```
+
+- Successful Response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Account updated successfully",
+            "user": {
+            "admin": false,
+            "comments": [],
+            "email": "email",
+            "fname": "fname",
+            "id": 3,
+            "journal_entries": [],
+            "lname": "lname",
+            "pokemon_collection": [],
+            "profile_picture": "",
+            "received_messages": [],
+            "sent_messages": [],
+            "username": "username"
+         }
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Bad Request",
+         "errors": {
+            "email": "Invalid email",
+         }
+      }
+      ```
+
+- Error Response: Login Required
+
+
+### Delete User Account
+
+Allows the current user to delete their own account
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: DELETE
+   - Route path: /api/auth/account
+   - Headers:
+      - Content-Type: application/json
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Account deleted successfully"
+      }
+      ```
+
+- Error Response: Login Required
+
+
+
+## POKEMON ROUTES
+
+## Get all Pokemon
+
+Return all the Pokemon
+
+- Require Authentication: false
+- Request
+
+   - Method: GET
+   - Route path: /api/pokemon
+   - Body: None
+
+- Successful Response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "Pokemon": [
+            {
+               "id": 1,
+               "image": "example.jpg",
+               "name": "Bulbasaur",
+               "stats": [],
+               "types": [
+                  "Grass",
+                  "Poison"
+               ],
+            }
+         ]
+      }
+      ```
+
+
+### Get Pokemon by ID
+
+Returns the details of a pokemon by pokemon id
+
+- Require Authentication: false
+- Request
+
+   - Method: GET
+   - Route path: /api/pokemon/:id
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "id": 1,
+         "image": "example.jpg",
+         "name": "Bulbasaur",
+         "stats": [
+            {
+               "stat_name": "hp",
+               "stat_value": 45
+            },
+            {
+               "stat_name": "attack",
+               "stat_value": 49
+            },
+            {
+               "stat_name": "defense",
+               "stat_value": 49
+            },
+            {
+               "stat_name": "speed",
+               "stat_value": 45
+            }
+         ],
+         "types": [
+            "Grass",
+            "Poison"
+         ]
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "message": "Pokemon not found"
+      }
+      ```
+
+
+### Add Pokemon to User Collection
+
+Adds a pokemon to the current user's pokemon collection
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: POST
+   - Route path: /api/pokemon/:id
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Pokemon added to your collection"
+      }
+      ```
+
+- Error Response: Login Required
+
+
+### Search Pokemon by ID or name query
+
+Searches for pokemon based on the user's search query. The query will accept pokemon ID and pokemon name (or the first characters of a pokemon's name) and return all results that match the query
+
+- Require Authentication: false
+- Request
+
+   - Method: GET
+   - Route path: /api/pokemon/search?query=(id or name)
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "Pokemon": [
+            {
+               "id": 2,
+               "image": "",
+               "name": "Ivysaur",
+               "stats": [
+                  {
+                     "stat_name": "hp",
+                     "stat_value": 60
+                  },
+                  {
+                     "stat_name": "attack",
+                     "stat_value": 62
+                  },
+                  {
+                     "stat_name": "defense",
+                     "stat_value": 63
+                  },
+                  {
+                     "stat_name": "speed",
+                     "stat_value": 60
+                  }
+               ],
+               "types": [
+                  "Grass",
+                  "Poison"
+               ]
+            }
+         ]
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "message": "Pokemon not found"
+      }
+      ```
+
+
+### Get User Pokemon Collection
+
+Returns the current user's collection of pokemon
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/pokemon/collection
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "pokemon_collection": [
+            {
+               "custom_moves": null,
+               "id": 1,
+               "level": 1,
+               "nickname": "nickname",
+               "pokemon": {
+                  "id": 2,
+                  "image": "example.jpg",
+                  "name": "Ivysaur",
+                  "stats": [
+                     {
+                        "stat_name": "hp",
+                        "stat_value": 60
+                     },
+                     {
+                        "stat_name": "attack",
+                        "stat_value": 800
+                     },
+                     {
+                        "stat_name": "defense",
+                        "stat_value": 63
+                     },
+                     {
+                        "stat_name": "speed",
+                        "stat_value": 60
+                     }
+                  ],
+                  "types": [
+                     "Grass",
+                     "Poison"
+                  ]
+               },
+               "pokemon_id": 2,
+               "user_id": 3
+            }
+         ]
+      }
+      ```
+
+- Error Response: Login Required
+
+
+
+### Get Instances of Pokemon in User Collection by Pokemon ID
+
+Returns all instances of a pokemon which appear in the current user's pokemon collection
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/pokemon/collection/:id
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "pokemon_instances": [
+            {
+               "collection_id": 1,
+               "index": 1,
+               "pokemon_data": {
+                  "custom_moves": null,
+                  "id": 1,
+                  "level": 1,
+                  "nickname": null,
+                  "pokemon": {
+                     "id": 2,
+                     "image": "example.jpg",
+                     "name": "Ivysaur",
+                     "stats": [
+                        {
+                           "stat_name": "hp",
+                           "stat_value": 60
+                        },
+                        {
+                           "stat_name": "attack",
+                           "stat_value": 62
+                        },
+                        {
+                           "stat_name": "defense",
+                           "stat_value": 63
+                        },
+                        {
+                           "stat_name": "speed",
+                           "stat_value": 60
+                        }
+                     ],
+                     "types": [
+                        "Grass",
+                        "Poison"
+                     ]
+                  },
+                  "pokemon_id": 2,
+                  "user_id": 3
+               },
+               "pokemon_id": 2
+            },
+         ]
+      }
+      ```
+
+- Error Response: Login Required
+
+
+### Update User Pokemon
+
+Allows the current user to update a pokemon in their collection by collection id
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: PUT
+   - Route path: /api/pokemon/collection/:id
+   - Body: 
+
+      ```json
+      {
+         "nickname": "nickname",
+         "level": 90,
+         "stats": [
+            {
+               "stat_name": "hp",
+               "stat_value": 60
+            },
+            {
+               "stat_name": "attack",
+               "stat_value": 80
+            }
+         ]
+      }
+      ```
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Pokémon updated successfully",
+         "pokemon": {
+            "custom_moves": null,
+            "id": 1,
+            "level": 90,
+            "nickname": "nickname",
+            "pokemon": {
+               "id": 2,
+               "image": "example.jpg",
+               "name": "Ivysaur",
+               "stats": [
+                  {
+                     "stat_name": "hp",
+                     "stat_value": 60
+                  },
+                  {
+                     "stat_name": "attack",
+                     "stat_value": 800
+                  },
+                  {
+                     "stat_name": "defense",
+                     "stat_value": 63
+                  },
+                  {
+                     "stat_name": "speed",
+                     "stat_value": 60
+                  }
+               ],
+               "types": [
+                  "Grass",
+                  "Poison"
+               ]
+            },
+            "pokemon_id": 2,
+            "user_id": 3
+         }
+      }
+      ```
+
+- Error Response: Login Required
+
+
+### Delete User Pokemon
+
+Allows the current user to delete a pokemon from their collection by collection id
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: PUT
+   - Route path: /api/pokemon/collection/:id
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Pokémon successfully removed from your collection"
+      }
+      ```
+
+- Error response: not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "error": "Pokémon not found in your collection"
+      }
+      ```
+
+- Error Response: Login Required
+
+
+
+## JOURNAL ROUTES
+
+### Get User Journal
+
+Returns the current user's Journal
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: GET
+   - Route path: /api/journal
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "Journal": [
+            {
+               "accomplishments": "",
+               "comments": [],
+               "content": "journal entry content",
+               "id": 1,
+               "like_count": 0,
+               "mood": "Content",
+               "photo_url": "",
+               "timestamp": "current timestamp",
+               "user_id": 2,
+               "weather": "Cloudy"
+            }
+         ]
+      }
+      ```
+
+- Error Response: Login Required
+
+
+### Post Journal Entry
+
+Posts an entry to the current user's Journal
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: POST
+   - Route path: /api/journal
+   - Body:
+
+      ```json
+      {
+         "content": "journal entry content",
+         "accomplishments": "accomplishments",
+         "weather": "Rainy",
+         "mood": "Happy",
+         "date": "YYYY-MM-DD",
+         "photo_url": "example.jpg"
+      }
+      ```
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "accomplishments": "accomplishments",
+         "comments": [],
+         "content": "journal entry content",
+         "id": 2,
+         "like_count": 0,
+         "mood": "Happy",
+         "photo_url": null,
+         "timestamp": "YYYY-MM-DD",
+         "user_id": 2,
+         "weather": "Rainy"
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Bad Request",
+         "errors": {
+            "content": "Journal entry content is required"
+         }
+      }
+      ```
+
+- Error Response: Login Required
+
+
+### Get Journal Entry by ID
+
+Returns the current user's journal entry base on entry ID
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: POST
+   - Route path: /api/journal/1
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "accomplishments": "accomplishments",
+         "comments": [],
+         "content": "journal entry content",
+         "id": 1,
+         "like_count": 0,
+         "mood": "Content",
+         "photo_url": null,
+         "timestamp": "YYYY-MM-DD",
+         "user_id": 2,
+         "weather": "Cloudy"
+      }
+      ```
+
+Error Response: Login Required
+
+
+### Update Journal Entry
+
+Allows the current user to edit a journal entry by entry ID
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: PUT
+   - Route path: /api/journal/:id
+   - Body:
+
+      ```json
+      {
+         "content": "journal entry content",
+         "accomplishments": "accomplishments",
+         "weather": "Rainy",
+         "mood": "Happy",
+         "date": "YYYY-MM-DD",
+         "photo_url": "example.jpg"
+      }
+      ```
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "journal_entry": {
+            "accomplishments": "accomplishments",
+            "comments": [],
+            "content": "journal entry content",
+            "id": 2,
+            "like_count": 0,
+            "mood": "Happy",
+            "photo_url": null,
+            "timestamp": "YYYY-MM-DD",
+            "user_id": 2,
+            "weather": "Rainy"
+         },
+         "message": "Journal entry updated successfully",
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "message": "Journal entry not found"
+      }
+      ```
+
+- Error response: Body validation errors
+
+   - Status Code: 400
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Bad Request",
+         "errors": {
+            "content": "Journal entry content is required"
+         }
+      }
+      ```
+
+- Error Response: Login Required
+
+
+### Delete Journal Entry
+
+Allows the current user to delete a journal entry by entry ID
+
+- Require Authentication: false
+- Require Authorization: true
+- Request
+
+   - Method: DELETE
+   - Route path: /api/journal/:id
+   - Body: None
+
+- Successful response
+
+   - Status Code: 200
+   - Headers:
+      - Content-Type: application/json
+   - Body:
+
+      ```json
+      {
+         "message": "Journal entry successfully deleted"
+      }
+      ```
+
+- Error response: Not found
+
+   - Status Code: 404
+   - Headers:
+      - Content-Type: application/json
+   -Body:
+
+      ```json
+      {
+         "message": "Pokemon not found"
+      }
+      ```
+
+- Error Response: Login Required

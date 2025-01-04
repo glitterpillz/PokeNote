@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .message import Message
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -41,6 +42,18 @@ class User(db.Model, UserMixin):
         cascade='all, delete-orphan'
     )
 
+    sent_messages = db.relationship(
+        'Message',
+        foreign_keys=[Message.sender_id],
+        back_populates='sender'
+    )
+
+    received_messages = db.relationship(
+        'Message',
+        foreign_keys=[Message.receiver_id],
+        back_populates='receiver'
+    )
+
     @property
     def password(self):
         return self.hashed_password
@@ -54,6 +67,7 @@ class User(db.Model, UserMixin):
 
     def to_dict(self):
         return {
+        "user": {
             'id': self.id,
             'username': self.username,
             'email': self.email,
@@ -63,5 +77,8 @@ class User(db.Model, UserMixin):
             'pokemon_collection': [entry.to_dict() for entry in self.pokemon_collection],
             'journal_entries': [entry.to_dict() for entry in self.journal_entries],
             'comments': [entry.to_dict() for entry in self.comments],
-            'profile_picture': self.profile_picture
+            'profile_picture': self.profile_picture,
+            'sent_messages': [msg.to_dict() for msg in self.sent_messages],
+            'received_messages': [msg.to_dict() for msg in self.received_messages]
         }
+    }
