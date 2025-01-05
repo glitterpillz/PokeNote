@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
+
+.landingPageMain {
+    background-color: #30385f;
+    padding-bottom: 400px;
+}
+
+.landingPageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcomeImageBox {
+    margin: 30px;
+    width: 95%;
+    display: flex;
+    color: #ffd444
+}
+
+.infoBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+    font-family: "Atma", serif;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.infoBox p {
+    margin: 0;
+    color: #fefbe2;
+    font-family: "Baloo Paaji 2", serif;
+}
+
+.infoBox h2 {
+    margin-bottom: 5px;
+}
+
+.welcomeImageBox img {
+    width: 60%;
+}
+
+
+.bodyContainer {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin-top: 50px;
+}
+
+.featuresContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px solid #fefbe2;
+    border-radius: 15px;
+    background-color: #50587e;
+    width: 225px;
+    padding: 10px;
+}
+
+.featuresContainer {
+    font-family: "Atma", serif;
+    color: #fefbe2;
+    font-size: 1.5rem;
+}
+
+.journalIcon img {
+    width: 180px;
+    margin: 12px;
+}
+
+.searchIcon img {
+    width: 140px;
+    margin: 20px;
+}
+
+.globeIcon img {
+    width: 140px;
+    margin: 20px;
+}

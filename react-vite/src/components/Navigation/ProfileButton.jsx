@@ -7,6 +7,8 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
+
+
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -40,49 +42,49 @@ function ProfileButton() {
     closeMenu();
   };
 
-  // const userIcon = <img src="/images/user-icon.png" alt="pikachu icon" />;
-
-  const userIcon = <FaCircleUser />
+  const userIcon = <FaCircleUser />;
 
   return (
     <div className={profile.profileButton}>
       <button onClick={toggleMenu}>{userIcon}</button>
       {showMenu && (
-        <ul className={profile.profileDropdown} ref={ulRef}>
-          {user ? (
-            <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <br />
-              <li>
-                <button onClick={logout} className={profile.modalButton}>Log Out</button>
-              </li>
-            </>
-          ) : (
-            <div className={profile.modalButtonContainer}>
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-                className={profile.modalButton}
-              />
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-                className={profile.modalButton}
-              />
-            </div>
-          )}
-        </ul>
+        <div className={profile.profileDropdown} ref={ulRef}>
+          <ul>
+            {user ? (
+              <>
+                <li>{user.username || "No username available"}</li>
+                <li>{user.email || "No email available"}</li>
+                <li>
+                  <button onClick={logout} className={profile.modalButton}>
+                    Log Out
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <OpenModalMenuItem
+                    itemText="Log In"
+                    onItemClick={closeMenu}
+                    modalComponent={<LoginFormModal />}
+                    className={profile.modalButton}
+                  />
+                </li>
+                <li>
+                  <OpenModalMenuItem
+                    itemText="Sign Up"
+                    onItemClick={closeMenu}
+                    modalComponent={<SignupFormModal />}
+                    className={profile.modalButton}
+                  />
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       )}
-
     </div>
-
-
   );
 }
 
 export default ProfileButton;
-
-

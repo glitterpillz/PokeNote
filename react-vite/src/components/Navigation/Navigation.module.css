@@ -1,0 +1,80 @@
+.mainNavContainer {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidePanel {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 1000;
+}
+
+.open {
+  width: 250px; /* Adjust width as needed */
+}
+
+/* Side Panel Links */
+.navList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  padding: 8px 16px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.navLink:hover {
+  color: #f1f1f1;
+}
+
+/* Close Button */
+.sidePanelCloseBtn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 36px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Open Panel Button */
+.sidePanelOpenBtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1100;
+}
+
+.sidePanelOpenBtn:hover {
+  background-color: #444;
+}
+
+.profileButton {
+  position: absolute;
+  background-color: wheat;
+  right: 30px;
+}
