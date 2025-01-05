@@ -29,6 +29,7 @@ def post_journal():
         mood = form.mood.data
         date = form.date.data  
         photo = form.photo.data
+        private = form.private.data
 
         if date:
             timestamp = date
@@ -49,7 +50,8 @@ def post_journal():
             weather=weather,
             mood=mood,
             timestamp=timestamp,
-            photo_url=photo_url
+            photo_url=photo_url,
+            private=private
         )
 
         db.session.add(new_entry)
@@ -92,6 +94,7 @@ def update_entry(id):
     mood = data.get('mood', journal_entry.mood)
     date = data.get('date', journal_entry.timestamp)
     photo = data.get('photo_url', journal_entry.photo_url)
+    private = data.get('private', journal_entry.private)
 
     if date and isinstance(date, str):
         try:
@@ -107,6 +110,7 @@ def update_entry(id):
     journal_entry.mood = mood
     journal_entry.timestamp = timestamp
     journal_entry.photo_url = photo
+    journal_entry.private = private
 
     db.session.commit()
 
@@ -134,7 +138,7 @@ def delete_journal_entry(id):
 @journal_routes.route('/all')
 @login_required
 def get_all_journal_entries():
-    journal_entries = JournalEntry.query.all()
+    journal_entries = JournalEntry.query.filter_by(private=False).all()
 
     if not journal_entries:
         return jsonify({'error': 'No journal entries found'}), 404

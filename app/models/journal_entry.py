@@ -14,7 +14,8 @@ class JournalEntry(db.Model):
     mood = db.Column(db.String(50), nullable=True)
     timestamp = db.Column(db.DateTime, nullable=False, default=None)
     photo_url = db.Column(db.String(255), nullable=True)
-    
+    private = db.Column(db.Boolean, nullable=False, default=False)
+
     user = db.relationship(
         'User',
         back_populates='journal_entries'
@@ -42,6 +43,7 @@ class JournalEntry(db.Model):
             'mood': self.mood,
             'timestamp': self.timestamp,
             'photo_url': self.photo_url,
+            'private': self.private,
             'comments': [comment.to_dict() for comment in self.comments],
             'like_count': len(self.likes)
         }

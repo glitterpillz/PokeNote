@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, FileField, SelectField, DateField
+from wtforms import TextAreaField, FileField, SelectField, DateField, BooleanField
 from wtforms.validators import DataRequired, Length, ValidationError
 from werkzeug.utils import secure_filename
 
@@ -50,6 +50,8 @@ class JournalEntryForm(FlaskForm):
     date = DateField('Date', format='%Y-%m-%d', validators=[])
 
     photo = FileField('Upload Photo (optional)')
+
+    private = BooleanField('private')
 
     def validate_photo(self, field):
         if field.data:
