@@ -37,6 +37,26 @@ function Navigation() {
               >
                 Home
               </NavLink>
+              <NavLink
+                to=""
+                className={nav.navLink}
+                onClick={closeSidePanel}
+              >
+                Journal
+              </NavLink>
+              <NavLink
+                to=""
+                className={nav.navLink}
+                onClick={closeSidePanel}
+              >
+                Pokedex
+              </NavLink>
+              <NavLink
+                to=""
+                className={nav.navLink}
+              >
+                Discover
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -45,15 +65,6 @@ function Navigation() {
         <ProfileButton />
       </div>
     </div>
-    // <ul>
-    //   <li>
-    //     <NavLink to="/">Home</NavLink>
-    //   </li>
-
-    //   <li>
-    //     <ProfileButton />
-    //   </li>
-    // </ul>
   );
 }
 

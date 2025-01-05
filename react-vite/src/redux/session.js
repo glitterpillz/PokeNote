@@ -6,25 +6,6 @@ const initialState = {
   errors: null,
 };
 
-// export const restoreUser = createAsyncThunk(
-//   "session/restoreUser",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const res = await fetch("/api/auth/session");
-//       const data = await res.json();
-
-//       if (!res.ok) {
-//         return rejectWithValue(data);
-//       }
-
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error.message || "Trouble getting current user");
-//     }
-//   }
-// );
-
-// Example thunk fix (restoreUser)
 export const restoreUser = createAsyncThunk(
   "session/restoreUser",
   async (_, { rejectWithValue }) => {
@@ -36,14 +17,12 @@ export const restoreUser = createAsyncThunk(
         return rejectWithValue(data);
       }
 
-      return data.user || data; // If `data.user` exists, return it, otherwise return `data`
+      return data.user || data;
     } catch (error) {
       return rejectWithValue(error.message || "Trouble getting current user");
     }
   }
 );
-
-
 
 export const getUserById = createAsyncThunk(
   "session/getUserById",
@@ -57,7 +36,6 @@ export const getUserById = createAsyncThunk(
     }
   }
 )
-
 
 export const login = createAsyncThunk(
   "session/login",
@@ -74,7 +52,7 @@ export const login = createAsyncThunk(
         throw { errors: data.errors || { general: "Invalid login credentials"} };
       }
 
-      return data;
+      return data.user || data;
     } catch (error) {
       return rejectWithValue(error.message || "Login failed");
     }
@@ -115,14 +93,12 @@ export const signup = createAsyncThunk(
         return rejectWithValue(data);
       }
 
-      return data; // Return user data to be used in the reducer
+      return data;
     } catch (error) {
       return rejectWithValue(error.message || "Signup failed");
     }
   }
 );
-
-
 
 export const logout = createAsyncThunk(
   "session/logout",
@@ -176,7 +152,7 @@ const sessionSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload; // Set user in state upon signup success
+        state.user = action.payload;
       })
       .addCase(logout.pending, (state) => {
         state.loading = true;
