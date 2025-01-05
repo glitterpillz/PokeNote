@@ -112,6 +112,23 @@ export const logout = createAsyncThunk(
   }
 );
 
+export const userAccount = createAsyncThunk(
+  "session/account",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch ('/api/auth/account');
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw { errors: data.errors || { general: "Error getting account"} };
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || "Error fetching user account data");
+    }
+  }
+)
+
 const sessionSlice = createSlice({
   name: "session",
   initialState,
@@ -165,7 +182,19 @@ const sessionSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
         state.user = null;
-      });
+      })
+      .addCase(userAccount.pending, (state) => {
+        state.loading = true;
+        state.errors = null;
+      })
+      .addCase(userAccount.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      })
+      .addCase(userAccount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userAccount = action.payload;
+      })
   },
 });
 
