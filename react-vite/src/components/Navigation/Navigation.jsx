@@ -28,6 +28,7 @@ function Navigation() {
           &times;
         </button>
         <nav>
+          <img src="/images/logo-main.png" alt="" />
           <ul className={nav.navList}>
             <li className={nav.navItem}>
               <NavLink
@@ -57,6 +58,19 @@ function Navigation() {
               >
                 Discover
               </NavLink>
+              <hr />
+              <NavLink
+                  to=""
+                  className={nav.navLink}
+                >
+                  About
+                </NavLink>
+                <NavLink
+                  to=""
+                  className={nav.navLink}
+                >
+                  Contact Us
+                </NavLink>
             </li>
           </ul>
         </nav>

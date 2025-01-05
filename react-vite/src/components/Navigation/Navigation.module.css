@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
+
 .mainNavContainer {
   padding: 20px;
   display: flex;
@@ -15,6 +18,9 @@
   transition: 0.3s;
   padding-top: 60px;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .open {
@@ -23,13 +29,10 @@
 
 /* Side Panel Links */
 .navList {
+  font-family: "Baloo Paaji 2", serif;
+  font-size: 24px;
   list-style-type: none;
-  margin: 0;
-  padding: 60px 20px;
-}
-
-.navItem {
-  padding: 8px 16px;
+  padding: 0 30px;
 }
 
 .navLink {
@@ -37,10 +40,12 @@
   color: #fefbe2;
   display: block;
   transition: 0.3s;
+  margin-bottom: 16px;
 }
 
 .navLink:hover {
-  color: #f1f1f1;
+  cursor: pointer;
+  color: #8cfbeb;
 }
 
 /* Close Button */
@@ -77,4 +82,10 @@
 .profileButton {
   position: absolute;
   right: 30px;
+}
+
+.sidePanel nav img {
+  width: 220px;
+  align-self: center;
+  padding: 20px 0 0 10px;
 }
