@@ -1,16 +1,19 @@
 import profile from "./ProfileButton.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaCircleUser } from "react-icons/fa6";
+// import { FaCircleUser } from "react-icons/fa6";
+import { RiUser4Line } from "react-icons/ri";
 import * as sessionActions from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { NavLink } from "react-router-dom";
+
 
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const user = useSelector((store) => store.session.user);
+  const user = useSelector((state) => state.session.user);
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
@@ -40,49 +43,54 @@ function ProfileButton() {
     closeMenu();
   };
 
-  // const userIcon = <img src="/images/user-icon.png" alt="pikachu icon" />;
-
-  const userIcon = <FaCircleUser />
+  const userIcon = <RiUser4Line />;
 
   return (
-    <div className={profile.profileButton}>
-      <button onClick={toggleMenu}>{userIcon}</button>
+    <div className={profile.profileButtonContainer}>
+      <button className={profile.profileButton} onClick={toggleMenu}>{userIcon}</button>
       {showMenu && (
-        <ul className={profile.profileDropdown} ref={ulRef}>
-          {user ? (
-            <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <br />
-              <li>
-                <button onClick={logout} className={profile.modalButton}>Log Out</button>
-              </li>
-            </>
-          ) : (
-            <div className={profile.modalButtonContainer}>
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-                className={profile.modalButton}
-              />
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-                className={profile.modalButton}
-              />
-            </div>
-          )}
-        </ul>
+        <div className={profile.profileDropdown} ref={ulRef}>
+          <ul>
+            {user ? (
+              <>
+                <li className={profile.hiMessage}>Hi, {user.fname}!</li>
+                <li>{user.username}</li>
+                <li>{user.email}</li>
+                <hr />
+                <li>
+                  <NavLink className={profile.accountLink} to="">manage account</NavLink>
+                </li>
+                <li>
+                  <button onClick={logout} className={profile.modalButton}>
+                    Log Out
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <OpenModalMenuItem
+                    itemText="Log In"
+                    onItemClick={closeMenu}
+                    modalComponent={<LoginFormModal />}
+                    className={profile.modalButton}
+                  />
+                </li>
+                <li>
+                  <OpenModalMenuItem
+                    itemText="Sign Up"
+                    onItemClick={closeMenu}
+                    modalComponent={<SignupFormModal />}
+                    className={profile.modalButton}
+                  />
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       )}
-
     </div>
-
-
   );
 }
 
 export default ProfileButton;
-
-

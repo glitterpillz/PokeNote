@@ -130,6 +130,20 @@ def delete_journal_entry(id):
     return jsonify({'message': 'Journal entry successfully deleted'}), 200
 
 
+
+@journal_routes.route('/all')
+@login_required
+def get_all_journal_entries():
+    journal_entries = JournalEntry.query.all()
+
+    if not journal_entries:
+        return jsonify({'error': 'No journal entries found'}), 404
+    
+    return jsonify([entry.to_dict() for entry in journal_entries])
+
+
+
+
 @journal_routes.route('/')
 @login_required
 def get_user_journal():

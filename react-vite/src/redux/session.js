@@ -6,6 +6,25 @@ const initialState = {
   errors: null,
 };
 
+// export const restoreUser = createAsyncThunk(
+//   "session/restoreUser",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const res = await fetch("/api/auth/session");
+//       const data = await res.json();
+
+//       if (!res.ok) {
+//         return rejectWithValue(data);
+//       }
+
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue(error.message || "Trouble getting current user");
+//     }
+//   }
+// );
+
+// Example thunk fix (restoreUser)
 export const restoreUser = createAsyncThunk(
   "session/restoreUser",
   async (_, { rejectWithValue }) => {
@@ -17,12 +36,13 @@ export const restoreUser = createAsyncThunk(
         return rejectWithValue(data);
       }
 
-      return data;
+      return data.user || data; // If `data.user` exists, return it, otherwise return `data`
     } catch (error) {
       return rejectWithValue(error.message || "Trouble getting current user");
     }
   }
 );
+
 
 
 export const getUserById = createAsyncThunk(
