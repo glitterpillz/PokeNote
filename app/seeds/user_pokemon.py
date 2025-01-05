@@ -5,14 +5,14 @@ def seed_user_pokemon():
     # User 1's Pokémon
     user1_pokemon1 = UserPokemon(
         user_id=1,
-        pokemon_id=1,  # Assuming Bulbasaur has id 1 in the pokemons table
+        pokemon_id=1,
         nickname="Leafy",
         level=10,
         custom_moves={"move1": "Vine Whip", "move2": "Tackle"}
     )
     user1_pokemon2 = UserPokemon(
         user_id=1,
-        pokemon_id=4,  # Assuming Charmander has id 4
+        pokemon_id=4,
         nickname="Flare",
         level=12,
         custom_moves={"move1": "Ember", "move2": "Scratch"}
@@ -21,14 +21,14 @@ def seed_user_pokemon():
     # User 2's Pokémon
     user2_pokemon1 = UserPokemon(
         user_id=2,
-        pokemon_id=7,  # Assuming Squirtle has id 7
+        pokemon_id=7,
         nickname="Shellshock",
         level=8,
         custom_moves={"move1": "Water Gun", "move2": "Tackle"}
     )
     user2_pokemon2 = UserPokemon(
         user_id=2,
-        pokemon_id=10,  # Assuming Caterpie has id 10
+        pokemon_id=10,
         nickname="Bugsy",
         level=5,
         custom_moves={"move1": "String Shot", "move2": "Tackle"}
@@ -37,20 +37,19 @@ def seed_user_pokemon():
     # User 3's Pokémon
     user3_pokemon1 = UserPokemon(
         user_id=3,
-        pokemon_id=13,  # Assuming Weedle has id 13
+        pokemon_id=13,
         nickname="Stinger",
         level=7,
         custom_moves={"move1": "Poison Sting", "move2": "String Shot"}
     )
     user3_pokemon2 = UserPokemon(
         user_id=3,
-        pokemon_id=3,  # Assuming Venusaur has id 3
+        pokemon_id=3,
         nickname="BigLeaf",
         level=20,
         custom_moves={"move1": "Razor Leaf", "move2": "Solar Beam"}
     )
 
-    # Add Pokémon to session
     all_user_pokemon = [
         user1_pokemon1, user1_pokemon2,
         user2_pokemon1, user2_pokemon2,

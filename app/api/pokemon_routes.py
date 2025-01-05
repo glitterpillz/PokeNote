@@ -114,26 +114,22 @@ def edit_user_pokemon(collection_id):
 
     data = request.get_json()
 
-    # Update nickname and level
     nickname = data.get('nickname', user_pokemon.nickname)
     level = data.get('level', user_pokemon.level)
     user_pokemon.nickname = nickname
     user_pokemon.level = level
 
-    # Optionally, update stats if provided
     stats_data = data.get('stats', [])
     for stat_data in stats_data:
         stat_name = stat_data.get('stat_name')
         stat_value = stat_data.get('stat_value')
         if stat_name and stat_value is not None:
-            # Use user_pokemon.pokemon_id instead of pokemon_id
+
             stat = PokemonStat.query.filter_by(pokemon_id=user_pokemon.pokemon_id, stat_name=stat_name).first()
 
             if stat:
-                # If the stat exists, update its value
                 stat.stat_value = stat_value
             else:
-                # If the stat does not exist, create a new stat record
                 new_stat = PokemonStat(
                     pokemon_id=user_pokemon.pokemon_id,
                     stat_name=stat_name,

@@ -4,7 +4,7 @@ import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../redux/session";
 import sign from "./SignupForm.module.css";
 
-function SignupFormModal() {
+function SignupFormModal({ navigate }) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -19,15 +19,27 @@ function SignupFormModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
+    const validationErrors = {};
 
-    if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword:
-          "Confirm Password field must be the same as the Password field",
-      });
+    if (fname[0] !== fname[0].toUpperCase()) {
+      validationErrors.fname = "First name must be capitalized";
     }
 
-    const res = await dispatch(
+    if (lname[0] !== lname[0].toUpperCase()) {
+      validationErrors.lname = "Last name must be capitalized";
+    }
+
+    if (password !== confirmPassword) {
+      validationErrors.confirmPassword = "Passwords must match";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    const serverResponse = await dispatch(
       sessionActions.signup({
         username,
         email,
@@ -39,11 +51,11 @@ function SignupFormModal() {
       })
     );
 
-    if (sessionActions.signup.rejected.match(res)) {
-      setErrors(res.payload);
-    }
-
-    if (sessionActions.signup.fulfilled) {
+    if (serverResponse.type === "session/signup/rejected") {
+      setErrors(serverResponse);
+    } else {
+      await dispatch(sessionActions.restoreUser());
+      navigate('/');
       closeModal();
     }
   };

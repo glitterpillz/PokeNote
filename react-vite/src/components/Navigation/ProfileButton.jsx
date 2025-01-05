@@ -1,17 +1,17 @@
 import profile from "./ProfileButton.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { FaCircleUser } from "react-icons/fa6";
 import { RiUser4Line } from "react-icons/ri";
 import * as sessionActions from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { NavLink } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 function ProfileButton() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((state) => state.session.user);
   const ulRef = useRef();
@@ -37,9 +37,10 @@ function ProfileButton() {
 
   const closeMenu = () => setShowMenu(false);
 
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    await dispatch(sessionActions.logout());
+    navigate("/");
     closeMenu();
   };
 
@@ -58,8 +59,13 @@ function ProfileButton() {
                 <li>{user.email}</li>
                 <hr />
                 <li>
-                  <NavLink className={profile.accountLink} to="">manage account</NavLink>
+                  <NavLink className={profile.accountLink} to="/manage-account">manage account</NavLink>
                 </li>
+                {user.admin && (
+                  <li>
+                    <NavLink className={profile.accountLink} to="/user-accounts">user accounts</NavLink>
+                  </li>
+                )}
                 <li>
                   <button onClick={logout} className={profile.modalButton}>
                     Log Out
@@ -68,22 +74,20 @@ function ProfileButton() {
               </>
             ) : (
               <>
-                <li>
+                <div className={profile.modalButtonContainer}>
                   <OpenModalMenuItem
                     itemText="Log In"
                     onItemClick={closeMenu}
-                    modalComponent={<LoginFormModal />}
+                    modalComponent={<LoginFormModal navigate={navigate} />}
                     className={profile.modalButton}
                   />
-                </li>
-                <li>
                   <OpenModalMenuItem
                     itemText="Sign Up"
                     onItemClick={closeMenu}
-                    modalComponent={<SignupFormModal />}
+                    modalComponent={<SignupFormModal navigate={navigate} />}
                     className={profile.modalButton}
                   />
-                </li>
+                </div>
               </>
             )}
           </ul>

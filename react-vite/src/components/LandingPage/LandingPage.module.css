@@ -23,7 +23,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     margin: 0 20px;
     font-family: "Atma", serif;
     font-weight: 500;
@@ -56,17 +56,32 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 5px solid #fefbe2;
+    border: 3px solid #fefbe2;
     border-radius: 15px;
     background-color: #50587e;
-    width: 225px;
+    width: 230px;
     padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.featuresContainer {
+.featuresContainer:hover {
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.featuresContainer h3 {
     font-family: "Atma", serif;
     color: #fefbe2;
     font-size: 1.5rem;
+}
+
+.featuresContainer p {
+    font-family: "Baloo Paaji 2", serif;
+    color: #fefbe2;
+    font-size: 1.2rem;
+    padding: 0 10px;
 }
 
 .journalIcon img {

@@ -8,17 +8,12 @@ import lan from "./LandingPage.module.css";
 function LandingPage() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-//   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 //   const navigate = useNavigate();
-//   const currentUser = useSelector((state) => state.session.user);
+  // const currentUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
-//   const toggleDropdown = () => {
-//     setIsDropdownOpen((prevState) => !prevState);
-//   };
 
   if (!isLoaded) {
     return <div>Loading...</div>;
@@ -43,18 +38,21 @@ function LandingPage() {
                 <img src="/images/journal.png" alt="" />
               </div>
               <h3>Journal</h3>
+              <p>Capture and cherish your Pokémon trainer journey with personalized journal entries, where you can reflect on your adventures and accomplishments. Keep them private or share with others on the Discover tab.</p>
             </div>
             <div className={lan.featuresContainer}>
               <div className={lan.searchIcon}>
                 <img src="/images/search-icon.png" alt="" />
               </div>
               <h3>Pokedex</h3>
+              <p>Explore the world of Pokémon with ease using the comprehensive Pokédex, allowing you to search, learn, and strategize with detailed Pokémon data. Add pokémon to your collection and keep track of their progress!</p>
             </div>
             <div className={lan.featuresContainer}>
               <div className={lan.globeIcon}>
                 <img src="/images/globe.png" alt="" />
               </div>
               <h3>Discover</h3>
+              <p>Dive into the adventures of fellow trainers by browsing their public journal entries. Share your experiences with others, and engage with likes and comments to build a vibrant Pokémon community.</p>
             </div>
           </div>
         </div>
