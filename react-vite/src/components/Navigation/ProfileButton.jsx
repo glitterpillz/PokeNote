@@ -1,18 +1,19 @@
 import profile from "./ProfileButton.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaCircleUser } from "react-icons/fa6";
+// import { FaCircleUser } from "react-icons/fa6";
+import { RiUser4Line } from "react-icons/ri";
 import * as sessionActions from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-
+import { NavLink } from "react-router-dom";
 
 
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const user = useSelector((store) => store.session.user);
+  const user = useSelector((state) => state.session.user);
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
@@ -42,18 +43,23 @@ function ProfileButton() {
     closeMenu();
   };
 
-  const userIcon = <FaCircleUser />;
+  const userIcon = <RiUser4Line />;
 
   return (
-    <div className={profile.profileButton}>
-      <button onClick={toggleMenu}>{userIcon}</button>
+    <div className={profile.profileButtonContainer}>
+      <button className={profile.profileButton} onClick={toggleMenu}>{userIcon}</button>
       {showMenu && (
         <div className={profile.profileDropdown} ref={ulRef}>
           <ul>
             {user ? (
               <>
-                <li>{user.username || "No username available"}</li>
-                <li>{user.email || "No email available"}</li>
+                <li className={profile.hiMessage}>Hi, {user.fname}!</li>
+                <li>{user.username}</li>
+                <li>{user.email}</li>
+                <hr />
+                <li>
+                  <NavLink className={profile.accountLink} to="">manage account</NavLink>
+                </li>
                 <li>
                   <button onClick={logout} className={profile.modalButton}>
                     Log Out

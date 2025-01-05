@@ -10,7 +10,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #23283c;
   overflow-x: hidden;
   transition: 0.3s;
   padding-top: 60px;
@@ -25,7 +25,7 @@
 .navList {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 60px 20px;
 }
 
 .navItem {
@@ -34,7 +34,7 @@
 
 .navLink {
   text-decoration: none;
-  color: white;
+  color: #fefbe2;
   display: block;
   transition: 0.3s;
 }
@@ -51,16 +51,17 @@
   font-size: 36px;
   background: none;
   border: none;
-  color: white;
+  color: #fefbe2;
   cursor: pointer;
 }
 
 /* Open Panel Button */
 .sidePanelOpenBtn {
-  font-size: 20px;
+  font-size: 40px;
   cursor: pointer;
-  background-color: #111;
-  color: white;
+  /* background-color: #23283c; */
+  background-color: transparent;
+  color: #fefbe2;
   border: none;
   padding: 10px 15px;
   position: fixed;
@@ -70,11 +71,10 @@
 }
 
 .sidePanelOpenBtn:hover {
-  background-color: #444;
+  background-color: transparent;
 }
 
 .profileButton {
   position: absolute;
-  background-color: wheat;
   right: 30px;
 }

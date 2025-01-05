@@ -1,3 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
+.profileButton {
+    color: #fefbe2;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    position: relative;
+}
+
 .profileDropdown {
-    color: #333;
+    font-family: "Baloo Paaji 2", serif;
+    font-size: 20px;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    color: #fefbe2;
+    background-color: #23283c;
+    border-radius: 10px;
+    padding: 15px 20px;
+    min-width: 120px;
+    z-index: 10;
+}
+
+.profileDropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.profileDropdown li {
+    margin-bottom: 10px;
+}
+
+.hiMessage {
+    font-size: 24px;
+    font-family: "Atma", serif;
+    font-weight: 500;
+}
+  
+.accountLink {
+    text-decoration: none;
+    color: #fefbe2;
+}
+
+.accountLink:hover {
+    color: #8cfbeb;
+}
+
+.modalButton {
+    background-color: transparent;
+    border: none;
+    font-family: "Baloo Paaji 2", serif;
+    font-size: 20px;
+    padding: 0;
+    color: #fefbe2;
+}
+
+.modalButton:hover {
+    cursor: pointer;
+    color: #8cfbeb;
 }
