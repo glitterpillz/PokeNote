@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { default as logger } from "redux-logger";
 import sessionReducer from './session';
+import pokemonReducer from './pokemon';
 
 const store = configureStore({
   reducer: {
     session: sessionReducer,
+    pokemon: pokemonReducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware();

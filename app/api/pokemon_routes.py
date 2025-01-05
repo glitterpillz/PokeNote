@@ -6,6 +6,12 @@ from app.models import db, Pokemon, PokemonStat, UserPokemon, User
 pokemon_routes = Blueprint('pokemon', __name__)
 
 
+# @pokemon_routes.route('/')
+# def pokemons():
+#     pokemons = Pokemon.query.filter(Pokemon.id.in_([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])).order_by(Pokemon.id).all()
+
+#     return jsonify({"Pokemon": [pokemon.to_dict() for pokemon in pokemons]})
+
 @pokemon_routes.route('/')
 def pokemons():
     pokemons = Pokemon.query.filter(Pokemon.id.in_([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])).order_by(Pokemon.id).all()

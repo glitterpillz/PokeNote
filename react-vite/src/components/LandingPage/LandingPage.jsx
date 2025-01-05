@@ -4,11 +4,12 @@ import * as sessionActions from "../../redux/session";
 // import ProfileButton from "../Navigation/ProfileButton";
 import Navigation from "../Navigation";
 import lan from "./LandingPage.module.css";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
   // const currentUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
@@ -40,7 +41,10 @@ function LandingPage() {
               <h3>Journal</h3>
               <p>Capture and cherish your Pokémon trainer journey with personalized journal entries, where you can reflect on your adventures and accomplishments. Keep them private or share with others on the Discover tab.</p>
             </div>
-            <div className={lan.featuresContainer}>
+            <div 
+              className={lan.featuresContainer}
+              onClick={() => navigate('/pokedex')}
+            >
               <div className={lan.searchIcon}>
                 <img src="/images/search-icon.png" alt="" />
               </div>
