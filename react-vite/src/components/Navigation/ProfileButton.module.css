@@ -52,9 +52,10 @@
     background-color: transparent;
     border: none;
     font-family: "Baloo Paaji 2", serif;
-    font-size: 20px;
+    font-size: 24px;
     padding: 0;
     color: #fefbe2;
+    transition: 0.3s;
 }
 
 .modalButton:hover {
