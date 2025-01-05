@@ -5,6 +5,9 @@
   padding: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  background-color: #30385f;
+  height: 60px;
 }
 
 .sidePanel {
