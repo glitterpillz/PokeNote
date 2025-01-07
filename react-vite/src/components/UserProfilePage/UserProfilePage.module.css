@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
+.profileContainer {
+    font-family: "Baloo Paaji 2", serif;
+    background-color: #aac4dd;
+    position: relative;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
+/* .navbar {
+    position: relative;
+    z-index: 1;
+    height: 60px; 
+    background-color: transparent;
+} */
+
+.accountMainContainer {
+    font-family: "Baloo Paaji 2", serif;
+    position: relative;
+}
+
+/* .profilePicBox {
+    position: relative;
+    text-align: center;
+} */
+
+/* .backgroundImg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 200px;
+}
+
+.profilePicImg {
+    position: relative;
+    top: 80px;
+    z-index: 2;
+    border-radius: 50%;
+    border: 3px solid white;
+    width: 250px;
+    height: 250px;
+}
+
+.mainInfoContainer {
+    background-color: #8CAECF;
+    margin-top: 0;
+}   */

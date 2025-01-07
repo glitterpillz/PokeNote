@@ -15,6 +15,7 @@ const UserAccountPage = () => {
       dispatch(sessionActions.userAccount());
     }, [dispatch]);
 
+
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -39,50 +40,75 @@ const UserAccountPage = () => {
             <Navigation />
         </div>
         <div className={acc.accountMainContainer}>
-          <div className={acc.profilePicBox}>
-            <img className={acc.backgroundImg} src={user.banner_url} alt="" />
-            {user.profile_picture ? (
-              <img
-                  className={acc.profilePicImg}
-                  src={user.profile_picture}
-                  alt={`${user.username}'s profile picture`}
-              />
-              ) : (
-              <p><strong>Profile Picture:</strong> None</p>
-            )}
+          <img className={acc.backgroundImg} src={user.banner_url} alt="" />
+          <div className={acc.header}>
+            <div className={acc.profilePicBox}>
+              {user.profile_picture ? (
+                <img
+                    className={acc.profilePicImg}
+                    src={user.profile_picture}
+                    alt={`${user.username}'s profile picture`}
+                />
+                ) : (
+                <p><strong>Profile Picture:</strong> None</p>
+                )}
+                <div className={acc.profileInfoBox}>
+                  <p>
+                    <strong>{user.username}</strong> <br />
+                    {user.email || "N/A"}
+                  </p>
+                </div>
+            </div>
+            <button onClick={() => navigate('/account/update')}>
+              Edit
+            </button>
           </div>
+          <hr className={acc.hr}/>
           <div className={acc.mainInfoContainer}>
-                <p>{user.username}</p>
-                <p><strong>Email:</strong> {user.email || "N/A"}</p>
-                <p><strong>First Name:</strong> {user.fname || "N/A"}</p>
-                <p><strong>Last Name:</strong> {user.lname || "N/A"}</p>
-        
-                <h2>Journal Entries:</h2>
-                {journalEntries.length > 0 ? (
-                <ul>
-                    {journalEntries.map((entry, index) => (
-                    <li key={index}>{entry.title || "Untitled Entry"}</li>
+            <div className={acc.nameContainer}>
+              <div className={acc.nameBox}>
+                 <p>First Name</p>
+                 <p className={acc.nameTitle}>{user.fname || "N/A"}</p>
+              </div>
+              <div className={acc.nameBox}>
+                <p>Last Name</p>
+                <p className={acc.nameTitle}>{user.lname || "N/A"}</p>
+              </div>
+            </div>
+            <div className={acc.linkContainer}>
+              <h2 className={acc.h2}>Pokemon Collection:</h2>
+              <hr />
+              {pokemonCollection.length > 0 ? (
+                <div className={acc.entryList}>
+                    {pokemonCollection.map((pokemon, index) => (
+                    <div key={index} className={acc.listEntry}>
+                      <p>{pokemon.pokemon.name || "Unnamed Pokemon"}</p>
+                      <p>Level: {pokemon.level}</p>
+                    </div>
                     ))}
-                </ul>
+                </div>
+              ) : (
+                <p>No Pokémon in collection.</p>
+              )}
+            </div>
+            <div className={acc.linkContainer}>
+              <h2 className={acc.h2}>Journal Entries</h2>
+              <hr />
+              {journalEntries.length > 0 ? (
+                <div className={acc.entryList}>
+                    {journalEntries.map((entry, index) => (
+                      <div key={index} className={acc.listEntry}>
+                        <p>{entry.timestamp}</p>
+                        <p>{entry.title || "Untitled Entry"}</p>
+                      </div>
+                    ))}
+                </div>
                 ) : (
                 <p>No journal entries available.</p>
-                )}
-        
-                <h2>Pokemon Collection:</h2>
-                {pokemonCollection.length > 0 ? (
-                <ul>
-                    {pokemonCollection.map((pokemon, index) => (
-                    <li key={index}>{pokemon.pokemon.name || "Unnamed Pokemon"}</li>
-                    ))}
-                </ul>
-                ) : (
-                <p>No Pokémon in collection.</p>
-                )}
+                )}          
+              </div>            
             </div>
           </div>
-          <button onClick={() => navigate('/account/update')}>
-                Edit Account
-          </button>
       </div>
     );
   };

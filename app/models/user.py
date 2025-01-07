@@ -16,8 +16,8 @@ class User(db.Model, UserMixin):
     fname = db.Column(db.String(40), nullable=False)
     lname = db.Column(db.String(40), nullable=False)
     admin = db.Column(db.Boolean, nullable=True)
-    profile_picture = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/bJPCvPt/profile-picture.jpg")
-    banner_url = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/864V411/banner.jpg")
+    profile_picture = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/g61kyQY/placeholder-prof-pic.png")
+    banner_url = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/QKPFB1t/placeholder-banner.jpg")
 
     pokemon_collection = db.relationship(
         'UserPokemon',

@@ -65,6 +65,9 @@ function ProfileButton() {
                 <li>
                   <NavLink className={profile.accountLink} to="/account">Manage Account</NavLink>
                 </li>
+                <li>
+                  <NavLink className={profile.accountLink} to={`/user/${user.id}/profile`}>View Profile</NavLink>
+                </li>
                 {user.admin && (
                   <li>
                     <NavLink className={profile.accountLink} to="/user-accounts">User Accounts</NavLink>
