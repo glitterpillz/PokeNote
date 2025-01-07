@@ -11,7 +11,6 @@ function SignupFormModal({ navigate }) {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [admin, setAdmin] = useState(false);
-  const [profile_picture, setProfilePicture] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -47,7 +46,6 @@ function SignupFormModal({ navigate }) {
         fname,
         lname,
         admin,
-        profile_picture
       })
     );
 
@@ -113,15 +111,6 @@ function SignupFormModal({ navigate }) {
             onChange={(e) => setAdmin(e.target.checked)}
           />
         </label>
-        <label>
-          Profile Picture URL
-          <input
-            type="text"
-            value={profile_picture}
-            onChange={(e) => setProfilePicture(e.target.value)}
-          />
-        </label>
-        {errors.profile_picture && <p>{errors.profile_picture}</p>}
         <label>
           Password
           <input

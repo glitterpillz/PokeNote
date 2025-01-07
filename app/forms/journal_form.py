@@ -1,9 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, FileField, SelectField, DateField, BooleanField
+from wtforms import TextAreaField, FileField, SelectField, DateField, BooleanField, StringField
 from wtforms.validators import DataRequired, Length, ValidationError
 from werkzeug.utils import secure_filename
 
 class JournalEntryForm(FlaskForm):
+    title = StringField(
+        'Title',
+        validators=[DataRequired(), Length(min=1, max=100)],
+        render_kw={'placeholder': 'Title...'}
+    )
+
     content = TextAreaField(
         'Content',
         validators=[DataRequired(), Length(min=1, max=500)],
@@ -49,12 +55,6 @@ class JournalEntryForm(FlaskForm):
 
     date = DateField('Date', format='%Y-%m-%d', validators=[])
 
-    photo = FileField('Upload Photo (optional)')
+    photo = StringField('Upload Photo (optional)')
 
     private = BooleanField('private')
-
-    def validate_photo(self, field):
-        if field.data:
-            filename = secure_filename(field.data.filename)
-            if not filename.lower().endswith(('.png', '.jpg', 'jpeg')):
-                raise ValidationError('Only .png, .jpg, .jpeg files allowed')

@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-// import LoginFormPage from '../components/LoginFormPage';
-// import SignupFormPage from '../components/SignupFormPage';
 import LandingPage from '../components/LandingPage/LandingPage';
 import PokedexPage from '../components/PokedexPage/PokedexPage';
+import UserAccountPage from '../components/UserAccountPage/UserAccountPage';
+import UpdateAccountPage from '../components/UpdateAccountPage.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -12,5 +12,13 @@ export const router = createBrowserRouter([
   {
     path: '/pokedex',
     element: <PokedexPage />
+  },
+  {
+    path: '/account',
+    element: <UserAccountPage />,
+  },
+  {
+    path: '/account/update',
+    element: <UpdateAccountPage />
   }
 ]);

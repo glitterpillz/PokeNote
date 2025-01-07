@@ -26,7 +26,8 @@ def seed_users():
         fname='Demo',
         lname='User',
         admin=False,
-        profile_picture='https://i.ibb.co/fStmGCz/wilderness-layout.jpg'
+        profile_picture='https://i.ibb.co/bJPCvPt/profile-picture.jpg',
+        banner_url='https://i.ibb.co/864V411/banner.jpg'
     )
     glitterpillz = User(
         username='glitterpillz',

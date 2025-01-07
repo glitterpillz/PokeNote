@@ -1,3 +1,8 @@
+import os
+import boto3
+import uuid
+from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
 from flask import Blueprint,jsonify, request
 from app.models import User, db
 from app.forms import LoginForm
@@ -5,8 +10,40 @@ from app.forms import SignUpForm
 from app.forms import UpdateAccountForm
 from flask_login import current_user, login_user, logout_user, login_required
 
-auth_routes = Blueprint('auth', __name__)
+load_dotenv()
 
+S3_BUCKET = os.environ.get('AWS_BUCKET_NAME')
+S3_REGION = os.environ.get('AWS_BUCKET_REGION')
+S3_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
+S3_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+s3_client = boto3.client(
+    's3',
+    region_name=S3_REGION,
+    aws_access_key_id=S3_ACCESS_KEY,
+    aws_secret_access_key=S3_SECRET_KEY
+)
+
+def upload_to_s3(file, bucket_name, folder='uploads'):
+    try:
+        filename = secure_filename(file.filename)
+        unique_filename = f"{folder}/{uuid.uuid4().hex}_{filename}"
+
+        s3_client.upload_fileobj(
+            file,
+            bucket_name,
+            unique_filename,
+            ExtraArgs={'ContentType': file.content_type}
+        )
+
+        return f"https://{bucket_name}.s3.{S3_REGION}.amazonaws.com/{unique_filename}"
+
+    except Exception as e:
+        raise ValueError(f"Failed to upload to S3: {e}")
+
+
+
+auth_routes = Blueprint('auth', __name__)
 
 @auth_routes.route('/session')
 def authenticate():
@@ -24,14 +61,15 @@ def login():
     Logs a user in
     """
     form = LoginForm()
-    # Get the csrf_token from the request cookie and put it into the
-    # form manually to validate_on_submit can be used
+
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
+    
     return form.errors, 401
 
 
@@ -59,8 +97,18 @@ def sign_up():
             fname=form.data['fname'],
             lname=form.data['lname'],
             admin=form.data['admin'],
-            profile_picture=form.data['profile_picture']
         )
+
+        if 'profile_picture' in request.files:
+            file = request.files['profile_picture']
+            if file and file.filename:
+                try:
+                    profile_picture_url = upload_to_s3(file, S3_BUCKET)
+                    user.profile_picture = profile_picture_url
+                except ValueError as e:
+                    return jsonify({'message': str(e)}), 400
+                
+
         db.session.add(user)
         db.session.commit()
         login_user(user)
@@ -89,33 +137,59 @@ def get_account():
     return jsonify(user.to_dict())
 
 
-@auth_routes.route('/account', methods=['PUT'])
+
+@auth_routes.route('/account/<int:id>', methods=['PUT'])
 @login_required
-def update_account():
+def update_account(id):
+    if id != current_user.id:
+        return {'error': 'Unauthorized'}, 403
+
     form = UpdateAccountForm()
+    form.current_user_id = current_user.id
     form['csrf_token'].data = request.cookies['csrf_token']
-    form.current_user_id = current_user.id  # Set the current user's ID for custom validation
 
     if form.validate_on_submit():
-        user = User.query.get(current_user.id)
+        user = User.query.get(id)
         if not user:
             return {'error': 'User not found'}, 404
 
-        user.username = form.data.get('username', user.username)
-        user.email = form.data.get('email', user.email)
-        user.fname = form.data.get('fname', user.fname)
-        user.lname = form.data.get('lname', user.lname)
-        user.profile_picture = form.data.get('profile_picture', user.profile_picture)
+        if form.username.data:
+            user.username = form.username.data
+
+        if form.email.data:
+            user.email = form.email.data
+
+        user.fname = form.fname.data or user.fname
+        user.lname = form.lname.data or user.lname
+
+        if 'profile_picture' in request.files:
+            file = request.files['profile_picture']
+            if file and file.filename:
+                try:
+                    profile_picture_url = upload_to_s3(file, S3_BUCKET, folder='profile_pictures')
+                    user.profile_picture = profile_picture_url
+                except ValueError as e:
+                    return jsonify({'message': f"Profile picture upload failed: {str(e)}"}), 400
+
+        if 'banner_url' in request.files:
+            file = request.files['banner_url']
+            if file and file.filename:
+                try:
+                    banner_url = upload_to_s3(file, S3_BUCKET, folder='banners')
+                    user.banner_url = banner_url
+                except ValueError as e:
+                    return jsonify({'message': f"Banner upload failed: {str(e)}"}), 400
 
         try:
             db.session.commit()
-        except Exception as e:
+        except Exception as db_error:
             db.session.rollback()
-            return {'error': 'Failed to update account information', 'details': str(e)}, 400
+            return {'error': 'Failed to update account', 'details': str(db_error)}, 500
 
-        return jsonify({'message': 'Account updated successfully', 'user': user.to_dict()})
+        return user.to_dict()
 
-    return form.errors, 400
+    return {'errors': form.errors}, 400
+
 
 
 @auth_routes.route('/account/<int:user_id>', methods=['DELETE'])

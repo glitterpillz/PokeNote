@@ -4,6 +4,7 @@ const initialState = {
   user: null,
   loading: false,
   errors: null,
+  userAccount: null,
 };
 
 export const restoreUser = createAsyncThunk(
@@ -69,7 +70,6 @@ export const signup = createAsyncThunk(
       fname,
       lname,
       admin,
-      profile_picture,
     },
     { rejectWithValue }
   ) => {
@@ -84,7 +84,6 @@ export const signup = createAsyncThunk(
           fname,
           lname,
           admin,
-          profile_picture,
         }),
       });
       const data = await res.json();
@@ -99,6 +98,7 @@ export const signup = createAsyncThunk(
     }
   }
 );
+
 
 export const logout = createAsyncThunk(
   "session/logout",
@@ -128,6 +128,38 @@ export const userAccount = createAsyncThunk(
     }
   }
 )
+
+
+export const updateAccount = createAsyncThunk(
+  "account/updateAccount",
+  async ({ userId, formData }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`/api/auth/account/${userId}`, {
+        method: 'PUT',
+        body: formData,
+      });
+
+      const text = await response.text();
+
+      if (!response.ok) {
+        console.error('Error response:', text);
+        return rejectWithValue(text);
+      }
+
+      try {
+        const data = JSON.parse(text);
+        return data;
+      } catch (error) {
+        return rejectWithValue('Failed to parse JSON');
+      }
+
+    } catch (error) {
+      return rejectWithValue(error.message || 'Error updating user account');
+    }
+  }
+);
+
+
 
 const sessionSlice = createSlice({
   name: "session",
@@ -195,6 +227,19 @@ const sessionSlice = createSlice({
         state.loading = false;
         state.userAccount = action.payload;
       })
+      .addCase(updateAccount.pending, (state) => {
+        state.loading = true;
+        state.errors = null;
+      })
+      .addCase(updateAccount.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      })
+      .addCase(updateAccount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userAccount = action.payload;
+      })
+
   },
 });
 
