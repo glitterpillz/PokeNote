@@ -1,4 +1,3 @@
-import profile from "./ProfileButton.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RiUser4Line } from "react-icons/ri";
@@ -8,6 +7,7 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import profile from "./ProfileButton.module.css";
 
 function ProfileButton() {
   const dispatch = useDispatch();
@@ -22,6 +22,10 @@ function ProfileButton() {
   };
 
   useEffect(() => {
+    if (!user) {
+      dispatch(sessionActions.restoreUser());
+    }
+
     if (!showMenu) return;
 
     const closeMenu = (e) => {
@@ -33,7 +37,7 @@ function ProfileButton() {
     document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  }, [showMenu, dispatch, user]);
 
   const closeMenu = () => setShowMenu(false);
 
@@ -59,11 +63,11 @@ function ProfileButton() {
                 <li>{user.email}</li>
                 <hr />
                 <li>
-                  <NavLink className={profile.accountLink} to="/account">manage account</NavLink>
+                  <NavLink className={profile.accountLink} to="/account">Manage Account</NavLink>
                 </li>
                 {user.admin && (
                   <li>
-                    <NavLink className={profile.accountLink} to="/user-accounts">user accounts</NavLink>
+                    <NavLink className={profile.accountLink} to="/user-accounts">User Accounts</NavLink>
                   </li>
                 )}
                 <li>

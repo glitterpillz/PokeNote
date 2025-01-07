@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from '../../redux/session'
 import Navigation from "../Navigation";
 import acc from './UserAccountPage.module.css'
+import { useNavigate } from "react-router-dom";
 
 
 const UserAccountPage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { userAccount, loading, errors } = useSelector((state) => state.session);
 
     useEffect(() => {
@@ -38,12 +40,12 @@ const UserAccountPage = () => {
         </div>
         <div className={acc.accountMainContainer}>
           <div className={acc.profilePicBox}>
-            <img className={acc.backgroundImg} src="/images/acc-bg.png" alt="" />
+            <img className={acc.backgroundImg} src={user.banner_url} alt="" />
             {user.profile_picture ? (
               <img
                   className={acc.profilePicImg}
                   src={user.profile_picture}
-                  alt={`${user.username}'s profile`}
+                  alt={`${user.username}'s profile picture`}
               />
               ) : (
               <p><strong>Profile Picture:</strong> None</p>
@@ -78,6 +80,9 @@ const UserAccountPage = () => {
                 )}
             </div>
           </div>
+          <button onClick={() => navigate('/account/update')}>
+                Edit Account
+          </button>
       </div>
     );
   };
