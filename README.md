@@ -131,7 +131,7 @@ main, always keeping it up to date.
 [Dashboard]: https://dashboard.render.com/
 
 
-## Pokedex Schema Design
+## PokeNote Schema Design
 
 ![alt text](image.png)
 

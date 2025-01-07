@@ -16,7 +16,8 @@ class User(db.Model, UserMixin):
     fname = db.Column(db.String(40), nullable=False)
     lname = db.Column(db.String(40), nullable=False)
     admin = db.Column(db.Boolean, nullable=True)
-    profile_picture = db.Column(db.String(255), nullable=True)
+    profile_picture = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/bJPCvPt/profile-picture.jpg")
+    banner_url = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/864V411/banner.jpg")
 
     pokemon_collection = db.relationship(
         'UserPokemon',
@@ -78,6 +79,7 @@ class User(db.Model, UserMixin):
             'journal_entries': [entry.to_dict() for entry in self.journal_entries],
             'comments': [entry.to_dict() for entry in self.comments],
             'profile_picture': self.profile_picture,
+            'banner_url': self.banner_url,
             'sent_messages': [msg.to_dict() for msg in self.sent_messages],
             'received_messages': [msg.to_dict() for msg in self.received_messages]
         }

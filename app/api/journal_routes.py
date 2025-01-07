@@ -23,6 +23,7 @@ def post_journal():
     form['csrf_token'].data = request.cookies.get('csrf_token')
 
     if form.validate_on_submit():
+        title = form.title.data
         content = form.content.data
         accomplishments = form.accomplishments.data
         weather = form.weather.data
@@ -45,6 +46,7 @@ def post_journal():
 
         new_entry = JournalEntry(
             user_id=current_user.id,
+            title=title,
             content=content,
             accomplishments=accomplishments,
             weather=weather,
@@ -88,6 +90,7 @@ def update_entry(id):
         return jsonify({'error': 'You can only view your own journal entries'}), 403
 
     data = request.get_json()
+    title = data.get('title', journal_entry.title)
     content = data.get('content', journal_entry.content)
     accomplishments = data.get('accomplishments', journal_entry.accomplishments)
     weather = data.get('weather', journal_entry.weather)
@@ -104,6 +107,7 @@ def update_entry(id):
     else:
         timestamp = journal_entry.timestamp
 
+    journal_entry.title = title
     journal_entry.content = content
     journal_entry.accomplishments = accomplishments
     journal_entry.weather = weather
