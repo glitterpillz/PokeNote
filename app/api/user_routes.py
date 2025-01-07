@@ -45,6 +45,26 @@ def user(id):
 
 
 
+# @user_routes.route('/<int:id>/profile')
+# def public_profile(id):
+#     """
+#     Query for a user's public profile by id and returns limited information.
+#     Publicly accessible.
+#     """
+#     user = User.query.get(id)
+#     if not user:
+#         return {'error': 'User not found'}, 404
+
+#     return jsonify({
+#         'id': user.id,
+#         'username': user.username,
+#         'fname': user.fname,
+#         'lname': user.lname,
+#         'profile_picture': user.profile_picture,
+#         'banner_url': user.banner_url,
+#         'pokemon_collection': [pokemon.to_dict() for pokemon in user.pokemon_collection],
+#         'journal_entries': [entry.to_dict() for entry in user.journal_entries]
+#     })
 @user_routes.route('/<int:id>/profile')
 def public_profile(id):
     """

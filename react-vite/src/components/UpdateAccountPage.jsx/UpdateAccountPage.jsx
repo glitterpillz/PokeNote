@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from '../../redux/session';
 import update from './UpdateAccountPage.module.css';
+import { useNavigate } from "react-router-dom";
 
 const UpdateAccountPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const currentUser = useSelector((state) => state.session.userAccount?.user);
 
@@ -56,6 +58,7 @@ const UpdateAccountPage = () => {
     try {
       await dispatch(sessionActions.updateAccount({ userId: currentUser.id, formData: updatedData })).unwrap();
       alert("Account updated successfully!");
+      navigate('/account')
     } catch (backendErrors) {
       setErrors(backendErrors);
     }
