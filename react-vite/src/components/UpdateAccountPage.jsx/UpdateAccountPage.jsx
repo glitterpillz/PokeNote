@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from '../../redux/session';
 import update from './UpdateAccountPage.module.css';
 import { useNavigate } from "react-router-dom";
+import Navigation from "../Navigation";
 
 const UpdateAccountPage = () => {
   const dispatch = useDispatch();
@@ -73,74 +74,96 @@ const UpdateAccountPage = () => {
   };
 
   return (
-    <div className={update.updateContainer}>
-      <h2>Edit Account</h2>
-      <form onSubmit={handleSubmit} className={update.form}>
-        <label>Username</label>
-        <input
-          className={update.input}
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-          required
-        />
-        {errors.username && <div className={update.error}>{errors.username}</div>}
-
-        <label>Email</label>
-        <input
-          className={update.input}
-          name="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        {errors.email && <div className={update.error}>{errors.email}</div>}
-
-        <label>First Name</label>
-        <input
-          className={update.input}
-          name="fname"
-          value={fname}
-          onChange={(e) => setFname(e.target.value)}
-          placeholder="First Name"
-        />
-        {errors.fname && <div className={update.error}>{errors.fname}</div>}
-
-        <label>Last Name</label>
-        <input
-          className={update.input}
-          name="lname"
-          value={lname}
-          onChange={(e) => setLname(e.target.value)}
-          placeholder="Last Name"
-        />
-        {errors.lname && <div className={update.error}>{errors.lname}</div>}
-
-        <label>Profile Picture</label>
-        <input
-          className={update.input}
-          name="profile_picture"
-          type="file"
-          onChange={handleProfilePictureChange}
-        />
-        {errors.profile_picture && <div className={update.error}>{errors.profile_picture}</div>}
-
-        <label>Banner Image</label>
-        <input
-          className={update.input}
-          name="banner_url"
-          type="file"
-          onChange={handleBannerUrlChange}
-        />
-        {errors.banner_url && <div className={update.error}>{errors.banner_url}</div>}
-
-        <button type="submit" className={update.button}>
-          Update Account
-        </button>
-      </form>
+    <div className={update.updateMainContainer}>
+      <div className={update.navbar}>
+        <Navigation />
+      </div>
+      <div className={update.updateBodyContainer}>
+        <h1 className={update.h1}>Edit Account</h1>
+        <form onSubmit={handleSubmit} className={update.form}>
+          <div className={update.formField}>
+            <label>Username</label>
+            <input
+              className={update.input}
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              required
+            />            
+            {errors.username && <div className={update.error}>{errors.username}</div>}
+          </div> 
+          <div className={update.formField}>
+            <label>Email</label>
+              <input
+                className={update.input}
+                name="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                required
+              />
+              {errors.email && <div className={update.error}>{errors.email}</div>} 
+          </div> 
+          <div className={update.formField}>
+            <label>First Name</label>
+            <input
+              className={update.input}
+              name="fname"
+              value={fname}
+              onChange={(e) => setFname(e.target.value)}
+              placeholder="First Name"
+            />
+            {errors.fname && <div className={update.error}>{errors.fname}</div>}
+          </div>
+          <div className={update.fileFormField}>
+            <label htmlFor="profilePicture">Profile Picture</label>
+            <input
+              id="profilePicture"
+              type="file"
+              onChange={handleProfilePictureChange}
+              className={update.fileInput}
+            />
+            <div className={update.fileButtonField}>
+              <button
+                type="button"
+                className={update.customFileButton}
+                onClick={() => document.getElementById('profilePicture').click()}
+              >
+                Choose File
+              </button>
+              <span className={update.fileName}>
+                {profilePicture ? profilePicture.name : "No file chosen"}
+              </span>
+            </div>
+          </div>
+          <div className={update.fileFormField}>
+            <label htmlFor="bannerUrl">Banner Image</label>
+            <input
+                id="bannerUrl"
+                type="file"
+                onChange={handleBannerUrlChange}
+                className={update.fileInput}
+              />
+            <div className={update.fileButtonField}>
+              <button
+                type="button"
+                className={update.customFileButton}
+                onClick={() => document.getElementById('bannerUrl').click()}
+              >
+                Choose File
+              </button>
+              <span className={update.fileName}>
+                {bannerUrl ? bannerUrl.name : "No file chosen"}
+              </span>
+            </div>
+          </div>
+          <button type="submit" className={update.button}>
+            Update Account
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

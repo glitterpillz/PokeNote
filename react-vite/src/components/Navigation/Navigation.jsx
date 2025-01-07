@@ -46,7 +46,7 @@ function Navigation() {
                 Journal
               </NavLink>
               <NavLink
-                to=""
+                to="/pokedex"
                 className={nav.navLink}
                 onClick={closeSidePanel}
               >

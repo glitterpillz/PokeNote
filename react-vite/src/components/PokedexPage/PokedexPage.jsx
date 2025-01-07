@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
-import * as sessionActions from '../../redux/session'
+import { useNavigate } from "react-router-dom";
+import * as sessionActions from "../../redux/session";
 import * as pokemonActions from "../../redux/pokemon";
 import Navigation from "../Navigation";
-import pok from './PokedexPage.module.css';
+import pok from "./PokedexPage.module.css";
 
 function PokedexPage() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -34,6 +35,10 @@ function PokedexPage() {
         }
     };
 
+    const handleCardClick = (id) => {
+        navigate(`/pokemon/${id}`);
+    };
+
     if (loading || !isLoaded) {
         return <div>Loading...</div>;
     }
@@ -42,6 +47,27 @@ function PokedexPage() {
         return <div>Error: {errors}</div>;
     }
 
+    const renderPokemonCards = (pokemonList) => {
+        return pokemonList.map((pokemon) => (
+            <div
+                key={pokemon.id}
+                className={pok.pokemonCard}
+                onClick={() => handleCardClick(pokemon.id)} 
+                style={{ cursor: "pointer" }} 
+            >
+                <img src={pokemon.image} alt={pokemon.name} />
+                <h3>{pokemon.name}</h3>
+                <div className={pok.typesContainer}>
+                    {pokemon.types.map((type, index) => (
+                        <div key={index} className={pok.pokemonType}>
+                            {type}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        ));
+    };
+
     return (
         <div>
             <div className={pok.navContainer}>
@@ -49,17 +75,14 @@ function PokedexPage() {
             </div>
             <div className={pok.searchContainer}>
                 <form className={pok.searchForm} onSubmit={handleSearch}>
-                    <input 
+                    <input
                         type="text"
                         placeholder="Search Pokémon by name or ID..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className={pok.searchInput}
                     />
-                    <button
-                        type="submit"
-                        className={pok.searchBtn}
-                    >
+                    <button type="submit" className={pok.searchBtn}>
                         Search
                     </button>
                 </form>
@@ -67,37 +90,13 @@ function PokedexPage() {
             <div className={pok.resultsContainer}>
                 {searchQuery.length > 0 ? (
                     searchResults.length > 0 ? (
-                        searchResults.map((pokemon) => (
-                            <div key={pokemon.id} className={pok.pokemonCard}>
-                                <img src={pokemon.image} alt={pokemon.name} />
-                                <h3>{pokemon.name}</h3>
-                                <div className={pok.typesContainer}>
-                                    {pokemon.types.map((type, index) => (
-                                        <div key={index} className={pok.pokemonType}>
-                                            {type}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))
+                        renderPokemonCards(searchResults)
                     ) : (
                         <p>No Pokémon found.</p>
                     )
                 ) : (
                     pokemons.length > 0 ? (
-                        pokemons.map((pokemon) => (
-                            <div className={pok.pokemonCard}>
-                                <img src={pokemon.image} alt={pokemon.name} />
-                                <h3>{pokemon.name}</h3>
-                                <div className={pok.typesContainer}>
-                                    {pokemon.types.map((type, index) => (
-                                        <div key={index} className={pok.pokemonType}>
-                                            {type}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))                       
+                        renderPokemonCards(pokemons)
                     ) : (
                         <p>No Pokémon to display.</p>
                     )
@@ -108,3 +107,4 @@ function PokedexPage() {
 }
 
 export default PokedexPage;
+

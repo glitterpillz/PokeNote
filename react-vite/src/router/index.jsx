@@ -4,6 +4,7 @@ import PokedexPage from '../components/PokedexPage/PokedexPage';
 import UserAccountPage from '../components/UserAccountPage/UserAccountPage';
 import UpdateAccountPage from '../components/UpdateAccountPage.jsx';
 import UserProfilePage from '../components/UserProfilePage/index.js';
+import PokemonDetailsPage from '../components/PokemonDetailsPage/PokemonDetailsPage.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
   {
     path: '/pokedex',
     element: <PokedexPage />
+  },
+  {
+    path: '/pokemon/:id',
+    element: <PokemonDetailsPage />
   },
   {
     path: '/user/:id/profile',

@@ -23,7 +23,7 @@ function UserProfilePage() {
     }, [userProfile]);  
     
 
-    if (loading) {
+    if (loading) { 
         return <div>Loading...</div>;
     }
 
@@ -43,17 +43,16 @@ function UserProfilePage() {
                 <Navigation />
             </div>
             <div className={pro.profileContainer}>
+                {banner_url ? (
+                    <img
+                        className={pro.bannerPic}
+                        src={banner_url}
+                        alt=""
+                    />
+                ) : (
+                    <div className={pro.bannerPic}>No banner picture available</div>
+                )}
                 <div className={pro.profileHeader}>
-                    {banner_url ? (
-                        <img
-                            className={pro.bannerPic}
-                            src={banner_url}
-                            alt=""
-                        />
-                        
-                    ) : (
-                        <div className={pro.bannerPic}>No banner picture available</div>
-                    )}
                     {profile_picture ? (
                         <img
                             className={pro.profilePic}
