@@ -112,6 +112,7 @@ export const logout = createAsyncThunk(
   }
 );
 
+// get user account
 export const userAccount = createAsyncThunk(
   "session/account",
   async (_, { rejectWithValue }) => {
@@ -129,7 +130,7 @@ export const userAccount = createAsyncThunk(
   }
 )
 
-
+// update user account
 export const updateAccount = createAsyncThunk(
   "account/updateAccount",
   async ({ userId, formData }, { rejectWithValue }) => {
@@ -155,6 +156,26 @@ export const updateAccount = createAsyncThunk(
 
     } catch (error) {
       return rejectWithValue(error.message || 'Error updating user account');
+    }
+  }
+);
+
+
+export const deleteAccount = createAsyncThunk(
+  "session/deleteAccount",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`/api/auth/account`, {
+        method: "DELETE",
+        credentials: "include", // Ensure session cookies are sent
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`Error deleting user account: ${data.message || "Unknown error"}`);
+      }
+      return data.message; // Return the success message
+    } catch (error) {
+      return rejectWithValue(error.message || "Error with fetch for deleting user account");
     }
   }
 );
@@ -239,7 +260,18 @@ const sessionSlice = createSlice({
         state.loading = false;
         state.userAccount = action.payload;
       })
-
+      // .addCase(deleteAccount.pending, (state) => {
+      //   state.loading = true;
+      //   state.errors = null;
+      // })
+      // .addCase(deleteAccount.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.errors = action.payload;
+      // })
+      .addCase(deleteAccount.fulfilled, (state) => {
+        state.user = null; // Clear the user from the state
+        state.userAccount = null; // Clear additional account-related info
+      });
   },
 });
 

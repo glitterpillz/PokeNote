@@ -96,7 +96,34 @@
     font-size: 1rem;
 }
 
+.footerButtons {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.backButton, .deleteButton {
+    background-color: transparent;
+    border: none;
+    font-family: "Atma", serif;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
 .backButton {
+    color: #ffd444;
+    font-size: 40px;
+}
+
+.deleteButton {
+    color: rgb(242, 116, 66);
+    font-size: 30px;
+    align-self: flex-start;
+}
+
+/* .backButton {
     align-self: flex-start;
     margin: 60px 120px;
     background-color: transparent;
@@ -111,4 +138,4 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+} */

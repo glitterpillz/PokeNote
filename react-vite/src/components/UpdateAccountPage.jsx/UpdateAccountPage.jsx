@@ -49,14 +49,14 @@ const UpdateAccountPage = () => {
     updatedData.append("email", email !== currentUser.email ? email : currentUser.email);
     updatedData.append("fname", fname || currentUser.fname);
     updatedData.append("lname", lname || currentUser.lname);
-  
+
     if (profilePicture instanceof File) {
       updatedData.append("profile_picture", profilePicture);
     }
     if (bannerUrl instanceof File) {
       updatedData.append("banner_url", bannerUrl);
     }
-  
+
     try {
       await dispatch(sessionActions.updateAccount({ userId: currentUser.id, formData: updatedData })).unwrap();
       alert("Account updated successfully!");
@@ -73,6 +73,20 @@ const UpdateAccountPage = () => {
   const handleBannerUrlChange = (e) => {
     setBannerUrl(e.target.files[0]);
   };
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+        try {
+            const message = await dispatch(sessionActions.deleteAccount()).unwrap();
+            alert(message || "Account deleted successfully.");
+            navigate("/"); // Redirect after deletion
+        } catch (error) {
+            console.error("Delete account error:", error);
+            alert(`Failed to delete account: ${error}`);
+        }
+    }
+};
+
 
   const backArrow = <div className={update.backArrow}><FaArrowLeft /></div>
 
@@ -166,13 +180,22 @@ const UpdateAccountPage = () => {
             Update Account
           </button>
         </form>
-        <button 
-          type="button" 
-          className={update.backButton}
-          onClick={() => navigate('/account')}
-        >
-          {backArrow}Back
-        </button>
+        <div className={update.footerButtons}>
+          <button 
+            type="button" 
+            className={update.backButton}
+            onClick={() => navigate('/account')}
+          >
+            {backArrow}Back
+          </button>
+          <button
+            type="button"
+            className={update.deleteButton}
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );

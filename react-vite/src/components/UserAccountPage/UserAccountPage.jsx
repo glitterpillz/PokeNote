@@ -5,7 +5,6 @@ import Navigation from "../Navigation";
 import acc from './UserAccountPage.module.css'
 import { useNavigate } from "react-router-dom";
 
-
 const UserAccountPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -76,15 +75,24 @@ const UserAccountPage = () => {
               </div>
             </div>
             <div className={acc.linkContainer}>
-              <h2 className={acc.h2}>Pokemon Collection:</h2>
+              <div className={acc.linkHeader}>
+                <h2 className={acc.h2}>Pokemon Collection</h2>
+                <button
+                  type="button"
+                  className={acc.manageButton}
+                  onClick={() => navigate('/pokemon/collection')}
+                >
+                  See All
+                </button>
+              </div>
               <hr />
               {pokemonCollection.length > 0 ? (
                 <div className={acc.entryList}>
-                    {pokemonCollection.map((pokemon, index) => (
-                    <div key={index} className={acc.listEntry}>
-                      <p>{pokemon.pokemon.name || "Unnamed Pokemon"}</p>
-                      <p>Level: {pokemon.level}</p>
-                    </div>
+                    {pokemonCollection.slice(0, 5).map((pokemon, index) => (
+                      <div key={index} className={acc.listEntry}>
+                        <p>{pokemon.pokemon.name || "Unnamed Pokemon"}</p>
+                        <p>Level: {pokemon.level}</p>
+                      </div>
                     ))}
                 </div>
               ) : (
@@ -92,11 +100,20 @@ const UserAccountPage = () => {
               )}
             </div>
             <div className={acc.linkContainer}>
-              <h2 className={acc.h2}>Journal Entries</h2>
+              <div className={acc.linkHeader}>
+                <h2 className={acc.h2}>Journal Entries</h2>
+                <button
+                  type="button"
+                  className={acc.manageButton}
+                  onClick={() => navigate('/journal/user')}
+                >
+                  See All
+                </button>
+              </div>
               <hr />
               {journalEntries.length > 0 ? (
                 <div className={acc.entryList}>
-                    {journalEntries.map((entry, index) => (
+                    {journalEntries.slice(0, 5).map((entry, index) => (
                       <div key={index} className={acc.listEntry}>
                         <p>{entry.timestamp}</p>
                         <p>{entry.title || "Untitled Entry"}</p>

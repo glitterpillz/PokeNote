@@ -192,7 +192,7 @@ def update_account(id):
 
 
 
-@auth_routes.route('/account/<int:user_id>', methods=['DELETE'])
+@auth_routes.route('/account', methods=['DELETE'])
 @login_required
 def delete_account(user_id=None):
     """
