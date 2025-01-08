@@ -5,6 +5,7 @@ import UserAccountPage from '../components/UserAccountPage/UserAccountPage';
 import UpdateAccountPage from '../components/UpdateAccountPage.jsx';
 import UserProfilePage from '../components/UserProfilePage/index.js';
 import PokemonDetailsPage from '../components/PokemonDetailsPage/PokemonDetailsPage.jsx';
+import UserJournalPage from '../components/UserJournalPage/UserJournalPage.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
   {
     path: '/user/:id/profile',
     element: <UserProfilePage />
+  },
+  {
+    path: '/journal/user',
+    element: <UserJournalPage />
   },
   {
     path: '/account',

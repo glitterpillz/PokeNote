@@ -4,6 +4,7 @@ import * as sessionActions from '../../redux/session';
 import update from './UpdateAccountPage.module.css';
 import { useNavigate } from "react-router-dom";
 import Navigation from "../Navigation";
+import { FaArrowLeft } from "react-icons/fa";
 
 const UpdateAccountPage = () => {
   const dispatch = useDispatch();
@@ -72,6 +73,8 @@ const UpdateAccountPage = () => {
   const handleBannerUrlChange = (e) => {
     setBannerUrl(e.target.files[0]);
   };
+
+  const backArrow = <div className={update.backArrow}><FaArrowLeft /></div>
 
   return (
     <div className={update.updateMainContainer}>
@@ -163,6 +166,13 @@ const UpdateAccountPage = () => {
             Update Account
           </button>
         </form>
+        <button 
+          type="button" 
+          className={update.backButton}
+          onClick={() => navigate('/account')}
+        >
+          {backArrow}Back
+        </button>
       </div>
     </div>
   );
