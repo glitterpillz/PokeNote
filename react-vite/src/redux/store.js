@@ -3,12 +3,14 @@ import { default as logger } from "redux-logger";
 import sessionReducer from './session';
 import pokemonReducer from './pokemon';
 import userReducer from './user';
+import journalReducer from './journal'
 
 const store = configureStore({
   reducer: {
     session: sessionReducer,
     pokemon: pokemonReducer,
     user: userReducer,
+    journal: journalReducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware();

@@ -39,7 +39,7 @@ function Navigation() {
                 Home
               </NavLink>
               <NavLink
-                to=""
+                to="/journal/user"
                 className={nav.navLink}
                 onClick={closeSidePanel}
               >

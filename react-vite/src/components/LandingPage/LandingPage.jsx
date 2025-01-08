@@ -34,7 +34,10 @@ function LandingPage() {
             <img src="/images/logo-main-cropped.png" alt="" />
           </div>
           <div className={lan.bodyContainer}>
-            <div className={lan.featuresContainer}>
+            <div 
+              className={lan.featuresContainer}
+              onClick={() => navigate('/journal/user')}  
+            >
               <div className={lan.journalIcon}>
                 <img src="/images/journal.png" alt="" />
               </div>
