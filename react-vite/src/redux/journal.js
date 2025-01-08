@@ -7,52 +7,25 @@ const initialState = {
     errors: null
 }
 
-// export const getUserJournal = createAsyncThunk(
-//     "journal/getUserJournal",
-//     async (_, { rejectWithValue }) => {
-//         try {
-//             const response = await fetch('/api/journal');
-//             const data = await response.json();
-//             if (!response.ok) {
-//                 throw new Error(`Error getting user journal: ${data.message}`);
-//             }
-//             return data;
-//         } catch (error) {
-//             return rejectWithValue(error.message || "Error fetching user journal");
-//         }
-//     }
-// )
 
+export const getAllEntries = createAsyncThunk(
+    "journal/getAllEntries",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch("/api/journal", {
+                method: 'GET'
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`Error getting journal entries: ${data.message}`);
+            }
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.message || "Error fetching all journal entries")
+        }
+    }
+)
 
-// export const getUserJournal = createAsyncThunk(
-//     "journal/getUserJournal",
-//     async (userId, { rejectWithValue }) => {
-//         if (!userId) {
-//             return rejectWithValue("User ID is required.");
-//         }
-
-//         try {
-//             const response = await fetch(`/api/journal/${userId}`, {
-//                 credentials: "include",
-//                 headers: {
-//                   "Content-Type": "application/json",
-//                 },
-//               });
-
-//               const data = await response.json();
-//               console.log("Response from API:", data); // Log response to see the data format
-
-//               if (!response.ok) {
-//                 throw new Error(data.error || "Failed to fetch journal entries");
-//               }
-              
-//               // If no journal entries are found, return an empty array
-//               return data.journal_entries || [data]; // Assuming `data` is a single journal entry object
-//         } catch (error) {
-//             return rejectWithValue(error.message || "Error fetching user journal");
-//         }
-//     }
-// );
 
 export const getUserJournal = createAsyncThunk(
     "journal/getUserJournal",
@@ -72,14 +45,24 @@ export const getUserJournal = createAsyncThunk(
 )
 
 
-
-
 const journalSlice = createSlice({
     name: "journal",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(getAllEntries.pending, (state) => {
+                state.loading = true;
+                state.errors = false;
+            })
+            .addCase(getAllEntries.rejected, (state, action) => {
+                state.loading = false;
+                state.errors = action.payload;
+            })
+            .addCase(getAllEntries.fulfilled, (state, action) => {
+                state.loading = false;
+                state.journal = action.payload;
+            })
             .addCase(getUserJournal.pending, (state) => {
                 state.loading = true;
                 state.errors = false;
@@ -91,33 +74,8 @@ const journalSlice = createSlice({
             .addCase(getUserJournal.fulfilled, (state, action) => {
                 state.loading = false;
                 state.journal = action.payload;
-            })
+            });
     }
 })
-
-// const journalSlice = createSlice({
-//     name: "journal",
-//     initialState,
-//     reducers: {},
-//     extraReducers: (builder) => {
-//         builder
-//             .addCase(getUserJournal.pending, (state) => {
-//                 console.log("Fetching journal entries...");
-//                 state.loading = true;
-//                 state.errors = null;
-//             })
-//             .addCase(getUserJournal.fulfilled, (state, action) => {
-//                 console.log("Journal entries fetched:", action.payload);
-//                 state.loading = false;
-//                 state.journalEntries = action.payload;
-//             })
-//             .addCase(getUserJournal.rejected, (state, action) => {
-//                 console.error("Error fetching journal entries:", action.payload);
-//                 state.loading = false;
-//                 state.errors = action.payload;
-//             });
-//     },
-// });
-
 
 export default journalSlice.reducer;
