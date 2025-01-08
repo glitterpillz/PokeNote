@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import * as pokemonActions from "../../redux/pokemon"
 import Navigation from "../Navigation";
 import { restoreUser } from "../../redux/session"
-
+import coll from './UserPokemonCollection.module.css'
+import { useNavigate } from "react-router-dom";
 
 function UserPokemonCollection() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentUser = useSelector((state) => state.session.user);
     const { pokemons, loading, errors } = useSelector((state) => state.pokemon);
 
@@ -42,14 +44,22 @@ function UserPokemonCollection() {
             </div>
             <div>
                 {pokemonCollection.length > 0 ? (
-                    <ul>
-                    {pokemonCollection.map((pokemon) => (
-                        <li key={pokemon.pokemon.id} style={{ marginBottom: '20px' }}>
-                            <img src={pokemon.pokemon.image} alt={pokemon.pokemon.name} />
-                            <h2>{pokemon.nickname}</h2>
-                        </li>
-                    ))}
-                </ul>
+                    <div>
+                        {pokemonCollection.map((pokemon) => (
+                            <div key={pokemon.id} style={{ marginBottom: '20px' }}>
+                                <img src={pokemon.pokemon.image} alt={pokemon.pokemon.name} />
+                                <h1>{pokemon.pokemon.name}</h1>
+                                <h2>{pokemon.nickname}</h2>
+                                <button
+                                    type="button"
+                                    className={coll.viewButton}
+                                    onClick={() => navigate(`/pokemon/collection/${pokemon.id}`)}
+                                >
+                                    View
+                                </button>
+                            </div>
+                        ))}
+                    </div>
                 
                 ) : (
                     <p>No pokemon collection found.</p>

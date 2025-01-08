@@ -59,6 +59,41 @@ export const getUserPokemon = createAsyncThunk(
     }
 );
 
+// export const fetchPokemonDetail = createAsyncThunk(
+//     "pokemon/fetchPokemonDetail",
+//     async (collectionId, { rejectWithValue }) => {
+//         try {
+//             const response = await fetch(`/api/pokemon/${collectionId}`);
+//             const data = await response.json();
+//             if (!response.ok) {
+//                 return rejectWithValue(data);
+//             }
+//             return data;
+//         } catch (error) {
+//             console.error("fetchPokemonDetail error:", error);
+//             return rejectWithValue(error.message || "Error fetching pokemon details")
+//         }
+//     }
+// )
+
+export const fetchPokemonDetail = createAsyncThunk(
+    "pokemon/fetchPokemonDetail",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`/api/pokemon/collection/${id}`);
+            if (!response.ok) {
+                const text = await response.text();
+                console.error('Error response:', text);
+                return rejectWithValue('Error fetching pokemon details');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("fetchPokemonDetail error:", error);
+            return rejectWithValue(error.message || "Error fetching pokemon details");
+        }
+    }
+);
 
 
 const pokemonSlice = createSlice({
@@ -103,7 +138,19 @@ const pokemonSlice = createSlice({
             .addCase(getUserPokemon.fulfilled, (state, action) => {
                 state.loading = false;
                 state.pokemons = action.payload;
-            });    
+            })
+            .addCase(fetchPokemonDetail.pending, (state) => {
+                state.loading = true;
+                state.errors = null;
+            })    
+            .addCase(fetchPokemonDetail.rejected, (state, action) => {
+                state.loading = false;
+                state.errors = action.payload;
+            })
+            .addCase(fetchPokemonDetail.fulfilled, (state, action) => {
+                state.loading = false;
+                state.pokemons = action.payload;
+            });
     }
 })
 

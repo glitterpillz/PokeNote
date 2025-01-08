@@ -88,28 +88,62 @@ def get_user_pokemons():
     return jsonify({"Pokemon": pokemons_dict})
 
 
-@pokemon_routes.route('/collection/<int:pokemon_id>')
-@login_required
-def get_user_pokemon_instances(pokemon_id):
-    """
-    Retrieve all instances of a specific Pokémon in the user's collection.
-    """
-    user_pokemons = UserPokemon.query.filter_by(user_id=current_user.id, pokemon_id=pokemon_id).all()
+# @pokemon_routes.route('/collection/<int:collection_id>')
+# @login_required
+# def get_user_pokemon_by_collection_id(collection_id):
+#     """
+#     Retrieve a specific Pokémon instance in the user's collection by collection ID.
+#     """
+#     user_pokemon = UserPokemon.query.filter_by(id=collection_id, user_id=current_user.id).first()
     
-    if not user_pokemons:
-        return {'error': 'Pokémon not found in your collection'}, 404
+#     if not user_pokemon:
+#         return jsonify({'error': 'Pokémon not found in your collection'}), 404
 
-    return jsonify({
-        'pokemon_instances': [
-            {
-                'collection_id': user_pokemon.id,
-                'pokemon_id': user_pokemon.pokemon_id,
-                'index': idx + 1,
-                'pokemon_data': user_pokemon.to_dict()
-            }
-            for idx, user_pokemon in enumerate(user_pokemons)
-        ]
-    })
+#     return jsonify({
+#         'collection_id': user_pokemon.id,
+#         'pokemon_id': user_pokemon.pokemon_id,
+#         'nickname': user_pokemon.nickname,
+#         'level': user_pokemon.level,
+#         'pokemon_data': user_pokemon.to_dict()
+#     })
+
+# @pokemon_routes.route('/collection/<int:collection_id>', methods=['GET'])
+# def get_user_pokemon_by_collection_id(collection_id):
+#     user_pokemon = UserPokemon.query.get(collection_id)
+#     if not user_pokemon:
+#         return jsonify({'error': 'Pokemon not found in your collection'}), 404
+#     return [{'pokemon': user_pokemon.to_dict()}]
+
+@pokemon_routes.route('/collection/<int:collection_id>', methods=['GET'])
+def get_user_pokemon_by_collection_id(collection_id):
+    user_pokemon = UserPokemon.query.get(collection_id)
+    if not user_pokemon:
+        return jsonify({'error': 'Pokemon not found in your collection'}), 404
+    return jsonify({'pokemon': user_pokemon.to_dict()})
+
+
+# @pokemon_routes.route('/collection/<int:pokemon_id>')
+# @login_required
+# def get_user_pokemon_instances(pokemon_id):
+#     """
+#     Retrieve all instances of a specific Pokémon in the user's collection.
+#     """
+#     user_pokemons = UserPokemon.query.filter_by(user_id=current_user.id, pokemon_id=pokemon_id).all()
+    
+#     if not user_pokemons:
+#         return {'error': 'Pokémon not found in your collection'}, 404
+
+#     return jsonify({
+#         'pokemon_instances': [
+#             {
+#                 'collection_id': user_pokemon.id,
+#                 'pokemon_id': user_pokemon.pokemon_id,
+#                 'index': idx + 1,
+#                 'pokemon_data': user_pokemon.to_dict()
+#             }
+#             for idx, user_pokemon in enumerate(user_pokemons)
+#         ]
+#     })
 
 
 @pokemon_routes.route('/collection/<int:collection_id>', methods=['PUT'])
