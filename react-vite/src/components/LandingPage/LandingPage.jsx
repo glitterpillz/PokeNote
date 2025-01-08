@@ -54,7 +54,10 @@ function LandingPage() {
               <h3>Pokedex</h3>
               <p>Explore the world of Pokémon with ease using the comprehensive Pokédex, allowing you to search, learn, and strategize with detailed Pokémon data. Add pokémon to your collection and keep track of their progress!</p>
             </div>
-            <div className={lan.featuresContainer}>
+            <div 
+              className={lan.featuresContainer}
+              onClick={() => navigate('/discover')}
+            >
               <div className={lan.globeIcon}>
                 <img src="/images/globe.png" alt="" />
               </div>

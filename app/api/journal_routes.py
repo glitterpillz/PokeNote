@@ -146,42 +146,8 @@ def get_all_journal_entries():
     if not journal_entries:
         return jsonify({'error': 'No journal entries found'}), 404
     
-    return jsonify({"Journal": [entry.to_dict() for entry in journal_entries]})
+    return jsonify([entry.to_dict() for entry in journal_entries])
 
-
-# @journal_routes.route('/')
-# @login_required
-# def get_user_journal():
-#     journal_entries = JournalEntry.query.filter_by(user_id=current_user.id).all()
-
-#     if not journal_entries:
-#         return jsonify([])
-
-#     return jsonify([entry.to_dict() for entry in journal_entries])
-
-
-# @journal_routes.route('/')
-# @login_required
-# def get_user_journal():
-#     journal_entries = JournalEntry.query.filter_by(user_id=current_user.id).all()
-
-#     if not journal_entries:
-#         return jsonify({'error': 'No journal entries found'}), 404
-
-#     return jsonify([entry.to_dict() for entry in journal_entries])
-
-# @journal_routes.route('/<int:user_id>', methods=['GET'])
-# @login_required
-# def get_user_journal(user_id):
-#     if user_id != current_user.id:
-#         return jsonify({'error': 'Unauthorized'}), 403  # Ensure correct user ID
-
-#     journal_entries = JournalEntry.query.filter_by(user_id=user_id).all()
-
-#     if not journal_entries:
-#         return jsonify({'error': 'No journal entries found'}), 404
-
-#     return jsonify({'journal_entries': [entry.to_dict() for entry in journal_entries]})
 
 @journal_routes.route('/user', methods=['GET'])
 def get_user_journal():

@@ -53,7 +53,7 @@ function Navigation() {
                 Pokedex
               </NavLink>
               <NavLink
-                to=""
+                to="/discover"
                 className={nav.navLink}
               >
                 Discover

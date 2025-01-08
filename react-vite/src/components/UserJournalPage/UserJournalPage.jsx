@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserJournal } from '../../redux/journal'
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Navigation from "../Navigation";
 import { restoreUser } from "../../redux/session";
 
 
 const UserJournalPage = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const currentUser = useSelector((state) => state.session.user);
     const { journal, loading, errors } = useSelector((state) => state.journal);
 
@@ -38,7 +38,7 @@ const UserJournalPage = () => {
     return (
         <div>
             <Navigation />
-            <h1>{currentUser?.fname}'s Journal</h1>
+            <h1>{currentUser?.fname}&apos;s Journal</h1>
             {/* Check if journal exists and is not empty */}
             {journalEntries.length > 0 ? (
                 <ul>
