@@ -68,15 +68,24 @@ def search_pokemon():
 
 
 
-@pokemon_routes.route('/collection')
-@login_required
-def get_user_collection():
-    user = User.query.get(current_user.id)
+# @pokemon_routes.route('/collection')
+# @login_required
+# def get_user_collection():
+#     user = User.query.get(current_user.id)
 
-    if not user:
-        return {'error': 'User not found'}, 404
+#     if not user:
+#         return {'error': 'User not found'}, 404
     
-    return jsonify({'pokemon_collection': [pokemon.to_dict() for pokemon in user.pokemon_collection]})
+#     return jsonify({'pokemon_collection': [pokemon.to_dict() for pokemon in user.pokemon_collection]})
+
+@pokemon_routes.route('/collection', methods=['GET'])
+def get_user_pokemons():
+    if not current_user.is_authenticated:
+        return jsonify({'message': 'User not authenticated'})
+    
+    pokemons = UserPokemon.query.filter(UserPokemon.user_id == current_user.id).all()
+    pokemons_dict = [pokemon.to_dict() for pokemon in pokemons]
+    return jsonify({"Pokemon": pokemons_dict})
 
 
 @pokemon_routes.route('/collection/<int:pokemon_id>')
