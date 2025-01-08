@@ -8,6 +8,7 @@ import PokemonDetailsPage from '../components/PokemonDetailsPage/PokemonDetailsP
 import UserJournalPage from '../components/UserJournalPage/UserJournalPage.jsx';
 import DiscoverPage from '../components/DiscoverPage/DiscoverPage.jsx';
 import UserPokemonCollection from '../components/UserPokemonCollection/UserPokemonCollection.jsx';
+import UserPokemonDetails from '../components/UserPokemonDetails/UserPokemonDetails.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
   {
     path: '/pokemon/collection',
     element: <UserPokemonCollection />
+  },
+  {
+    path: '/pokemon/collection/:id',
+    element: <UserPokemonDetails />
   },
   {
     path: '/user/:id/profile',
