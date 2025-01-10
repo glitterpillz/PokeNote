@@ -167,13 +167,13 @@ export const deleteAccount = createAsyncThunk(
     try {
       const response = await fetch(`/api/auth/account`, {
         method: "DELETE",
-        credentials: "include", // Ensure session cookies are sent
+        credentials: "include",
       });
       const data = await response.json();
       if (!response.ok) {
         throw new Error(`Error deleting user account: ${data.message || "Unknown error"}`);
       }
-      return data.message; // Return the success message
+      return data.message;
     } catch (error) {
       return rejectWithValue(error.message || "Error with fetch for deleting user account");
     }
@@ -260,17 +260,9 @@ const sessionSlice = createSlice({
         state.loading = false;
         state.userAccount = action.payload;
       })
-      // .addCase(deleteAccount.pending, (state) => {
-      //   state.loading = true;
-      //   state.errors = null;
-      // })
-      // .addCase(deleteAccount.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.errors = action.payload;
-      // })
       .addCase(deleteAccount.fulfilled, (state) => {
-        state.user = null; // Clear the user from the state
-        state.userAccount = null; // Clear additional account-related info
+        state.user = null;
+        state.userAccount = null;
       });
   },
 });

@@ -79,7 +79,7 @@ const UpdateAccountPage = () => {
         try {
             const message = await dispatch(sessionActions.deleteAccount()).unwrap();
             alert(message || "Account deleted successfully.");
-            navigate("/"); // Redirect after deletion
+            navigate("/");
         } catch (error) {
             console.error("Delete account error:", error);
             alert(`Failed to delete account: ${error}`);

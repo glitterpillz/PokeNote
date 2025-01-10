@@ -4,6 +4,8 @@ from app.models import db, Comment, JournalEntry
 
 comment_routes = Blueprint('comments', __name__)
 
+
+# ADD A COMMENT
 @comment_routes.route('/<int:journal_id>', methods=['POST'])
 @login_required
 def add_comment(journal_id):
@@ -30,6 +32,7 @@ def add_comment(journal_id):
     return jsonify(comment.to_dict()), 201
 
 
+# GET COMMENTS OF A JOURNAL ENTRY
 @comment_routes.route('/<int:journal_id>')
 @login_required
 def get_entry_comments(journal_id):
@@ -46,6 +49,7 @@ def get_entry_comments(journal_id):
     return jsonify([comment.to_dict() for comment in comments]), 200
 
 
+# EDIT COMMENT
 @comment_routes.route('/<int:comment_id>', methods=['PUT'])
 @login_required
 def update_comment(comment_id):
@@ -69,6 +73,7 @@ def update_comment(comment_id):
     return jsonify({'message': 'Comment updated successfully', 'comment': comment.to_dict()}), 200
 
 
+# DELETE COMMENT
 @comment_routes.route('/<int:comment_id>', methods=['DELETE'])
 @login_required
 def delete_comment(comment_id):

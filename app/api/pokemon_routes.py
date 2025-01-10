@@ -116,7 +116,6 @@ def edit_user_pokemon(collection_id):
 
     return jsonify({'message': 'Pokémon updated successfully', 'pokemon': user_pokemon.to_dict()})
 
-
 def update_stats(user_pokemon, stats_data):
     """
     Update the stats for a specific Pokémon in the user's collection.
@@ -136,7 +135,6 @@ def update_stats(user_pokemon, stats_data):
                     stat_value=stat_value
                 )
                 db.session.add(new_stat)
-
 
 def update_custom_moves(user_pokemon, custom_moves):
     """

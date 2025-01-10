@@ -65,7 +65,6 @@ def login():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
@@ -126,7 +125,7 @@ def unauthorized():
 
 
 
-
+# GET USER ACCOUNT
 @auth_routes.route('/account')
 @login_required
 def get_account():
@@ -137,7 +136,7 @@ def get_account():
     return jsonify(user.to_dict())
 
 
-
+# EDIT USER ACCOUNT
 @auth_routes.route('/account/<int:id>', methods=['PUT'])
 @login_required
 def update_account(id):
@@ -191,7 +190,7 @@ def update_account(id):
     return {'errors': form.errors}, 400
 
 
-
+# DELETE USER ACCOUNT
 @auth_routes.route('/account', methods=['DELETE'])
 @login_required
 def delete_account(user_id=None):

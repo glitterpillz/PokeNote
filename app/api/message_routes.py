@@ -4,6 +4,8 @@ from flask_login import current_user, login_required
 
 message_routes = Blueprint('messages', __name__)
 
+
+# SEND A DIRECT MESSAGE
 @message_routes.route('/send', methods=['POST'])
 @login_required
 def send_message():
@@ -33,6 +35,7 @@ def send_message():
     return jsonify({'message': 'Message sent successfully', 'sent_message': message.to_dict()}), 201
 
 
+# GET USER INBOX
 @message_routes.route('/inbox')
 @login_required
 def get_inbox():
@@ -44,6 +47,7 @@ def get_inbox():
         return jsonify({'error': f'No messages found for User {current_user.id}.'}), 404
     
 
+# GET USER SENT BOX
 @message_routes.route('/sent')
 @login_required
 def get_sent_box():

@@ -36,7 +36,6 @@ class Pokemon(db.Model):
 class PokemonStat(db.Model):
     __tablename__ = 'pokemon_stats'
 
-    # Schema handling for production
     __table_args__ = {'schema': SCHEMA} if environment == 'production' else {}
 
     id = db.Column(db.Integer, primary_key=True)

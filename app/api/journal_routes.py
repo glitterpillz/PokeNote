@@ -4,7 +4,6 @@ from app.models import db, JournalEntry, Like
 from app.forms import JournalEntryForm
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
-# from app.config import Config
 import os
 import boto3
 import uuid
@@ -46,6 +45,7 @@ def upload_to_s3(file, bucket_name, folder='uploads'):
 journal_routes = Blueprint('journal', __name__)
 
 
+# POST JOURNAL ENTRY
 @journal_routes.route('/post', methods=['POST'])
 @login_required
 def create_journal_entry():
@@ -53,7 +53,6 @@ def create_journal_entry():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        # Set default timestamp if not provided
         timestamp = form.timestamp.data if form.timestamp.data else datetime.utcnow()
 
         journal_entry = JournalEntry(
@@ -67,13 +66,12 @@ def create_journal_entry():
             timestamp=timestamp,
         )
 
-        # Handle photo upload
         if 'photo' in request.files:
             file = request.files['photo']
             if file and file.filename:
                 try:
                     photo = upload_to_s3(file, S3_BUCKET, folder='journal_photos')
-                    journal_entry.photo = photo  # Save the S3 URL to the photo field
+                    journal_entry.photo = photo
                 except ValueError as e:
                     return jsonify({'message': f"Photo upload failed: {str(e)}"}), 400
 
@@ -89,7 +87,7 @@ def create_journal_entry():
     return jsonify({'errors': form.errors}), 400
 
 
-
+# GET JOURNAL ENTRY
 @journal_routes.route('/<int:id>')
 @login_required
 def get_journal_entry(id):
@@ -104,6 +102,7 @@ def get_journal_entry(id):
     return jsonify(journal_entry.to_dict())
 
 
+# EDIT JOURNAL ENTRY
 @journal_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_entry(id):
@@ -147,6 +146,7 @@ def update_entry(id):
     return jsonify({'message': 'Journal entry updated successfully', 'journal_entry': journal_entry.to_dict()})
 
 
+# DELETE JOURNAL ENTRY
 @journal_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_journal_entry(id):
@@ -164,7 +164,7 @@ def delete_journal_entry(id):
     return jsonify({'message': 'Journal entry successfully deleted'}), 200
 
 
-
+# GET ALL PUBLIC JOURNAL ENTRIES
 @journal_routes.route('/', methods=['GET'])
 def get_all_journal_entries():
     journal_entries = JournalEntry.query.filter_by(is_private=False).all()
@@ -175,6 +175,7 @@ def get_all_journal_entries():
     return jsonify([entry.to_dict() for entry in journal_entries])
 
 
+# GET ALL USER JOURNAL ENTRIES
 @journal_routes.route('/user', methods=['GET'])
 def get_user_journal():
     if not current_user.is_authenticated:
@@ -185,7 +186,7 @@ def get_user_journal():
     return jsonify({"Journal": journal_dict})
 
 
-
+# LIKE A JOURNAL ENTRY
 @journal_routes.route('/<int:id>/like', methods=['POST'])
 @login_required
 def like_journal_entry(id):
@@ -206,6 +207,7 @@ def like_journal_entry(id):
     return jsonify({'message': 'Journal entry liked successfully', 'like': like.to_dict()}), 201
 
 
+# UNLIKE A JOURNAL ENTRY
 @journal_routes.route('/<int:journal_entry_id>/like', methods=['DELETE'])
 @login_required
 def unlike_journal_entry(journal_entry_id):
