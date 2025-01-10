@@ -87,12 +87,10 @@ export const fetchPokemonDetail = createAsyncThunk(
     async (id, { rejectWithValue }) => {
         try {
             const response = await fetch(`/api/pokemon/collection/${id}`);
+            const data = await response.json();
             if (!response.ok) {
-                const text = await response.text();
-                console.error('Error response:', text);
                 return rejectWithValue('Error fetching pokemon details');
             }
-            const data = await response.json();
             return data;
         } catch (error) {
             console.error("fetchPokemonDetail error:", error);

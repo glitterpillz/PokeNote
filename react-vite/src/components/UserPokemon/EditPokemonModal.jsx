@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { editUserPokemon } from '../../redux/pokemon'; // Define this thunk
+import { editUserPokemon, fetchPokemonDetail } from '../../redux/pokemon'; // Define this thunk
 import { useState } from 'react';
 
 function EditPokemonModal({ pokemon }) {
@@ -35,29 +35,30 @@ function EditPokemonModal({ pokemon }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         const payload = {
             nickname,
             level,
             stats: stats.map((stat) => ({
                 stat_name: stat.stat_name,
-                stat_value: Number(stat.stat_value), // Ensure stat values are numbers
+                stat_value: Number(stat.stat_value),
             })),
             custom_moves: customMoves,
         };
-
-        await dispatch(editUserPokemon({ id: pokemon.id, payload }))
-            .unwrap()
-            .then(() => {
-                alert('Pokémon updated successfully!');
-                
-                closeModal();
-            })
-            .catch((error) => {
-                console.error('Error updating Pokémon:', error);
-                alert('Failed to update Pokémon. Please try again.');
-            });
+    
+        try {
+            await dispatch(editUserPokemon({ id: pokemon.id, payload })).unwrap();
+            alert('Pokémon updated successfully!');
+    
+            dispatch(fetchPokemonDetail(pokemon.id));
+    
+            closeModal();
+        } catch (error) {
+            console.error('Error updating Pokémon:', error);
+            alert('Failed to update Pokémon. Please try again.');
+        }
     };
+    
 
     return (
         <form onSubmit={handleSubmit}>

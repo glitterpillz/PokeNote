@@ -33,10 +33,16 @@ function UserPokemonDetails() {
         }
     }, [dispatch, currentUser, id]);
 
+
     const handleEditPokemon = (pokemon) => {
-        setModalContent(<EditPokemonModal pokemon={pokemon} />);
-        // dispatch(fetchPokemonDetail(pokemon.id))
-    };    
+        setModalContent(
+            <EditPokemonModal 
+                pokemon={pokemon} 
+                closeModal={() => setModalContent(null)} 
+            />
+        );
+    };
+    
 
     const handleDeletePokemon = async (pokemonId) => {
         try {
