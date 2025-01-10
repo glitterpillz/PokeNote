@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
+.form {
+    background-image: url('/images/journal-bg.png'); /* Reference the path starting from /public */
+    background-size: contain; /* Ensures the image covers the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+    width: 1000px;
+    height: 1000px;
+    font-family: "Baloo Paaji 2", serif;
+    font-size: 1.5rem;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.formHeading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    align-items: flex-start;
+    font-size: 1.3rem;
+    padding-top: 30px;
+}
+
+.inputBox {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-weight: 600;
+}
+
+.formInput {
+    height: 25px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #333;
+    color: #333;
+    font-size: 1.2rem;
+    width: 240px;
+}
+
+.inputSelect {
+    font-family: "Baloo Paaji 2", serif;
+    font-size: 1.2rem;
+    background-color: transparent;
+    border: none;
+    color: black;
+    width: 150px;
+}
+
+.contentBox {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    bottom: 20px;
+    left: 75px;
+}
+
+.contentLabel {
+    font-weight: 600;
+}
+
+/* .contentTextArea {
+    width: 440px;
+    font-size: 1.2rem;
+} */
+
+.contentTextArea {
+    width: 430px;
+    height: 200px; /* Set a height for the textarea */
+    font-size: 1.3rem;
+    font-family: "Baloo Paaji 2", serif;
+    color: #333;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    resize: none; /* Prevent resizing */
+    background-color: transparent; /* Make the background color transparent */
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 30px, /* Adjust space before the line */
+        #000 32px, /* Darker line color */
+        #000 31px /* Thickness of the line */
+    );
+    line-height: 31px; /* Match the new spacing */
+    overflow: auto; /* Ensure scrolling if content exceeds the height */
+}

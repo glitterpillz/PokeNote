@@ -29,27 +29,33 @@ function LoginFormModal({ navigate }) {
   return (
     <div className={login.loginModalContainer}>
       <h1 className={login.h1}>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
+      <form className={login.form} onSubmit={handleSubmit}>
+        <div className={login.inputBox}>
+          <label>
+            Email
+          </label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className={login.formInput}
             required
           />
-        </label>
-        {errors.payload?.email && <p>{errors.payload?.email}</p>}
-        <label>
-          Password
+          {errors.payload?.email && <p>{errors.payload?.email}</p>}
+        </div>
+        <div className={login.inputBox}>
+          <label>
+            Password
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className={login.formInput}
             required
           />
-        </label>
         {errors.payload?.password && <p>{errors.payload?.password}</p>}
+        </div>
         <button type="submit" className={login.loginSubmit}>
           Submit
         </button>
