@@ -46,8 +46,15 @@ function CreateJournalEntryModal() {
         }
     };
 
+    const handlePhotoChange = (e) => {
+        setPhoto(e.target.files[0]);
+    }
+
     return (
         <div className={edit.editFormContainer}>
+            <div className={edit.mewPic}>
+                <img src="/images/mew.png" alt="" />
+            </div>
             {/* <h2 className={edit.}>Create Journal Entry</h2> */}
             <form className={edit.form} onSubmit={handleSubmit}>
                 <div className={edit.formHeading}>
@@ -120,7 +127,7 @@ function CreateJournalEntryModal() {
                 </div>
 
                 <div className={edit.contentBox}>
-                    <label className={edit.contentLabel}>
+                    <label className={edit.formLabel}>
                         Entry:
                     </label>
                     <textarea
@@ -131,38 +138,79 @@ function CreateJournalEntryModal() {
                     />
                 </div>
 
-                <label>
-                    Accomplishments:
+                <div className={edit.accomplishBox}>
+                    <label className={edit.formLabel}>
+                        Accomplishments:
+                    </label>
                     <textarea
                         value={accomplishments}
                         onChange={(e) => setAccomplishments(e.target.value)}
+                        className={edit.accomplishTextArea}
                     />
-                </label>
+                </div>
 
-
-
-
-                <label>
-                    Upload Photo (optional):
+                {/* <div>
+                    <label htmlFor="photo">Upload Photo:</label>
+                    <label>(optional)</label>
                     <input
+                        id="photo"
                         type="file"
-                        accept="image/*"
-                        onChange={(e) => setPhoto(e.target.files[0])}
+                        onChange={handlePhotoChange}
+                        className={edit.fileInput}
                     />
-                </label>
+                    <div className={edit.fileButtonField}>
+                        <button
+                            type="button"
+                            className={edit.customFileButton}
+                            onClick={() => document.getElementById('photo').click()}
+                        >
+                            Choose File
+                        </button>
+                        <span className={edit.fileName}>
+                            {photo ? photo.name : "No file chosen"}
+                        </span>
+                    </div>
+                </div> */}
 
-                <label>
-                    Private Entry:
+                <div className={edit.photoBox}>
+                    <div className={edit.photoLabelBox}>
+                        <label className={edit.formLabel}htmlFor="photo">Upload Photo:</label>
+                        <label className={edit.optional}>(optional)</label>
+                        <input
+                            id="photo"
+                            type="file"
+                            onChange={handlePhotoChange}
+                            className={`${edit.fileInput} ${edit.hiddenFileInput}`} // Add hiddenFileInput class
+                        />
+                    </div>
+                    <div className={edit.fileButtonField}>
+                        <button
+                            type="button"
+                            className={edit.customFileButton}
+                            onClick={() => document.getElementById('photo').click()}
+                        >
+                            Choose File
+                        </button>
+                        <span className={edit.fileName}>
+                            {photo ? photo.name : "No file chosen"}
+                        </span>
+                    </div>
+                </div>
+
+                <div className={edit.privateBox}>
+                    <label className={edit.formLabel}>
+                        Private Entry:
+                    </label>
                     <input
                         type="checkbox"
                         checked={isPrivate}
                         onChange={() => setIsPrivate((prev) => !prev)}
                     />
-                </label>
+                </div>
 
-                <div>
-                    <button type="submit">Save Entry</button>
-                    <button type="button" onClick={closeModal}>Cancel</button>
+                <div className={edit.formButtons}>
+                    <button className={edit.button} type="submit">Save</button>
+                    <button className={edit.button} type="button" onClick={closeModal}>Cancel</button>
                 </div>
             </form>
         </div>
