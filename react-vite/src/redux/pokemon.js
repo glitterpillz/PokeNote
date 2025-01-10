@@ -87,12 +87,10 @@ export const fetchPokemonDetail = createAsyncThunk(
     async (id, { rejectWithValue }) => {
         try {
             const response = await fetch(`/api/pokemon/collection/${id}`);
+            const data = await response.json();
             if (!response.ok) {
-                const text = await response.text();
-                console.error('Error response:', text);
                 return rejectWithValue('Error fetching pokemon details');
             }
-            const data = await response.json();
             return data;
         } catch (error) {
             console.error("fetchPokemonDetail error:", error);
@@ -100,34 +98,6 @@ export const fetchPokemonDetail = createAsyncThunk(
         }
     }
 );
-
-// export const editUserPokemon = createAsyncThunk(
-//     "pokemon/editUserPokemon",
-//     async ({ id, payload }, { rejectWithValue }) => {
-//         try {
-//             console.log("Payload being sent to server:", payload); // Debugging payload
-
-//             const response = await fetch(`/api/pokemon/collection/${id}`, {
-//                 method: 'PUT',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify(payload),
-//             });
-
-//             const data = await response.json();
-//             console.log("Server response:", data); // Debugging response
-
-//             if (!response.ok) {
-//                 throw new Error(data.error || 'Failed to update Pokémon');
-//             }
-//             return data.pokemon;
-//         } catch (error) {
-//             console.error("Error in thunk:", error.message); // Log errors
-//             return rejectWithValue(error.message || "Error updating Pokémon");
-//         }
-//     }
-// );
 
 
 export const editUserPokemon = createAsyncThunk(

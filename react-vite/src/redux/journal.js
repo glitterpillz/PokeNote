@@ -50,11 +50,11 @@ export const createJournalEntry = createAsyncThunk(
         try {
             const response = await fetch('/api/journal/post', { method: 'POST', body: formData });
             const data = await response.json();
-            console.log("Backend response:", data);  // Log the API response
+            console.log("Backend response:", data); 
             if (!response.ok) {
                 return rejectWithValue(data);
             }
-            return data.journal;  // Ensure this returns the expected structure
+            return data.journal;
         } catch (error) {
             console.error("Unexpected error:", error);
             return rejectWithValue(error.message || "Unknown error");
@@ -80,7 +80,7 @@ const journalSlice = createSlice({
             })
             .addCase(getAllEntries.fulfilled, (state, action) => {
                 state.loading = false;
-                state.journal = action.payload.journal || action.payload;  // Ensure consistency of the data structure
+                state.journal = action.payload.journal || action.payload;
             })
             .addCase(getUserJournal.pending, (state) => {
                 state.loading = true;
@@ -92,23 +92,9 @@ const journalSlice = createSlice({
             })
             .addCase(getUserJournal.fulfilled, (state, action) => {
                 state.loading = false;
-                state.journal = action.payload.journal || action.payload;  // Handle structure correctly
-                state.entryDetails = action.payload.entryDetails || null;  // Handle entryDetails if necessary
+                state.journal = action.payload.journal || action.payload; 
+                state.entryDetails = action.payload.entryDetails || null;
             })
-            // .addCase(createJournalEntry.pending, (state) => {
-            //     state.loading = true;
-            //     state.errors = false;
-            // })
-            // .addCase(createJournalEntry.rejected, (state, action) => {
-            //     state.loading = false;
-            //     state.errors = action.payload.message || action.payload;
-            // })
-            // .addCase(createJournalEntry.fulfilled, (state, action) => {
-            //     state.loading = false;
-            //     if (action.payload) {
-            //         state.journal.push(action.payload);  // Add new entry to the journal
-            //     }
-            // });
             .addCase(createJournalEntry.pending, (state) => {
                 state.loading = true;
                 state.errors = null;
@@ -119,9 +105,8 @@ const journalSlice = createSlice({
             })
             .addCase(createJournalEntry.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log("New journal entry payload:", action.payload); // Log payload
                 if (Array.isArray(state.journal)) {
-                    state.journal.push(action.payload);  // Safely push if it's an array
+                    state.journal.push(action.payload); 
                 } else {
                     console.error("State journal is not an array:", state.journal);
                 }

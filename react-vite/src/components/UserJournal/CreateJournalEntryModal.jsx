@@ -36,10 +36,9 @@ function CreateJournalEntryModal() {
             await dispatch(createJournalEntry(entryData)).unwrap();
             alert('Journal entry created successfully!');
 
-            // Optionally, dispatch getUserJournal to reload the journal after entry is added
             dispatch(getUserJournal());
 
-            closeModal();  // Close the modal after submission
+            closeModal();
         } catch (error) {
             console.error('Error creating journal entry:', error);
             alert('Failed to create journal entry. Please try again.');
@@ -50,7 +49,6 @@ function CreateJournalEntryModal() {
         <form onSubmit={handleSubmit}>
             <h2>Create Journal Entry</h2>
 
-            {/* Title Input */}
             <label>
                 Title:
                 <input
@@ -61,7 +59,6 @@ function CreateJournalEntryModal() {
                 />
             </label>
 
-            {/* Content Input */}
             <label>
                 Content:
                 <textarea
@@ -71,7 +68,6 @@ function CreateJournalEntryModal() {
                 />
             </label>
 
-            {/* Accomplishments Input */}
             <label>
                 Accomplishments:
                 <textarea
@@ -80,7 +76,6 @@ function CreateJournalEntryModal() {
                 />
             </label>
 
-            {/* Weather Selection */}
             <label>
                 Weather:
                 <select
@@ -97,7 +92,6 @@ function CreateJournalEntryModal() {
                 </select>
             </label>
 
-            {/* Mood Selection */}
             <label>
                 Mood:
                 <select
@@ -117,7 +111,6 @@ function CreateJournalEntryModal() {
                 </select>
             </label>
 
-            {/* Date Input */}
             <label>
                 Date:
                 <input
@@ -127,7 +120,6 @@ function CreateJournalEntryModal() {
                 />
             </label>
 
-            {/* File Upload (Optional) */}
             <label>
                 Upload Photo (optional):
                 <input
@@ -137,7 +129,6 @@ function CreateJournalEntryModal() {
                 />
             </label>
 
-            {/* Private Entry Checkbox */}
             <label>
                 Private Entry:
                 <input

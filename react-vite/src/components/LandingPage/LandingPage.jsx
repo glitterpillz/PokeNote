@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../redux/session";
-// import ProfileButton from "../Navigation/ProfileButton";
 import Navigation from "../Navigation";
 import lan from "./LandingPage.module.css";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,6 @@ function LandingPage() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
-  // const currentUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
