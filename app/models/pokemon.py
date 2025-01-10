@@ -30,7 +30,7 @@ class Pokemon(db.Model):
             'name': self.name,
             'types': self.types,
             'image': self.image,
-            'stats': [stat.to_dict() for stat in self.stats]
+            'stats': [stat.to_dict() for stat in self.stats] if self.stats else []
         }
     
 class PokemonStat(db.Model):

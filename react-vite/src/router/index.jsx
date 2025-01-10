@@ -5,10 +5,10 @@ import UserAccountPage from '../components/UserAccountPage/UserAccountPage';
 import UpdateAccountPage from '../components/UpdateAccountPage.jsx';
 import UserProfilePage from '../components/UserProfilePage/index.js';
 import PokemonDetailsPage from '../components/PokemonDetailsPage/PokemonDetailsPage.jsx';
-import UserJournalPage from '../components/UserJournalPage/UserJournalPage.jsx';
+import UserJournalPage from '../components/UserJournal/UserJournalPage.jsx';
 import DiscoverPage from '../components/DiscoverPage/DiscoverPage.jsx';
-import UserPokemonCollection from '../components/UserPokemonCollection/UserPokemonCollection.jsx';
-import UserPokemonDetails from '../components/UserPokemonDetails/UserPokemonDetails.jsx';
+import UserPokemonCollection from '../components/UserPokemon/UserPokemonCollection.jsx';
+import UserPokemonDetails from '../components/UserPokemon/UserPokemonDetails.jsx';
 
 export const router = createBrowserRouter([
   {

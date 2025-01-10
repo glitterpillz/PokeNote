@@ -53,8 +53,8 @@ class JournalEntryForm(FlaskForm):
         validators=[]
     )
 
-    date = DateField('Date', format='%Y-%m-%d', validators=[])
+    timestamp = DateField('Date', format='%Y-%m-%d', validators=[])
 
     photo = StringField('Upload Photo (optional)')
 
-    private = BooleanField('private')
+    is_private = BooleanField('Private')

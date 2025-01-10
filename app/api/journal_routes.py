@@ -4,64 +4,90 @@ from app.models import db, JournalEntry, Like
 from app.forms import JournalEntryForm
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
-from app.config import Config
+# from app.config import Config
 import os
+import boto3
+import uuid
+from dotenv import load_dotenv
+
+load_dotenv()
+
+S3_BUCKET = os.environ.get('AWS_BUCKET_NAME')
+S3_REGION = os.environ.get('AWS_BUCKET_REGION')
+S3_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
+S3_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+s3_client = boto3.client(
+    's3',
+    region_name=S3_REGION,
+    aws_access_key_id=S3_ACCESS_KEY,
+    aws_secret_access_key=S3_SECRET_KEY
+)
+
+def upload_to_s3(file, bucket_name, folder='uploads'):
+    try:
+        filename = secure_filename(file.filename)
+        unique_filename = f"{folder}/{uuid.uuid4().hex}_{filename}"
+
+        s3_client.upload_fileobj(
+            file,
+            bucket_name,
+            unique_filename,
+            ExtraArgs={'ContentType': file.content_type}
+        )
+
+        return f"https://{bucket_name}.s3.{S3_REGION}.amazonaws.com/{unique_filename}"
+
+    except Exception as e:
+        raise ValueError(f"Failed to upload to S3: {e}")
+
+
 
 journal_routes = Blueprint('journal', __name__)
-
-UPLOAD_FOLDER = Config.UPLOAD_FOLDER
-
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
 
 
 @journal_routes.route('/post', methods=['POST'])
 @login_required
-def post_journal():
+def create_journal_entry():
     form = JournalEntryForm()
-
-    form['csrf_token'].data = request.cookies.get('csrf_token')
+    form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        title = form.title.data
-        content = form.content.data
-        accomplishments = form.accomplishments.data
-        weather = form.weather.data
-        mood = form.mood.data
-        date = form.date.data  
-        photo = form.photo.data
-        private = form.private.data
+        # Set default timestamp if not provided
+        timestamp = form.timestamp.data if form.timestamp.data else datetime.utcnow()
 
-        if date:
-            timestamp = date
-        else:
-            timestamp = db.func.current_timestamp()
-
-        photo_url = None
-        if photo:
-            filename = secure_filename(photo.filename)
-            photo_path = os.path.join(UPLOAD_FOLDER, filename)
-            photo.save(photo_path)
-            photo_url = f'/static/uploads/{filename}'
-
-        new_entry = JournalEntry(
+        journal_entry = JournalEntry(
             user_id=current_user.id,
-            title=title,
-            content=content,
-            accomplishments=accomplishments,
-            weather=weather,
-            mood=mood,
+            title=form.title.data,
+            content=form.content.data,
+            accomplishments=form.accomplishments.data,
+            weather=form.weather.data,
+            mood=form.mood.data,
+            is_private=form.is_private.data,
             timestamp=timestamp,
-            photo_url=photo_url,
-            private=private
         )
 
-        db.session.add(new_entry)
-        db.session.commit()
+        # Handle photo upload
+        if 'photo' in request.files:
+            file = request.files['photo']
+            if file and file.filename:
+                try:
+                    photo = upload_to_s3(file, S3_BUCKET, folder='journal_photos')
+                    journal_entry.photo = photo  # Save the S3 URL to the photo field
+                except ValueError as e:
+                    return jsonify({'message': f"Photo upload failed: {str(e)}"}), 400
 
-        return jsonify(new_entry.to_dict()), 201
+        try:
+            db.session.add(journal_entry)
+            db.session.commit()
+        except Exception as db_error:
+            db.session.rollback()
+            return jsonify({'error': 'Failed to create journal entry', 'details': str(db_error)}), 500
 
-    return {'errors': form.errors}, 400
+        return jsonify(journal_entry.to_dict()), 201
+
+    return jsonify({'errors': form.errors}), 400
+
 
 
 @journal_routes.route('/<int:id>')
@@ -95,13 +121,13 @@ def update_entry(id):
     accomplishments = data.get('accomplishments', journal_entry.accomplishments)
     weather = data.get('weather', journal_entry.weather)
     mood = data.get('mood', journal_entry.mood)
-    date = data.get('date', journal_entry.timestamp)
-    photo = data.get('photo_url', journal_entry.photo_url)
-    private = data.get('private', journal_entry.private)
+    timestamp = data.get('timestamp', journal_entry.timestamp)
+    photo = data.get('photo', journal_entry.photo)
+    is_private = data.get('is_private', journal_entry.is_private)
 
-    if date and isinstance(date, str):
+    if timestamp and isinstance(timestamp, str):
         try:
-            timestamp = datetime.strptime(date, '%Y-%m-%d')
+            timestamp = datetime.strptime(timestamp, '%Y-%m-%d')
         except ValueError:
             return jsonify({'error': 'Invalid date format, use YYYY-MM-DD'}), 400
     else:
@@ -113,8 +139,8 @@ def update_entry(id):
     journal_entry.weather = weather
     journal_entry.mood = mood
     journal_entry.timestamp = timestamp
-    journal_entry.photo_url = photo
-    journal_entry.private = private
+    journal_entry.photo = photo
+    journal_entry.is_private = is_private
 
     db.session.commit()
 
@@ -141,7 +167,7 @@ def delete_journal_entry(id):
 
 @journal_routes.route('/', methods=['GET'])
 def get_all_journal_entries():
-    journal_entries = JournalEntry.query.filter_by(private=False).all()
+    journal_entries = JournalEntry.query.filter_by(is_private=False).all()
 
     if not journal_entries:
         return jsonify({'error': 'No journal entries found'}), 404

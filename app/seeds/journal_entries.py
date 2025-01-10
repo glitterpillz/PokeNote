@@ -12,8 +12,8 @@ def seed_journal_entries():
             weather="Sunny",
             mood="Happy",
             timestamp=datetime(2025, 1, 3),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         ),
         JournalEntry(
             user_id=1,
@@ -23,8 +23,8 @@ def seed_journal_entries():
             weather="Cloudy",
             mood="Tired",
             timestamp=datetime(2025, 1, 2),
-            photo_url=None,
-            private=True
+            photo=None,
+            is_private=True
         ),
         JournalEntry(
             user_id=1,
@@ -34,8 +34,8 @@ def seed_journal_entries():
             weather="Rainy",
             mood="Excited",
             timestamp=datetime(2025, 1, 1),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         ),
         JournalEntry(
             user_id=1,
@@ -45,8 +45,8 @@ def seed_journal_entries():
             weather="Partly Cloudy",
             mood="Confident",
             timestamp=datetime(2024, 12, 31),
-            photo_url=None,
-            private=True
+            photo=None,
+            is_private=True
         ),
         JournalEntry(
             user_id=1,
@@ -56,8 +56,8 @@ def seed_journal_entries():
             weather="Snowy",
             mood="Grateful",
             timestamp=datetime(2024, 12, 30),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         )
     ]
 
@@ -71,8 +71,8 @@ def seed_journal_entries():
             weather="Sunny",
             mood="Excited",
             timestamp=datetime(2025, 1, 3),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         ),
         JournalEntry(
             user_id=2,
@@ -82,8 +82,8 @@ def seed_journal_entries():
             weather="Cloudy",
             mood="Neutral",
             timestamp=datetime(2025, 1, 2),
-            photo_url=None,
-            private=True
+            photo=None,
+            is_private=True
         ),
         JournalEntry(
             user_id=2,
@@ -93,8 +93,8 @@ def seed_journal_entries():
             weather="Partly Cloudy",
             mood="Happy",
             timestamp=datetime(2025, 1, 1),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         ),
         JournalEntry(
             user_id=2,
@@ -104,8 +104,8 @@ def seed_journal_entries():
             weather="Cloudy",
             mood="Excited",
             timestamp=datetime(2024, 12, 31),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         ),
         JournalEntry(
             user_id=2,
@@ -115,8 +115,8 @@ def seed_journal_entries():
             weather="Stormy",
             mood="Tired",
             timestamp=datetime(2024, 12, 30),
-            photo_url=None,
-            private=True
+            photo=None,
+            is_private=True
         )
     ]
 
@@ -130,8 +130,8 @@ def seed_journal_entries():
             weather="Sunny",
             mood="Loved",
             timestamp=datetime(2025, 1, 3),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         ),
         JournalEntry(
             user_id=3,
@@ -141,8 +141,8 @@ def seed_journal_entries():
             weather="Rainy",
             mood="Grateful",
             timestamp=datetime(2025, 1, 2),
-            photo_url=None,
-            private=True
+            photo=None,
+            is_private=True
         ),
         JournalEntry(
             user_id=3,
@@ -152,8 +152,8 @@ def seed_journal_entries():
             weather="Cloudy",
             mood="Happy",
             timestamp=datetime(2025, 1, 1),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         ),
         JournalEntry(
             user_id=3,
@@ -163,8 +163,8 @@ def seed_journal_entries():
             weather="Partly Cloudy",
             mood="Neutral",
             timestamp=datetime(2024, 12, 31),
-            photo_url=None,
-            private=False
+            photo=None,
+            is_private=False
         ),
         JournalEntry(
             user_id=3,
@@ -174,8 +174,8 @@ def seed_journal_entries():
             weather="Sunny",
             mood="Excited",
             timestamp=datetime(2024, 12, 30),
-            photo_url=None,
-            private=True
+            photo=None,
+            is_private=True
         )
     ]
 

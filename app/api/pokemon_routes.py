@@ -6,12 +6,7 @@ from app.models import db, Pokemon, PokemonStat, UserPokemon, User
 pokemon_routes = Blueprint('pokemon', __name__)
 
 
-# @pokemon_routes.route('/')
-# def pokemons():
-#     pokemons = Pokemon.query.filter(Pokemon.id.in_([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])).order_by(Pokemon.id).all()
-
-#     return jsonify({"Pokemon": [pokemon.to_dict() for pokemon in pokemons]})
-
+# GET ALL POKEMON:
 @pokemon_routes.route('/')
 def pokemons():
     pokemons = Pokemon.query.filter(Pokemon.id.in_([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])).order_by(Pokemon.id).all()
@@ -19,6 +14,7 @@ def pokemons():
     return jsonify({"Pokemon": [pokemon.to_dict() for pokemon in pokemons]})
 
 
+# GET POKEMON BY ID:
 @pokemon_routes.route('/<int:id>')
 def get_pokemon_by_id(id):
     pokemon = Pokemon.query.get(id)
@@ -29,6 +25,7 @@ def get_pokemon_by_id(id):
     return jsonify({'message': 'Pokemon not found'}), 404
 
 
+# ADD POKEMON TO USER:
 @pokemon_routes.route('/<int:id>', methods=['POST'])
 @login_required
 def add_pokemon_to_user(id):
@@ -44,6 +41,7 @@ def add_pokemon_to_user(id):
     return jsonify({'message': 'Pokemon added to your collection'}), 201
 
 
+# SEARCH POKEMON:
 @pokemon_routes.route('/search', methods=['GET'])
 def search_pokemon():
     search_query = request.args.get('query', '').strip()
@@ -65,19 +63,7 @@ def search_pokemon():
     return jsonify({"Pokemon": [pokemon.to_dict() for pokemon in pokemons]})
 
 
-
-
-
-# @pokemon_routes.route('/collection')
-# @login_required
-# def get_user_collection():
-#     user = User.query.get(current_user.id)
-
-#     if not user:
-#         return {'error': 'User not found'}, 404
-    
-#     return jsonify({'pokemon_collection': [pokemon.to_dict() for pokemon in user.pokemon_collection]})
-
+# GET USER POKEMON COLLECTION:
 @pokemon_routes.route('/collection', methods=['GET'])
 def get_user_pokemons():
     if not current_user.is_authenticated:
@@ -88,32 +74,7 @@ def get_user_pokemons():
     return jsonify({"Pokemon": pokemons_dict})
 
 
-# @pokemon_routes.route('/collection/<int:collection_id>')
-# @login_required
-# def get_user_pokemon_by_collection_id(collection_id):
-#     """
-#     Retrieve a specific Pokémon instance in the user's collection by collection ID.
-#     """
-#     user_pokemon = UserPokemon.query.filter_by(id=collection_id, user_id=current_user.id).first()
-    
-#     if not user_pokemon:
-#         return jsonify({'error': 'Pokémon not found in your collection'}), 404
-
-#     return jsonify({
-#         'collection_id': user_pokemon.id,
-#         'pokemon_id': user_pokemon.pokemon_id,
-#         'nickname': user_pokemon.nickname,
-#         'level': user_pokemon.level,
-#         'pokemon_data': user_pokemon.to_dict()
-#     })
-
-# @pokemon_routes.route('/collection/<int:collection_id>', methods=['GET'])
-# def get_user_pokemon_by_collection_id(collection_id):
-#     user_pokemon = UserPokemon.query.get(collection_id)
-#     if not user_pokemon:
-#         return jsonify({'error': 'Pokemon not found in your collection'}), 404
-#     return [{'pokemon': user_pokemon.to_dict()}]
-
+# GET USER POKEMON DETAILS:
 @pokemon_routes.route('/collection/<int:collection_id>', methods=['GET'])
 def get_user_pokemon_by_collection_id(collection_id):
     user_pokemon = UserPokemon.query.get(collection_id)
@@ -122,35 +83,12 @@ def get_user_pokemon_by_collection_id(collection_id):
     return jsonify({'pokemon': user_pokemon.to_dict()})
 
 
-# @pokemon_routes.route('/collection/<int:pokemon_id>')
-# @login_required
-# def get_user_pokemon_instances(pokemon_id):
-#     """
-#     Retrieve all instances of a specific Pokémon in the user's collection.
-#     """
-#     user_pokemons = UserPokemon.query.filter_by(user_id=current_user.id, pokemon_id=pokemon_id).all()
-    
-#     if not user_pokemons:
-#         return {'error': 'Pokémon not found in your collection'}, 404
-
-#     return jsonify({
-#         'pokemon_instances': [
-#             {
-#                 'collection_id': user_pokemon.id,
-#                 'pokemon_id': user_pokemon.pokemon_id,
-#                 'index': idx + 1,
-#                 'pokemon_data': user_pokemon.to_dict()
-#             }
-#             for idx, user_pokemon in enumerate(user_pokemons)
-#         ]
-#     })
-
-
+# EDIT USER POKEMON:
 @pokemon_routes.route('/collection/<int:collection_id>', methods=['PUT'])
 @login_required
 def edit_user_pokemon(collection_id):
     """
-    Edit a Pokémon in the user's collection, including optional updates to stats.
+    Edit a Pokémon in the user's collection, including optional updates to stats and custom moves.
     """
     user_pokemon = UserPokemon.query.filter_by(id=collection_id, user_id=current_user.id).first()
 
@@ -163,17 +101,30 @@ def edit_user_pokemon(collection_id):
 
     data = request.get_json()
 
-    nickname = data.get('nickname', user_pokemon.nickname)
-    level = data.get('level', user_pokemon.level)
-    user_pokemon.nickname = nickname
-    user_pokemon.level = level
+    user_pokemon.nickname = data.get('nickname', user_pokemon.nickname)
+    user_pokemon.level = data.get('level', user_pokemon.level)
 
-    stats_data = data.get('stats', [])
+    update_stats(user_pokemon, data.get('stats', []))
+
+    update_custom_moves(user_pokemon, data.get('custom_moves', []))
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Failed to update Pokémon', 'details': str(e)}), 400
+
+    return jsonify({'message': 'Pokémon updated successfully', 'pokemon': user_pokemon.to_dict()})
+
+
+def update_stats(user_pokemon, stats_data):
+    """
+    Update the stats for a specific Pokémon in the user's collection.
+    """
     for stat_data in stats_data:
         stat_name = stat_data.get('stat_name')
         stat_value = stat_data.get('stat_value')
         if stat_name and stat_value is not None:
-
             stat = PokemonStat.query.filter_by(pokemon_id=user_pokemon.pokemon_id, stat_name=stat_name).first()
 
             if stat:
@@ -186,15 +137,16 @@ def edit_user_pokemon(collection_id):
                 )
                 db.session.add(new_stat)
 
-    try:
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': 'Failed to update Pokémon', 'details': str(e)}), 400
 
-    return jsonify({'message': 'Pokémon updated successfully', 'pokemon': user_pokemon.to_dict()})
+def update_custom_moves(user_pokemon, custom_moves):
+    """
+    Update or add the custom moves for the user's Pokémon.
+    """
+    if custom_moves is not None:
+        user_pokemon.custom_moves = custom_moves
 
 
+# DELETE USER POKEMON
 @pokemon_routes.route('/collection/<int:collection_id>', methods=['DELETE'])
 @login_required
 def delete_user_pokemon(collection_id):
@@ -210,4 +162,4 @@ def delete_user_pokemon(collection_id):
         db.session.rollback()
         return jsonify({'error': 'Failed to delete Pokémon', 'details': str(e)}), 400
     
-    return jsonify({'message': 'Pokémon successfully removed from your collection'})
+    return jsonify({'message': 'Pokémon successfully removed from your collection'}), 200

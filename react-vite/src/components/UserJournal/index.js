@@ -1,3 +1,3 @@
 import UserJournalPage from "./UserJournalPage";
 
-export default UserJournalPage;
+export default { UserJournalPage }

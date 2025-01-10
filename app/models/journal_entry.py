@@ -14,8 +14,8 @@ class JournalEntry(db.Model):
     weather = db.Column(db.String(50), nullable=True)
     mood = db.Column(db.String(50), nullable=True)
     timestamp = db.Column(db.DateTime, nullable=False, default=None)
-    photo_url = db.Column(db.String(255), nullable=True)
-    private = db.Column(db.Boolean, nullable=False, default=False)
+    photo = db.Column(db.String(255), nullable=True)
+    is_private = db.Column(db.Boolean, nullable=True, default=False)
 
     user = db.relationship(
         'User',
@@ -35,6 +35,9 @@ class JournalEntry(db.Model):
     )
 
     def to_dict(self):
+        formatted_timestamp = (
+            self.timestamp.strftime('%Y-%m-%d') if self.timestamp else None
+        )
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -43,9 +46,9 @@ class JournalEntry(db.Model):
             'accomplishments': self.accomplishments,
             'weather': self.weather,
             'mood': self.mood,
-            'timestamp': self.timestamp,
-            'photo_url': self.photo_url,
-            'private': self.private,
+            'timestamp': formatted_timestamp,
+            'photo': self.photo,
+            'is_private': self.is_private,
             'comments': [comment.to_dict() for comment in self.comments],
             'like_count': len(self.likes)
         }
