@@ -62,6 +62,41 @@ export const createJournalEntry = createAsyncThunk(
     }
 );
 
+// export const fetchEntryById = createAsyncThunk(
+//     "journal/fetchEntryById",
+//     async (id, { rejectWithValue }) => {
+//         try {
+//             const response = await fetch(`/api/journal/${id}`);
+//             const data = await response.json();
+//             if (!response.ok) {
+//                 return rejectWithValue("Error fetching journal entry");
+//             }
+//             return data;
+//         } catch (error) {
+//             console.log("fetchEntryById error:", error);
+//             return rejectWithValue(error.message || "Error fetching entry");
+//         }
+//     }
+// );
+
+export const fetchEntryById = createAsyncThunk(
+    "journal/fetchEntryById",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`/api/journal/${id}`);
+            const data = await response.json();
+            console.log("API Response:", data);
+            if (!response.ok) {
+                return rejectWithValue(data.error || "Error fetching journal entry");
+            }
+            return data;
+        } catch (error) {
+            console.error("fetchEntryById error:", error);
+            return rejectWithValue(error.message || "Error fetching entry");
+        }
+    }
+);
+
 
 
 const journalSlice = createSlice({
@@ -110,8 +145,20 @@ const journalSlice = createSlice({
                 } else {
                     console.error("State journal is not an array:", state.journal);
                 }
-            });
-                }
+            })
+            .addCase(fetchEntryById.pending, (state) => {
+                state.loading = true;
+                state.errors = null;
+            })
+            .addCase(fetchEntryById.rejected, (state, action) => {
+                state.loading = false;
+                state.errors = action.payload;
+            })
+            .addCase(fetchEntryById.fulfilled, (state, action) => {
+                state.loading = false;
+                state.entryDetails = action.payload;
+            })
+        }
 });
 
 export default journalSlice.reducer;

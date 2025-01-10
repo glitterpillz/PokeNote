@@ -89,17 +89,14 @@ def create_journal_entry():
 
 # GET JOURNAL ENTRY
 @journal_routes.route('/<int:id>')
-@login_required
 def get_journal_entry(id):
     journal_entry = JournalEntry.query.get(id)
 
     if not journal_entry:
         return jsonify({'error': 'Journal entry not found'}), 404
     
-    if journal_entry.user_id != current_user.id:
-        return jsonify({'error': 'You can only view your own journal entries'}), 403
-    
     return jsonify(journal_entry.to_dict())
+
 
 
 # EDIT JOURNAL ENTRY

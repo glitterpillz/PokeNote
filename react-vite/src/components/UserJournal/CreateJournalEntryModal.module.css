@@ -1,19 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
 
-.form {
-    background-image: url('/images/journal-bg.png'); /* Reference the path starting from /public */
-    background-size: contain; /* Ensures the image covers the entire container */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    background-position: center; /* Centers the image */
-    width: 1000px;
-    height: 1000px;
+.editFormContainer {
     font-family: "Baloo Paaji 2", serif;
-    font-size: 1.5rem;
-    color: #333;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
+    width: 600px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+    font-size: 1.5rem;
+    width: 100%;
+    background-color: #30385f;
+    color: #fefbe2;
+    padding: 20px 30px;
+    border-radius: 10px;
+    border: 2px solid #fefbe2;
 }
 
 .formHeading {
@@ -23,12 +29,12 @@
     gap: 5px;
     align-items: flex-start;
     font-size: 1.3rem;
-    padding-top: 30px;
 }
 
 .inputBox {
+    width: 300px;
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
     align-items: center;
     font-weight: 600;
 }
@@ -37,56 +43,129 @@
     height: 25px;
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid #333;
-    color: #333;
+    border-bottom: 2px solid #fefbe2;
+    color: #fefbe2;
     font-size: 1.2rem;
-    width: 240px;
+    width: 200px;
 }
 
 .inputSelect {
     font-family: "Baloo Paaji 2", serif;
     font-size: 1.2rem;
-    background-color: transparent;
     border: none;
-    color: black;
+    color: #fefbe2;
     width: 150px;
+    background-color: #50587e;
+    border-radius: 3px;
 }
 
-.contentBox {
+.contentBox, .accomplishBox {
     display: flex;
     flex-direction: column;
-    position: relative;
-    bottom: 20px;
-    left: 75px;
 }
 
-.contentLabel {
+.formLabel {
     font-weight: 600;
 }
 
-/* .contentTextArea {
-    width: 440px;
-    font-size: 1.2rem;
-} */
-
 .contentTextArea {
-    width: 430px;
-    height: 200px; /* Set a height for the textarea */
+    height: 180px;
     font-size: 1.3rem;
     font-family: "Baloo Paaji 2", serif;
-    color: #333;
+    color: #fefbe2;
     padding: 10px;
-    border: none;
+    border: 2px solid #fefbe2;
+    border-radius: 8px;
+    resize: none;
+    background-color: #50587e;
+}
+
+.accomplishTextArea {
+    height: 60px;
+    padding: 10px;
+    border: 2px solid #fefbe2;
     border-radius: 5px;
-    resize: none; /* Prevent resizing */
-    background-color: transparent; /* Make the background color transparent */
-    background-image: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 30px, /* Adjust space before the line */
-        #000 32px, /* Darker line color */
-        #000 31px /* Thickness of the line */
-    );
-    line-height: 31px; /* Match the new spacing */
-    overflow: auto; /* Ensure scrolling if content exceeds the height */
+    color: #fefbe2;
+    background-color: transparent;
+    resize: none;
+    font-size: 1.3rem;
+    font-family: "Baloo Paaji 2", serif;
+    background-color: #50587e;
+}
+
+.photoBox {
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+.photoLabelBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.fileButtonField {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.customFileButton {
+    font-size: 1.2rem;
+    background-color: #1e2442;
+    color: #cacee2;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-family: "Baloo Paaji 2", serif;
+}
+
+.fileName {
+    font-size: 1.2rem;
+}
+
+.privateBox {
+    display: flex;
+    gap: 20px;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 30px 0;
+}
+
+
+.button {
+    width: 30%;
+    align-self: center;
+    padding: 5px;
+    font-family: "Atma", serif;
+    font-size: 30px;
+    font-weight: 600;
+    background-color: #1e2442;
+    color: #cacee2;
+    border-radius: 8px;
+}
+
+
+.mewPic {
+    position: absolute;
+    left: 430px;
+    bottom: 750px;
+}
+
+.mewPic img {
+    width: 280px;
+}
+
+.hiddenFileInput {
+    display: none; /* Hides the default file input */
 }
