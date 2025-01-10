@@ -60,78 +60,110 @@ function SignupFormModal({ navigate }) {
 
   return (
     <div className={sign.signupModalContainer}>
-      <h1>Sign Up</h1>
+      <h1 className={sign.h1}>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
+      <form className={sign.form} onSubmit={handleSubmit}>
+        <div className={sign.inputBox}>
+          <label>
+            Email
+          </label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className={sign.formInput}
             required
           />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
+          {errors.email && <p>{errors.email}</p>}
+        </div>
+
+        <div className={sign.inputBox}>
+          <label>
+            Username
+          </label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className={sign.formInput}
             required
           />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
+          {errors.username && <p>{errors.username}</p>}
+        </div>
+
+        <div className={sign.inputBox}>
+          <label>
+            First Name
+          </label>
           <input
             type="text"
             value={fname}
             onChange={(e) => setFname(e.target.value)}
+            className={sign.formInput}
             required
           />
-        </label>
-        {errors.fname && <p>{errors.fname}</p>}
-        <label>
-          Last Name
+          {errors.fname && <p>{errors.fname}</p>}
+        </div>
+
+        <div className={sign.inputBox}>
+          <label>
+            Last Name
+          </label>
           <input
             type="text"
             value={lname}
             onChange={(e) => setLname(e.target.value)}
+            className={sign.formInput}
             required
           />
-        </label>
-        {errors.lname && <p>{errors.lname}</p>}
-        <label>
-          Admin
+          {errors.lname && <p>{errors.lname}</p>}
+        </div>
+
+        <div className={sign.inputBox}>
+          <label>
+            Admin
+          </label>
           <input
             type="checkbox"
             checked={admin}
             onChange={(e) => setAdmin(e.target.checked)}
+            className={sign.adminBox}
           />
-        </label>
-        <label>
-          Password
+        </div>
+
+        <div className={sign.inputBox}>
+          <label>
+            Password
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className={sign.formInput}
             required
           />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
+          {errors.password && <p>{errors.password}</p>}
+        </div>
+
+        <div className={sign.inputBox}>
+          <label>
+            Confirm
+          </label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            className={sign.formInput}
             required
           />
-        </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        </div>
+        <button 
+          type="submit"
+          className={sign.signupSubmit}
+        >
+          Sign Up
+        </button>
       </form>
     </div>
   );
