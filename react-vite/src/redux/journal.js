@@ -62,25 +62,9 @@ export const createJournalEntry = createAsyncThunk(
     }
 );
 
-// export const fetchEntryById = createAsyncThunk(
-//     "journal/fetchEntryById",
-//     async (id, { rejectWithValue }) => {
-//         try {
-//             const response = await fetch(`/api/journal/${id}`);
-//             const data = await response.json();
-//             if (!response.ok) {
-//                 return rejectWithValue("Error fetching journal entry");
-//             }
-//             return data;
-//         } catch (error) {
-//             console.log("fetchEntryById error:", error);
-//             return rejectWithValue(error.message || "Error fetching entry");
-//         }
-//     }
-// );
 
-export const fetchEntryById = createAsyncThunk(
-    "journal/fetchEntryById",
+export const fetchEntryDetails = createAsyncThunk(
+    "journal/fetchEntryDetails",
     async (id, { rejectWithValue }) => {
         try {
             const response = await fetch(`/api/journal/${id}`);
@@ -91,8 +75,50 @@ export const fetchEntryById = createAsyncThunk(
             }
             return data;
         } catch (error) {
-            console.error("fetchEntryById error:", error);
+            console.error("fetchEntryDetails error:", error);
             return rejectWithValue(error.message || "Error fetching entry");
+        }
+    }
+);
+
+
+export const updateEntry = createAsyncThunk(
+    "journal/updateEntry",
+    async ({ id, payload }, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`/api/journal/${id}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to update journal entry') 
+            }
+            return data.entryDetails;
+        } catch (error) {
+            return rejectWithValue(error.message || 'Error updating journal entry')
+        }
+    }
+)
+
+export const deleteEntry = createAsyncThunk(
+    "journal/deleteEntry",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`/api/journal/${id}`, {
+                method: 'DELETE',
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to delete entry");
+            }
+            return { id, message: data.message || "Journal entry deleted successfully"}
+        } catch (error) {
+            return rejectWithValue(error.message || "Error removing journal entry")
         }
     }
 );
@@ -146,19 +172,36 @@ const journalSlice = createSlice({
                     console.error("State journal is not an array:", state.journal);
                 }
             })
-            .addCase(fetchEntryById.pending, (state) => {
+            .addCase(fetchEntryDetails.pending, (state) => {
                 state.loading = true;
                 state.errors = null;
             })
-            .addCase(fetchEntryById.rejected, (state, action) => {
+            .addCase(fetchEntryDetails.rejected, (state, action) => {
                 state.loading = false;
                 state.errors = action.payload;
             })
-            .addCase(fetchEntryById.fulfilled, (state, action) => {
+            .addCase(fetchEntryDetails.fulfilled, (state, action) => {
                 state.loading = false;
                 state.entryDetails = action.payload;
             })
-        }
+            .addCase(updateEntry.pending, (state) => {
+                state.loading = true;
+                state.errors = null;
+            })
+            .addCase(updateEntry.rejected, (state, action) => {
+                state.loading = false;
+                state.errors = action.payload;
+            })
+            .addCase(updateEntry.fulfilled, (state, action) => {
+                state.loading = false;
+                state.entryDetails = action.payload;
+            })
+            .addCase(deleteEntry.fulfilled, (state, action) => {
+                state.journal = (Array.isArray(state.journal) ? state.journal : []).filter(
+                    (entry) => entry.id !== action.payload.id
+                )
+            })
+    }
 });
 
 export default journalSlice.reducer;

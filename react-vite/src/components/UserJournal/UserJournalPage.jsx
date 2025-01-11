@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserJournal } from "../../redux/journal";
+import { deleteEntry, getUserJournal } from "../../redux/journal";
 import { useModal } from "../../context/Modal";
 import Navigation from "../Navigation";
 import CreateJournalEntryModal from "./CreateJournalEntryModal";
 import ent from './UserJournalPage.module.css'
+import UpdateEntryModal from "./UpdateEntryModal";
+import { useNavigate } from "react-router-dom";
 
 const UserJournalPage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { setModalContent } = useModal();
     const currentUser = useSelector((state) => state.session.user);
     const { journal, loading, errors } = useSelector((state) => state.journal);
@@ -19,6 +22,39 @@ const UserJournalPage = () => {
     const handleCreateJournal = () => {
         setModalContent(<CreateJournalEntryModal closeModal={() => setModalContent(null)} />);
     };
+
+    const handleUpdateEntry = (entryDetails) => {
+        setModalContent(
+            <UpdateEntryModal
+                entryDetails={entryDetails}
+                closeModal={() => setModalContent(null)} 
+            />
+        )
+    }
+
+    const handleDeleteEntry = async (entryId) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete this entry?");
+            
+        if (isConfirmed) {
+            try {
+                dispatch(deleteEntry(entryId)).unwrap();
+                
+                const updatedJournal = journal?.Journal.filter(entry => entry.id !== entryId);
+                dispatch({ type: 'SET_JOURNAL', payload: { Journal: updatedJournal } }); // Update the state optimistically
+    
+                alert("Entry deleted successfully");
+
+                dispatch(getUserJournal());
+                navigate('/journal/user');  
+            } catch (error) {
+                console.error("Error deleting entry:", error);
+                alert("Error deleting entry");
+            }
+        } else {
+            console.log("Deletion canceled");
+        }
+    };
+        
 
     if (loading) {
         return <div>Loading...</div>;
@@ -65,7 +101,18 @@ const UserJournalPage = () => {
                                             />
                                             </div>
                                         )}
-
+                                        <button
+                                            className={ent.editButton}
+                                            onClick={() => handleUpdateEntry(entry)} // Pass the entry details here
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className={ent.deleteButton}
+                                            onClick={() => handleDeleteEntry(entry.id)}
+                                        >
+                                            Delete
+                                        </button>
                                     </div>
                                 </div>
                             ))}
