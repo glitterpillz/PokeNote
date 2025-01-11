@@ -1,18 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserInbox } from "../../redux/message";
+import { getUserInbox, getUserSentBox } from "../../redux/message";
 import Navigation from "../Navigation";
-// import in from './UserInboxPage.module.css'
+import { useMessageContext } from '../../context/MessageContext';
 
 const UserInboxPage = () => {
     const dispatch = useDispatch();
-    // const currentUser = useSelector((state) => state.session.user)    
+    const { view, setView } = useMessageContext();
 
-    const { inbox, loading, errors } = useSelector((state) => state.message);
+    const { inbox, sentBox, loading, errors } = useSelector((state) => state.message);
 
     useEffect(() => {
-        dispatch(getUserInbox());
-    }, [dispatch])
+        if (view === "inbox") {
+            dispatch(getUserInbox());
+        } else if (view === "sent") {
+            dispatch(getUserSentBox());
+        }
+    }, [dispatch, view]);
+
+    const messages = view === "inbox" ? inbox : sentBox;
 
     if (loading) {
         return <div>Loading...</div>;
@@ -22,31 +28,36 @@ const UserInboxPage = () => {
         return <div>Error: {errors.general || "Something went wrong"}</div>;
     }
 
-    // console.log('CURRENT USER:', currentUser)
-
     return (
         <div>
             <div>
                 <Navigation />
             </div>
+            <div style={{ margin: "1em 0", display: "flex", gap: "1em" }}>
+                <button onClick={() => setView("inbox")} style={{ backgroundColor: view === "inbox" ? "#ddd" : "#fff" }}>
+                    Inbox
+                </button>
+                <button onClick={() => setView("sent")} style={{ backgroundColor: view === "sent" ? "#ddd" : "#fff" }}>
+                    Sent
+                </button>
+            </div>
             <div>
-                {inbox.length > 0 ? (
-                    <div>
-                        {inbox.map((message) => (
-                            <div key={message.id}>
-                                <p>date: {message.timestamp}</p>
-                                <p>to: {message.receiver}</p>
-                                <p>from: {message.sender}</p>
-                                <p>message: {message.content}</p>
-                            </div>
-                        ))}
-                    </div>
+                <h1>{view === "inbox" ? "Inbox" : "Sent Box"}</h1>
+                {messages && messages.length > 0 ? (
+                    messages.map((message) => (
+                        <div key={message.id} style={{ margin: "1em 0", border: "1px solid #ccc", padding: "1em" }}>
+                            <p><strong>Date:</strong> {message.timestamp}</p>
+                            <p><strong>To:</strong> {message.receiver}</p>
+                            <p><strong>From:</strong> {message.sender}</p>
+                            <p><strong>Message:</strong> {message.content}</p>
+                        </div>
+                    ))
                 ) : (
-                    <p>No messages.</p>
+                    <p>No messages found.</p>
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default UserInboxPage;
