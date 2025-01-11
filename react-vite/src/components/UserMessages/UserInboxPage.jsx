@@ -3,10 +3,14 @@ import { useEffect } from "react";
 import { getUserInbox, getUserSentBox } from "../../redux/message";
 import Navigation from "../Navigation";
 import { useMessageContext } from '../../context/MessageContext';
+import SendMessageModal from "./SendMessageModal";
+import { useModal } from "../../context/Modal";
 
 const UserInboxPage = () => {
     const dispatch = useDispatch();
     const { view, setView } = useMessageContext();
+    const { setModalContent } = useModal();
+    
 
     const { inbox, sentBox, loading, errors } = useSelector((state) => state.message);
 
@@ -19,6 +23,10 @@ const UserInboxPage = () => {
     }, [dispatch, view]);
 
     const messages = view === "inbox" ? inbox : sentBox;
+
+    const handleSendMessage = () => {
+        setModalContent(<SendMessageModal closeModal={() => setModalContent(null)}/>);
+    }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -39,6 +47,9 @@ const UserInboxPage = () => {
                 </button>
                 <button onClick={() => setView("sent")} style={{ backgroundColor: view === "sent" ? "#ddd" : "#fff" }}>
                     Sent
+                </button>
+                <button onClick={handleSendMessage}>
+                    New Message
                 </button>
             </div>
             <div>

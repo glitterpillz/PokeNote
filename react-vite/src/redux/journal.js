@@ -56,8 +56,7 @@ export const createJournalEntry = createAsyncThunk(
             }
             return data.journal;
         } catch (error) {
-            console.error("Unexpected error:", error);
-            return rejectWithValue(error.message || "Unknown error");
+            return rejectWithValue(error.message || "Error posting journal entry");
         }
     }
 );
