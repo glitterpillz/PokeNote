@@ -195,7 +195,7 @@ const journalSlice = createSlice({
             .addCase(updateEntry.fulfilled, (state, action) => {
                 state.loading = false;
                 state.entryDetails = action.payload;
-            })
+            })                  
             .addCase(deleteEntry.fulfilled, (state, action) => {
                 state.journal = (Array.isArray(state.journal) ? state.journal : []).filter(
                     (entry) => entry.id !== action.payload.id

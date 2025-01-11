@@ -98,7 +98,6 @@ def get_journal_entry(id):
     return jsonify(journal_entry.to_dict())
 
 
-
 # EDIT JOURNAL ENTRY
 @journal_routes.route('/<int:id>', methods=['PUT'])
 @login_required
@@ -107,38 +106,47 @@ def update_entry(id):
 
     if not journal_entry:
         return jsonify({'error': 'Journal entry not found'}), 404
-    
-    if journal_entry.user_id != current_user.id:
-        return jsonify({'error': 'You can only view your own journal entries'}), 403
 
-    data = request.get_json()
+    if journal_entry.user_id != current_user.id:
+        return jsonify({'error': 'You can only edit your own journal entries'}), 403
+
+    data = request.form
     title = data.get('title', journal_entry.title)
     content = data.get('content', journal_entry.content)
     accomplishments = data.get('accomplishments', journal_entry.accomplishments)
     weather = data.get('weather', journal_entry.weather)
     mood = data.get('mood', journal_entry.mood)
+    is_private = data.get('is_private', journal_entry.is_private) == 'true'
     timestamp = data.get('timestamp', journal_entry.timestamp)
-    photo = data.get('photo', journal_entry.photo)
-    is_private = data.get('is_private', journal_entry.is_private)
 
     if timestamp and isinstance(timestamp, str):
         try:
             timestamp = datetime.strptime(timestamp, '%Y-%m-%d')
         except ValueError:
             return jsonify({'error': 'Invalid date format, use YYYY-MM-DD'}), 400
-    else:
-        timestamp = journal_entry.timestamp
 
     journal_entry.title = title
     journal_entry.content = content
     journal_entry.accomplishments = accomplishments
     journal_entry.weather = weather
     journal_entry.mood = mood
-    journal_entry.timestamp = timestamp
-    journal_entry.photo = photo
     journal_entry.is_private = is_private
+    journal_entry.timestamp = timestamp
 
-    db.session.commit()
+    if 'photo' in request.files:
+        file = request.files['photo']
+        if file and file.filename:
+            try:
+                photo_url = upload_to_s3(file, S3_BUCKET, folder='journal_photos')
+                journal_entry.photo = photo_url
+            except ValueError as e:
+                return jsonify({'error': f"Photo upload failed: {str(e)}"}), 400
+
+    try:
+        db.session.commit()
+    except Exception as db_error:
+        db.session.rollback()
+        return jsonify({'error': 'Failed to update journal entry', 'details': str(db_error)}), 500
 
     return jsonify({'message': 'Journal entry updated successfully', 'journal_entry': journal_entry.to_dict()})
 

@@ -40,7 +40,7 @@ const UserJournalPage = () => {
                 dispatch(deleteEntry(entryId)).unwrap();
                 
                 const updatedJournal = journal?.Journal.filter(entry => entry.id !== entryId);
-                dispatch({ type: 'SET_JOURNAL', payload: { Journal: updatedJournal } }); // Update the state optimistically
+                dispatch({ type: 'SET_JOURNAL', payload: { Journal: updatedJournal } });
     
                 alert("Entry deleted successfully");
 
@@ -103,7 +103,7 @@ const UserJournalPage = () => {
                                         )}
                                         <button
                                             className={ent.editButton}
-                                            onClick={() => handleUpdateEntry(entry)} // Pass the entry details here
+                                            onClick={() => handleUpdateEntry(entry)}
                                         >
                                             Edit
                                         </button>
