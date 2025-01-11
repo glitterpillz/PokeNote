@@ -10,6 +10,7 @@ import DiscoverPage from '../components/DiscoverPage/DiscoverPage.jsx';
 import UserPokemonCollection from '../components/UserPokemon/UserPokemonCollection.jsx';
 import UserPokemonDetails from '../components/UserPokemon/UserPokemonDetails.jsx';
 import EntryDetailsPage from '../components/UserJournal/EntryDetailsPage.jsx';
+import UserInboxPage from '../components/UserMessages/UserInboxPage.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -55,5 +56,9 @@ export const router = createBrowserRouter([
   {
     path: '/account/update',
     element: <UpdateAccountPage />
+  },
+  {
+    path: '/inbox',
+    element: <UserInboxPage />
   }
 ]);

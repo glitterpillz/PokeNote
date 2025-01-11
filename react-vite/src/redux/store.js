@@ -4,6 +4,7 @@ import sessionReducer from './session';
 import pokemonReducer from './pokemon';
 import userReducer from './user';
 import journalReducer from './journal'
+import MessageReducer from './message'
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     pokemon: pokemonReducer,
     user: userReducer,
     journal: journalReducer,
+    message: MessageReducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware();
