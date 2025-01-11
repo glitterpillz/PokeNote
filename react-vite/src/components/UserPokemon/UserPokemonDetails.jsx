@@ -50,7 +50,7 @@ function UserPokemonDetails() {
             alert(result.message || "Pokémon deleted successfully!");
             navigate("/pokemon/collection");
         } catch (error) {
-            console.error("Error deleting Pokémon:", error); // Log the error for debugging
+            console.error("Error deleting Pokémon:", error);
             alert(
                 typeof error === 'string'
                     ? error

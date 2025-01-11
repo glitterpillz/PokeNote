@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { editUserPokemon, fetchPokemonDetail } from '../../redux/pokemon'; // Define this thunk
+import { editUserPokemon, fetchPokemonDetail } from '../../redux/pokemon';
 import { useState } from 'react';
 
 function EditPokemonModal({ pokemon }) {

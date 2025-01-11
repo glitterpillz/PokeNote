@@ -12,7 +12,6 @@ export const getUserProfile = createAsyncThunk(
         try {
             const res = await fetch(`/api/users/${id}/profile`);
             const data = await res.json();
-            console.log('Fetched profile data:', data); // Log the fetched data
             return data;
         } catch (error) {
             return rejectWithValue(error.message || "User profile couldn't be found");
