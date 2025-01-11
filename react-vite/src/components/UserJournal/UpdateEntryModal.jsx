@@ -1,79 +1,90 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
-import { createJournalEntry, getUserJournal } from '../../redux/journal'; // Ensure getUserJournal is imported
-import ent from './CreateJournalEntryModal.module.css'
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
+import { updateEntry, getUserJournal } from "../../redux/journal";
+import { useState, useEffect } from "react";
+import ent from './CreateJournalEntryModal.module.css';
 
-function CreateJournalEntryModal() {
+function UpdateEntryModal({ entryDetails }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
+    const [timestamp, setTimestamp] = useState('');
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [accomplishments, setAccomplishments] = useState('');
     const [weather, setWeather] = useState('');
     const [mood, setMood] = useState('');
-    const [date, setDate] = useState('');
-    const [isPrivate, setIsPrivate] = useState(false);
+    const [content, setContent] = useState('');
+    const [accomplishments, setAccomplishments] = useState('');
     const [photo, setPhoto] = useState(null);
+    const [isPrivate, setIsPrivate] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const entryData = new FormData();
-        entryData.append('title', title);
-        entryData.append('content', content);
-        entryData.append('accomplishments', accomplishments);
-        entryData.append('weather', weather);
-        entryData.append('mood', mood);
-        entryData.append('date', date);
-        entryData.append('is_private', isPrivate);
-        if (photo) {
-            entryData.append('photo', photo);
+    // Populate state with existing entry details when component mounts
+    useEffect(() => {
+        if (entryDetails) {
+            setTimestamp(entryDetails.timestamp || '');
+            setTitle(entryDetails.title || '');
+            setWeather(entryDetails.weather || '');
+            setMood(entryDetails.mood || '');
+            setContent(entryDetails.content || '');
+            setAccomplishments(entryDetails.accomplishments || '');
+            setIsPrivate(entryDetails.isPrivate || false);
         }
-
-        try {
-            console.log('ENTRY DATA:', entryData);
-            await dispatch(createJournalEntry(entryData)).unwrap();
-            alert('Journal entry created successfully!');
-
-            dispatch(getUserJournal());
-
-            closeModal();
-        } catch (error) {
-            console.error('Error creating journal entry:', error);
-            alert('Failed to create journal entry. Please try again.');
-        }
-    };
+    }, [entryDetails]);
 
     const handlePhotoChange = (e) => {
         setPhoto(e.target.files[0]);
-    }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const payload = {
+            timestamp,
+            title,
+            weather,
+            mood,
+            content,
+            accomplishments,
+            is_private: isPrivate,
+        };
+        if (photo instanceof File) {
+            payload.photo = photo; 
+        }
+    
+        try {
+            await dispatch(updateEntry({ id: entryDetails.id, payload })).unwrap();
+            alert('Entry updated successfully!');
+
+            dispatch(getUserJournal(entryDetails.user_id))
+
+            closeModal();
+        } catch (error) {
+            console.error('Error updating entry:', error);
+            alert('Failed to update entry. Please try again.');
+        }
+
+    };
+    
 
     return (
         <div className={ent.mainFormContainer}>
-            <div className={ent.mewPic}>
-                <img src="/images/mew.png" alt="" />
-            </div>
-            {/* <h2 className={edit.}>Create Journal Entry</h2> */}
+            <div className={ent.butterPic}>
+                <img src="/images/butterfree.png" alt="" />
+            </div>            
             <form className={ent.form} onSubmit={handleSubmit}>
                 <div className={ent.formHeading}>
                     <div className={ent.inputBox}>
-                        <label>
-                            Date:
-                        </label>
+                        <label>Date:</label>
                         <input
                             type="date"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
+                            value={timestamp}
+                            onChange={(e) => setTimestamp(e.target.value)}
                             className={ent.formInput}
+                            required
                         />
                     </div>
 
                     <div className={ent.inputBox}>
-                        <label>
-                            Title:
-                        </label>
+                        <label>Title:</label>
                         <input
                             type="text"
                             value={title}
@@ -84,9 +95,7 @@ function CreateJournalEntryModal() {
                     </div>
 
                     <div className={ent.inputBox}>
-                        <label>
-                            Weather:
-                        </label>
+                        <label>Weather:</label>
                         <select
                             value={weather}
                             onChange={(e) => setWeather(e.target.value)}
@@ -103,9 +112,7 @@ function CreateJournalEntryModal() {
                     </div>
 
                     <div className={ent.inputBox}>
-                        <label>
-                            Mood:
-                        </label>
+                        <label>Mood:</label>
                         <select
                             value={mood}
                             onChange={(e) => setMood(e.target.value)}
@@ -127,7 +134,7 @@ function CreateJournalEntryModal() {
 
                 <div className={ent.contentBox}>
                     <label className={ent.formLabel}>
-                        Entry:
+                        Content:
                     </label>
                     <textarea
                         value={content}
@@ -148,12 +155,20 @@ function CreateJournalEntryModal() {
                     />
                 </div>
 
+                {/* <div className={ent.photoBox}>
+                    <label>Upload Photo:</label>
+                    <input
+                        type="file"
+                        onChange={handlePhotoChange}
+                        className={ent.fileInput}
+                    />
+                </div> */}
+
                 <div className={ent.photoBox}>
                     <div className={ent.photoLabelBox}>
                         <label className={ent.formLabel}htmlFor="photo">Upload Photo:</label>
                         <label className={ent.optional}>(optional)</label>
                         <input
-                            id="photo"
                             type="file"
                             onChange={handlePhotoChange}
                             className={`${ent.fileInput} ${ent.hiddenFileInput}`} // Add hiddenFileInput class
@@ -163,7 +178,7 @@ function CreateJournalEntryModal() {
                         <button
                             type="button"
                             className={ent.customFileButton}
-                            onClick={() => document.getElementById('photo').click()}
+                            onClick={handlePhotoChange}
                         >
                             Choose File
                         </button>
@@ -172,6 +187,7 @@ function CreateJournalEntryModal() {
                         </span>
                     </div>
                 </div>
+                
 
                 <div className={ent.privateBox}>
                     <label className={ent.formLabel}>
@@ -185,13 +201,16 @@ function CreateJournalEntryModal() {
                 </div>
 
                 <div className={ent.formButtons}>
-                    <button className={ent.button} type="submit">Save</button>
-                    <button className={ent.button} type="button" onClick={closeModal}>Cancel</button>
+                    <button type="submit" className={ent.button}>
+                        Save
+                    </button>
+                    <button type="button" className={ent.button} onClick={closeModal}>
+                        Cancel
+                    </button>
                 </div>
             </form>
         </div>
     );
 }
 
-export default CreateJournalEntryModal;
-
+export default UpdateEntryModal;

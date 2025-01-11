@@ -227,20 +227,10 @@ const pokemonSlice = createSlice({
                 state.pokemonDetails = action.payload;
             })
             .addCase(deleteUserPokemon.fulfilled, (state, action) => {
-                console.log('Before deletion:', state.pokemons);
                 state.pokemons = (Array.isArray(state.pokemons) ? state.pokemons : []).filter(
                     (pokemon) => pokemon.id !== action.payload.id
-                );
-                
-                console.log('After deletion:', state.pokemons);
+                );              
             });
-            
-            // .addCase(deleteUserPokemon.fulfilled, (state, action) => {
-            //     state.loading = false;
-            //     state.pokemons = state.pokemons.filter(
-            //         (pokemon) => pokemon.id !== action.payload.id
-            //     );
-            // });
     }
 })
 

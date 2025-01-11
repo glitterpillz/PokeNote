@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEntryById } from "../../redux/journal";
+import { fetchEntryDetails } from "../../redux/journal";
 import { useParams } from "react-router-dom";
 import Navigation from "../Navigation";
 import { restoreUser } from "../../redux/session";
@@ -22,7 +22,7 @@ function EntryDetailsPage() {
 
     useEffect(() => {
         if (currentUser) {
-            dispatch(fetchEntryById(id));
+            dispatch(fetchEntryDetails(id));
         }
     }, [dispatch, currentUser, id]);
 

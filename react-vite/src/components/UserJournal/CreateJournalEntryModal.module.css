@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
 
-.editFormContainer {
+.mainFormContainer {
     font-family: "Baloo Paaji 2", serif;
     display: flex;
     flex-direction: column;
@@ -158,7 +158,7 @@
 
 .mewPic {
     position: absolute;
-    left: 430px;
+    left: 400px;
     bottom: 750px;
 }
 
@@ -166,6 +166,16 @@
     width: 280px;
 }
 
+.butterPic {
+    position: absolute;
+    left: 400px;
+    bottom: 760px;
+}
+
+.butterPic img {
+    width: 280px;
+}
+
 .hiddenFileInput {
-    display: none; /* Hides the default file input */
+    display: none;
 }
