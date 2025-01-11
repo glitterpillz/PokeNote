@@ -185,8 +185,16 @@ function CreateJournalEntryModal() {
                 </div>
 
                 <div className={ent.formButtons}>
-                    <button className={ent.button} type="submit">Save</button>
-                    <button className={ent.button} type="button" onClick={closeModal}>Cancel</button>
+                    <button type="submit" className={ent.button}>
+                        Save
+                    </button>
+                    <button 
+                        type="button" 
+                        className={ent.button} 
+                        onClick={closeModal}
+                    >
+                        Cancel
+                    </button>
                 </div>
             </form>
         </div>
