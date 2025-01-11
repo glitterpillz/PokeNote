@@ -74,10 +74,22 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
     };
 
     return (
-        <div className={ent.modalOverlay}>
-            <div className={ent.modalContent}>
-                <h2>Update Journal Entry</h2>
-                <form onSubmit={handleSubmit} className={ent.form}>
+        <div className={ent.mainFormContainer}>
+            <h2>Update Journal Entry</h2>
+            <form onSubmit={handleSubmit} className={ent.form}>
+                <div className={ent.inputBox}>
+                    <label htmlFor="timestamp">Date:</label>
+                    <input
+                        id="timestamp"
+                        type="date"
+                        name="timestamp"
+                        value={formData.timestamp}
+                        onChange={handleChange}
+                        className={ent.formInput}
+                    />
+                </div>
+                
+                <div className={ent.inputBox}>
                     <label htmlFor="title">Title:</label>
                     <input
                         id="title"
@@ -85,63 +97,85 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
                         name="title"
                         value={formData.title}
                         onChange={handleChange}
+                        className={ent.formInput}
                         required
                     />
+                </div>
 
-                    <label htmlFor="content">Content:</label>
-                    <textarea
-                        id="content"
-                        name="content"
-                        value={formData.content}
-                        onChange={handleChange}
-                        required
-                    ></textarea>
-
-                    <label htmlFor="accomplishments">Accomplishments:</label>
-                    <textarea
-                        id="accomplishments"
-                        name="accomplishments"
-                        value={formData.accomplishments}
-                        onChange={handleChange}
-                    ></textarea>
-
+                <div className={ent.inputBox}>
                     <label htmlFor="weather">Weather:</label>
                     <select
                         id="weather"
                         name="weather"
                         value={formData.weather}
                         onChange={handleChange}
+                        className={ent.inputSelect}
                     >
-                        <option value="">Select weather</option>
+                        <option value="">Select Weather</option>
                         <option value="Sunny">Sunny</option>
+                        <option value="Partly Cloudy">Partly Cloudy</option>
                         <option value="Cloudy">Cloudy</option>
                         <option value="Rainy">Rainy</option>
+                        <option value="Stormy">Stormy</option>
                         <option value="Snowy">Snowy</option>
                     </select>
+                </div>
 
+                <div className={ent.inputBox}>
                     <label htmlFor="mood">Mood:</label>
                     <select
                         id="mood"
                         name="mood"
                         value={formData.mood}
                         onChange={handleChange}
+                        className={ent.inputSelect}
                     >
-                        <option value="">Select mood</option>
+                        <option value="">Select Mood</option>
                         <option value="Happy">Happy</option>
-                        <option value="Neutral">Neutral</option>
                         <option value="Sad">Sad</option>
+                        <option value="Angry">Angry</option>
+                        <option value="Neutral">Neutral</option>
+                        <option value="Tired">Tired</option>
                         <option value="Excited">Excited</option>
+                        <option value="Loved">Loved</option>
+                        <option value="Confident">Confident</option>
+                        <option value="Grateful">Grateful</option>
                     </select>
+                </div>
 
-                    <label htmlFor="timestamp">Timestamp:</label>
-                    <input
-                        id="timestamp"
-                        type="date"
-                        name="timestamp"
-                        value={formData.timestamp}
+                <div className={ent.contentBox}>
+                    <label 
+                        htmlFor="content"
+                        className={ent.formLabel}   
+                    >
+                        Entry:
+                    </label>
+                    <textarea
+                        id="content"
+                        name="content"
+                        value={formData.content}
                         onChange={handleChange}
-                    />
+                        className={ent.contentTextArea}
+                        required
+                    ></textarea>
+                </div>
 
+                <div className={ent.accomplishBox}>
+                    <label 
+                        htmlFor="accomplishments"
+                        className={ent.formLabel}
+                    >
+                        Accomplishments:</label>
+                    <textarea
+                        id="accomplishments"
+                        name="accomplishments"
+                        value={formData.accomplishments}
+                        onChange={handleChange}
+                        className={ent.accomplishTextArea}
+                    ></textarea>
+                </div>
+
+                <div className={ent.photoBox}>
                     <label htmlFor="photo">Upload Photo:</label>
                     <input
                         id="photo"
@@ -152,8 +186,15 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
                     {formData.photo && (
                         <p>Selected Photo: {formData.photo.name}</p>
                     )}
+                </div>
 
-                    <label htmlFor="is_private">Private:</label>
+                <div className={ent.privateBox}>
+                    <label
+                        htmlFor="is_private"
+                        className={ent.formLabel}
+                    >
+                        Private:
+                    </label>
                     <input
                         id="is_private"
                         type="checkbox"
@@ -161,21 +202,21 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
                         checked={formData.is_private}
                         onChange={handleChange}
                     />
+                </div>
 
-                    <div className={ent.buttonsContainer}>
-                        <button type="submit" className={ent.saveButton}>
-                            Save
-                        </button>
-                        <button
-                            type="button"
-                            className={ent.cancelButton}
-                            onClick={closeModal}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <div className={ent.formButtons}>
+                    <button type="submit" className={ent.button}>
+                        Save
+                    </button>
+                    <button
+                        type="button"
+                        className={ent.button}
+                        onClick={closeModal}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </div>
     );
 };
