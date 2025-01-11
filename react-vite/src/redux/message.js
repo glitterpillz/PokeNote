@@ -44,6 +44,30 @@ export const getUserSentBox = createAsyncThunk(
     }
 )   
 
+
+export const sendMessage = createAsyncThunk(
+    "message/sendMessage",
+    async (messageData, { rejectWithValue }) => {
+        try {
+            const response = await fetch('/api/messages/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(messageData),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                return rejectWithValue(data);
+            }
+            return data.sent_message;
+        } catch (error) {
+            return rejectWithValue(error.message || "Error sending direct message");
+        }
+    }
+);
+
+
 const MessageSlice = createSlice({
     name: "message",
     initialState,
@@ -73,6 +97,22 @@ const MessageSlice = createSlice({
             .addCase(getUserSentBox.fulfilled, (state, action) => {
                 state.loading = false;
                 state.sentBox = action.payload;
+            })
+            .addCase(sendMessage.pending, (state) => {
+                state.loading = true;
+                state.errors = null;
+            })
+            .addCase(sendMessage.rejected, (state, action) => {
+                state.loading = false;
+                state.errors = action.payload;
+            })
+            .addCase(sendMessage.fulfilled, (state, action) => {
+                state.loading = false;
+                if (Array.isArray(state.sentBox)) {
+                    state.sentBox.push(action.payload);
+                } else {
+                    console.error("State sentBox is not an array", state.sentBox)
+                }
             })
     }
 })

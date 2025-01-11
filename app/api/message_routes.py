@@ -9,30 +9,34 @@ message_routes = Blueprint('messages', __name__)
 @message_routes.route('/send', methods=['POST'])
 @login_required
 def send_message():
-    """
-    Sends a message from the current user to another user using their username.
-    """
-    data = request.get_json()
-    receiver_username = data.get('receiver')
-    content = data.get('content')
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Invalid request. JSON data is required.'}), 400
 
-    if not receiver_username or not content:
-        return jsonify({'error': 'Receiver username and content are required'}), 400
+        receiver_username = data.get('receiver')
+        content = data.get('content')
 
-    receiver = User.query.filter_by(username=receiver_username).first()
-    if not receiver:
-        return jsonify({'error': f'User with username "{receiver_username}" not found'}), 404
+        if not receiver_username or not content:
+            return jsonify({'error': 'Receiver username and content are required.'}), 400
 
-    message = Message(
-        sender_id=current_user.id,
-        receiver_id=receiver.id,
-        content=content
-    )
+        receiver = User.query.filter_by(username=receiver_username).first()
+        if not receiver:
+            return jsonify({'error': f'User with username "{receiver_username}" not found.'}), 404
 
-    db.session.add(message)
-    db.session.commit()
+        message = Message(
+            sender_id=current_user.id,
+            receiver_id=receiver.id,
+            content=content
+        )
 
-    return jsonify({'message': 'Message sent successfully', 'sent_message': message.to_dict()}), 201
+        db.session.add(message)
+        db.session.commit()
+
+        return jsonify({'message': 'Message sent successfully.', 'sent_message': message.to_dict()}), 201
+
+    except Exception as e:
+        return jsonify({'error': f'An unexpected error occurred: {str(e)}'}), 500
 
 
 # GET USER INBOX
