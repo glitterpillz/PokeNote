@@ -76,6 +76,7 @@ function ProfileButton() {
                     <NavLink className={profile.accountLink} to="/user-accounts">User Accounts</NavLink>
                   </li>
                 )}
+                <hr />
                 <li>
                   <button onClick={logout} className={profile.modalButton}>
                     Log Out

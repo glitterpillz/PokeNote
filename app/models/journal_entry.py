@@ -41,6 +41,8 @@ class JournalEntry(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'username': self.user.username,
+            'profile_picture': self.user.profile_picture,
             'title': self.title,
             'content': self.content,
             'accomplishments': self.accomplishments,
