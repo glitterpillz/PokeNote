@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
+.messagePic {
+    position: absolute;
+    top: -195px;
+    left: -10px;
+    z-index: -1;
+}
+
+.messagePic img {
+    width: 530px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    background-color: #6f77a1;
+    width: 495px;
+    height: 132px;
+    border: 9px solid #fefbe2;
+    font-family: "Baloo Paaji 2", serif;
+}
+
+
+.receiverBox {
+    font-weight: 600;
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+    padding-left: 5px;
+    font-size: 1.3rem;
+}
+
+.input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #fefbe2;
+    height: 25px;
+}
+
+
+.messageBox {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 1.3rem;
+}

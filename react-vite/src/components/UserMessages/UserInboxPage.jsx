@@ -5,6 +5,7 @@ import Navigation from "../Navigation";
 import { useMessageContext } from '../../context/MessageContext';
 import SendMessageModal from "./SendMessageModal";
 import { useModal } from "../../context/Modal";
+import box from './UserInboxPage.module.css'
 
 const UserInboxPage = () => {
     const dispatch = useDispatch();
@@ -41,22 +42,30 @@ const UserInboxPage = () => {
             <div>
                 <Navigation />
             </div>
-            <div style={{ margin: "1em 0", display: "flex", gap: "1em" }}>
-                <button onClick={() => setView("inbox")} style={{ backgroundColor: view === "inbox" ? "#ddd" : "#fff" }}>
-                    Inbox
-                </button>
-                <button onClick={() => setView("sent")} style={{ backgroundColor: view === "sent" ? "#ddd" : "#fff" }}>
-                    Sent
-                </button>
-                <button onClick={handleSendMessage}>
-                    New Message
-                </button>
+            <div className={box.mainBoxContainer}>
+                <div className={box.header}>
+                    <h1>{view === "inbox" ? "Inbox" : "Sent Box"}</h1>
+                </div>
+                <div style={{ margin: "1em 0", display: "flex", gap: "1em" }}>
+                    <button onClick={() => setView("inbox")} style={{ backgroundColor: view === "inbox" ? "#ddd" : "#fff" }}>
+                        Inbox
+                    </button>
+                    <button onClick={() => setView("sent")} style={{ backgroundColor: view === "sent" ? "#ddd" : "#fff" }}>
+                        Sent
+                    </button>
+                    <button onClick={handleSendMessage}>
+                        New Message
+                    </button>
+                </div>
             </div>
-            <div>
-                <h1>{view === "inbox" ? "Inbox" : "Sent Box"}</h1>
+            <div className={box.messageContainer}>
                 {messages && messages.length > 0 ? (
                     messages.map((message) => (
-                        <div key={message.id} style={{ margin: "1em 0", border: "1px solid #ccc", padding: "1em" }}>
+                        <div 
+                            key={message.id} 
+                            style={{ margin: "1em 0", border: "1px solid #ccc", padding: "1em" }}
+                            className={box.messageBox}
+                        >
                             <p><strong>Date:</strong> {message.timestamp}</p>
                             <p><strong>To:</strong> {message.receiver}</p>
                             <p><strong>From:</strong> {message.sender}</p>
