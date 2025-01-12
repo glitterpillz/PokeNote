@@ -33,10 +33,19 @@
     margin-bottom: 10px;
 }
 
+.profileDropdown hr {
+    color: #ffd444;
+    background-color: #ffd444;
+    border: 1px solid #ffd444;
+
+}
+
 .hiMessage {
     font-size: 24px;
     font-family: "Atma", serif;
-    font-weight: 500;
+    font-weight: 600;
+    color: #ffd444;
+
 }
   
 .accountLink {

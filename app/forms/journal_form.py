@@ -25,12 +25,12 @@ class JournalEntryForm(FlaskForm):
         'Weather',
         choices=[
             ('', 'Select Weather'),
-            ('Sunny', 'Sunny'),
-            ('Partly Cloudy', 'Partly Cloudy'),
-            ('Cloudy', 'Cloudy'),
-            ('Rainy', 'Rainy'),
-            ('Stormy', 'Stormy'),
-            ('Snowy', 'Snowy')
+            ('Sunny', '☀️ sunny'),
+            ('Partly Cloudy', '🌤️ partly cloudy'),
+            ('Cloudy', '☁️ cloudy'),
+            ('Rainy', '🌧️ raining'),
+            ('Stormy', '⛈️ storming'),
+            ('Snowy', '❄️ snowing')
         ],
         validators=[]
     )
@@ -39,16 +39,15 @@ class JournalEntryForm(FlaskForm):
         'Mood',
         choices=[
             ('', 'Select Mood'),  
-            ('Happy', 'Happy'),
-            ('Sad', 'Sad'),
-            ('Angry', 'Angry'),
-            ('Neutral', 'Neutral'),
-            ('Tired', 'Tired'),
-            ('Excited', 'Excited'),
-            ('Loved', 'Loved'),
-            ('Homicidal', 'Homicidal'),
-            ('Confident', 'Confident'),
-            ('Grateful', 'Grateful')
+            ('Happy', '😊 happy'),
+            ('Sad', '😢 sad'),
+            ('Angry', '😡 fuming'),
+            ('Neutral', '😐 fine'),
+            ('Tired', '😴 tired'),
+            ('Excited', '🤩 excited'),
+            ('Loved', '🥰 loved'),
+            ('Confident', '😎 confident'),
+            ('Grateful', '🙏 grateful')
         ],
         validators=[]
     )

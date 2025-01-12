@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Baloo Paaji 2", serif;
+}
+
+.entryCard {
+    display: flex; /* Align children side by side */
+    align-items: flex-start; /* Align items at the top */
+    padding: 10px;
+    margin: 15px 0;
+    border: 2px solid #fefbe2;
+    border-radius: 10px;
+    background-color: #50587e;
+    width: 700px;
+}
+
+.profilePicBox {
+    flex: 0 0 50px; /* Fixed width of 50px */
+    margin: 5px 20px 0 5px; /* Add space between profilePicBox and mainEntryContainer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profilePicBox img {
+    width: 100%; /* Make the image fit within the box */
+    height: auto;
+    border-radius: 50%; /* Optional: Make the image circular */
+}
+
+.mainEntryContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Arrange content vertically */
+    width: 90%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    color: #fefbe2;
+    font-size: 1rem;
+}
+
+.header .profileLink {
+    text-decoration: none;
+    font-weight: bold;
+    color: #fefbe2;
+}
+
+.header span {
+    margin: 0 10px;
+}
+
+.entryInfo {
+    margin-bottom: 10px;
+}
+
+.h4 {
+    font-family: "Atma", serif;
+    color: #ffd444;
+    font-size: 1.4rem;
+}
+
+.entryBody {
+    font-size: 14px;
+    color: #333;
+    margin-right: 60px;
+}
+
+.entryPicBox {
+    width: 560px;
+}
+
+.entryPicBox img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+
+.scrollTopButton {
+    position: fixed;
+    top: 20px; 
+    right: 20px;
+    z-index: 1000;
+}
+
+.scrollTopButton.show {
+    display: block; 
+}
+
+
+.scrollTopButton {
+    transition: opacity 0.3s ease;
+}
