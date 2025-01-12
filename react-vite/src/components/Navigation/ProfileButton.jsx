@@ -63,6 +63,9 @@ function ProfileButton() {
                 <li>{user.email}</li>
                 <hr />
                 <li>
+                  <NavLink className={profile.accountLink} to="/inbox">Inbox</NavLink>
+                </li>
+                <li>
                   <NavLink className={profile.accountLink} to="/account">Manage Account</NavLink>
                 </li>
                 <li>

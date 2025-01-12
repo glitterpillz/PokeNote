@@ -1,0 +1,4 @@
+.mainBoxContainer {
+    display: flex;
+    flex-direction: column;
+}
