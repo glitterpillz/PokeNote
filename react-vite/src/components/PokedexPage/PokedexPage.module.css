@@ -86,7 +86,8 @@ h3 {
 }
 
 .pokemonType {
-    border: 2px solid #fefbe2;
+    /* border: 1.5px solid #fefbe2; */
+    color: #2b2a2a;
     padding: 3px 6px;
     border-radius: 10px;
     text-align: center;

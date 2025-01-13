@@ -47,6 +47,23 @@ function PokedexPage() {
         return <div>Error: {errors}</div>;
     }
 
+    const typeColors = {
+        Fire: '#f89055',
+        Water: '#469ae4',
+        Grass: '#30d884',
+        Electric: '#fdd75a',
+        Psychic: '#f165ef',
+        Ice: '#98D8D8',
+        Dragon: '#9269f1',
+        Dark: '#604667',
+        Fairy: '#ee99c6',
+        Normal: '#89a6a9',
+        Poison: '#c677cf',
+        Flying: '#a9c4ec',
+        Bug: '#91e0b0',
+    };
+
+
     const renderPokemonCards = (pokemonList) => {
         return pokemonList.map((pokemon) => (
             <div
@@ -59,11 +76,16 @@ function PokedexPage() {
                 <h3>{pokemon.name}</h3>
                 <div className={pok.typesContainer}>
                     {pokemon.types.map((type, index) => (
-                        <div key={index} className={pok.pokemonType}>
+                        <div
+                            key={index}
+                            className={pok.pokemonType}
+                            style={{ backgroundColor: typeColors[type] || '#ccc' }}
+                        >
                             {type}
                         </div>
                     ))}
                 </div>
+                
             </div>
         ));
     };
