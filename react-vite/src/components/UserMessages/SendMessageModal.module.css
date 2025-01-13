@@ -1,28 +1,67 @@
 @import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
 
-.messagePic {
-    position: absolute;
-    top: -195px;
-    left: -10px;
-    z-index: -1;
-}
-
-.messagePic img {
-    width: 530px;
-}
-
 .form {
     display: flex;
     flex-direction: column;
-    background-color: #6f77a1;
-    width: 495px;
-    height: 132px;
-    border: 9px solid #fefbe2;
+    gap: 20px;
+    background-color: #50587e;
+    width: 400px;
+    border: 3px solid #cacee2;
+    border-radius: 8px;
     font-family: "Baloo Paaji 2", serif;
+    font-size: 1.4rem;
+    color: #15141a;
+    padding: 20px;
 }
 
-
 .receiverBox {
+    font-weight: 600;
+    display: flex;
+    gap: 10px;
+}
+
+.input {
+    background-color: #6f77a1;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    padding: 5px 10px;
+    width: 180px;
+}
+
+.messageBox {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+}
+
+.textArea {
+    background-color: #6f77a1;
+    border-radius: 5px;
+    resize: none;
+    height: 100px;
+    font-size: 1.3rem;
+}
+
+.buttonsBox {
+    align-self: center;
+    display: flex;
+    gap: 20px;
+}
+
+.button {
+    align-self: center;
+    padding: 5px 15px;
+    font-family: "Atma", serif;
+    font-size: 25px;
+    font-weight: 600;
+    background-color: #1e2442;
+    color: #cacee2;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* .receiverBox {
     font-weight: 600;
     display: flex;
     gap: 10px;
@@ -44,4 +83,4 @@
     flex-direction: column;
     font-weight: 600;
     font-size: 1.3rem;
-}
+} */
