@@ -69,14 +69,9 @@ function DiscoverPage() {
                         <p className={dis.timestamp}>{entry.timestamp}</p>
                     </div>
                     <div className={dis.entryInfo}>
-                        <h4 className={dis.h4}>{entry.title}</h4>
-                    </div>
-                    <div className={dis.entryBody}>
-                        <p>{entry.content}</p>
-                        <p>{entry.accomplishments}</p>
-                        <div className={dis.entryPicBox}>
-                            <img src={entry.photo} alt="" />
-                        </div>
+                        <h1 className={dis.h1}>{entry.title}</h1>
+                        <p className={dis.entryBody}>{entry.content}</p>
+                        <img  className={dis.entryPic} src={entry.photo} alt="" />
                     </div>
                 </div>
             </div>
@@ -107,6 +102,11 @@ function DiscoverPage() {
                     {upArrow}
                 </div>
             )}
+
+                <div className={dis.mainHeader}>
+                    <h4 className={dis.h4}>Explore the adventures of trainers around the world!</h4>
+                    <p className={dis.headerMessage}>Discover stories, milestones, and moments shared by the community</p>
+                </div>
 
             <div className={dis.mainBodyContainer}>
                 {journal.length > 0 ? renderJournalEntries(journal) : <p>No entries found.</p>}

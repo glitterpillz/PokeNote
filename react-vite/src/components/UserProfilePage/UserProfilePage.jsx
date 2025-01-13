@@ -35,7 +35,7 @@ function UserProfilePage() {
         return <div>No profile data available.</div>;
     }
     
-    const { banner_url, fname, lname, journal_entries, pokemon_collection, profile_picture, username } = userProfile;
+    const { banner_url, journal_entries, pokemon_collection, profile_picture, username } = userProfile;
 
     return (
         <div>
