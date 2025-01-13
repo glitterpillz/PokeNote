@@ -34,10 +34,6 @@ function SendMessageModal() {
 
     return (
         <div>
-            <div className={mod.messagePic}>
-                <img src="/images/message-box.png" alt="" />
-            </div>
-
             <form onSubmit={handleSubmit} className={mod.form}>
                 <div className={mod.receiverBox}>
                     <label>To:</label>
