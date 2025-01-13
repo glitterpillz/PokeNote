@@ -37,6 +37,18 @@ const UserInboxPage = () => {
         return <div>Error: {errors.general || "Something went wrong"}</div>;
     }
 
+    const formatTimestamp = (timestamp) => {
+        const date = new Date(timestamp);
+        return date.toLocaleString("en-US", {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        })
+    }
+
     return (
         <div>
             <div>
@@ -48,14 +60,17 @@ const UserInboxPage = () => {
                 </div>
                 <div className={box.flexContainer}>
                     <div className={box.buttonsContainer}>
-                            <button onClick={handleSendMessage}>
+                            <button onClick={handleSendMessage} className={box.button}>
                                 Compose
-                            </button>
-                            <button onClick={() => setView("inbox")}>
+                            </button >
+                            <button onClick={() => setView("inbox")} className={box.button}>
                                 Inbox
                             </button>
-                            <button onClick={() => setView("sent")}>
+                            <button onClick={() => setView("sent")} className={box.button}>
                                 Sent
+                            </button>
+                            <button className={box.button}>
+                                Friends
                             </button>
                     </div>
 
@@ -72,13 +87,17 @@ const UserInboxPage = () => {
                                         <img src={message.profile_picture} alt={message.sender} />
                                     </div>
 
-                                    <div className={box.messageBodyBox}>
-                                        <div className={box.toFromDiv}>
-                                            <p><strong>To:</strong> {message.receiver}</p>
-                                            <p><strong>From:</strong> {message.sender}</p>
+                                    <div className={box.messageBodyContainer}>
+                                        <div className={box.messageBodyBox}>
+                                            <div className={box.toFromDiv}>
+                                                <div className={box.toFromRow}>
+                                                    <p><strong>To:</strong> {message.receiver}</p>
+                                                    <p><strong>From:</strong> {message.sender}</p>
+                                                </div>
+                                                <p className={box.date}><strong>Date:</strong> {formatTimestamp(message.timestamp)}</p>                                            
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p><strong>Date:</strong> {message.timestamp}</p>
+                                        <div className={box.messageBody}>
                                             <p><strong>Message:</strong> {message.content}</p>
                                         </div>
                                     </div>
