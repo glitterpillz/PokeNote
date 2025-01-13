@@ -52,41 +52,42 @@ function UserProfilePage() {
                 ) : (
                     <div className={pro.bannerPic}>No banner picture available</div>
                 )}
-                <div className={pro.profileHeader}>
-                    {profile_picture ? (
-                        <img
-                            className={pro.profilePic}
-                            src={profile_picture}
-                            alt={`${username}'s profile`}
-                        />
-                    ) : (
-                        <div className={pro.noProfilePic}>No Profile Picture</div>
-                    )}
-                    <h2>{username}</h2>
-                    <p>{fname} {lname}</p>
-                </div>
-                <div className={pro.profileDetails}>
-                    <h3>Journal Entries</h3>
-                    {journal_entries && journal_entries.length > 0 ? (
-                        <ul>
-                            {journal_entries.map((entry, index) => (
-                                <li key={index}>{entry.title || "Untitled Entry"}</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No journal entries available.</p>
-                    )}
-    
-                    <h3>Pokemon Collection</h3>
-                    {pokemon_collection && pokemon_collection.length > 0 ? (
-                        <ul>
-                            {pokemon_collection.map((pokemon, index) => (
-                                <li key={index}>{pokemon.name || "Unnamed Pokemon"}</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No Pokémon in collection.</p>
-                    )}
+                <div className={pro.profileBox}>
+                    <div className={pro.profileHeader}>
+                        {profile_picture ? (
+                            <img
+                                className={pro.profilePic}
+                                src={profile_picture}
+                                alt={`${username}'s profile`}
+                            />
+                        ) : (
+                            <div className={pro.noProfilePic}>No Profile Picture</div>
+                        )}
+                        <h2>{username}</h2>
+                    </div>
+                    <div className={pro.profileDetails}>
+                        <h3>Journal Entries</h3>
+                        {journal_entries && journal_entries.length > 0 ? (
+                            <ul>
+                                {journal_entries.map((entry, index) => (
+                                    <li key={index}>{entry.title || "Untitled Entry"}</li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No journal entries available.</p>
+                        )}
+        
+                        <h3>Pokemon Collection</h3>
+                        {pokemon_collection && pokemon_collection.length > 0 ? (
+                            <ul>
+                                {pokemon_collection.map((pokemon, index) => (
+                                    <li key={index}>{pokemon.pokemon.name || "Unnamed Pokemon"}</li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No Pokémon in collection.</p>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
