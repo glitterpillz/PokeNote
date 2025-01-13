@@ -15,44 +15,86 @@
 
 .flexContainer {
     display: flex;
-    width: 700px;
-    border: 2px solid white;
-    gap: 40px;
-    padding: 20px 0;
+    width: 800px;
+    border: 2px solid #67709c;
+    border-radius: 10px;
 }
 
 .buttonsContainer {
     flex: 0 0 auto; 
-    width: 25%; 
+    width: 10%; 
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    gap: 20px;
+    padding: 30px 10px 0 30px;
+    background-color: #67709c;
+}
+
+.button {
+    background-color: transparent;
+    border: none;
+    font-family: "Atma", serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #23283c;
+}
+
+.button:hover {
+    cursor: pointer;
+    color: #ffd444;
 }
 
 .messageContainer {
-    flex: 1;
     font-family: "Baloo Paaji 2", serif;
     font-size: 1.3rem;
+    padding: 20px;
+    background-image: linear-gradient(to bottom right, rgb(151, 224, 244), rgb(232, 149, 228));    
+    width: 85%;
 }
 
 .messageBox {
     display: flex;
     align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.messageBodyContainer {
+    border: 2px solid #30385f;
+    border-radius: 8px;
+    width: 100%;
 }
 
 .toFromDiv {
     display: flex;
-    gap: 30px;
+    flex-wrap: wrap;
+    background-color: #30385f;
+    padding: 0 15px;
+    font-size: 1.1rem;
+    color: #fefbe2;
 }
 
-.messageBoxBody {
+.toFromRow {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    gap: 30px;
+    position: relative;
+    bottom: 15px;
+}
+
+.date {
+    position: relative;
+    top: 10px;
+    right: 195px;
+}
+
+.messageBody {
+    background-color: #67709c;
+    padding: 5px 10px;
+    font-size: 1.2rem;
 }
 
 .imageBox img {
     width: 50px;
     border-radius: 50%;
-    padding: 20px
 }
