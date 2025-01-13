@@ -30,6 +30,7 @@ class Message(db.Model):
             'id': self.id,
             'sender_id': self.sender_id,
             'receiver_id': self.receiver_id,
+            'profile_picture': self.sender.profile_picture,
             'content': self.content,
             'timestamp': self.timestamp.isoformat(),
             'sender': self.sender.username,

@@ -1,90 +1,3 @@
-// import { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// // import { useNavigate } from "react-router-dom";
-// import * as sessionActions from "../../redux/session";
-// import * as journalActions from "../../redux/journal";
-// import Navigation from "../Navigation";
-// import { Link } from "react-router-dom";
-// import dis from "./DiscoverPage.module.css";
-
-// function DiscoverPage() {
-//     const dispatch = useDispatch();
-//     // const navigate = useNavigate();
-//     const [isLoaded, setIsLoaded] = useState(false);
-//     const { journal, loading, errors } = useSelector((state) => state.journal)
-
-//     useEffect(() => {
-//         dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-
-//         if (journal.length === 0) {
-//             dispatch(journalActions.getAllEntries());
-//         }
-//     }, [dispatch, journal])
-
-//     if (loading || !isLoaded) {
-//         return <div>Loading...</div>;
-//     }
-
-//     if (errors) {
-//         return <div>Error: {errors}</div>;
-//     }
-
-
-//     const renderJournalEntries = (entryList) => {
-//         const sortedEntries = [...entryList].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-//         return sortedEntries.map((entry) => (
-//             <div
-//                 key={entry.id}
-//                 className={dis.entryCard}
-//             >
-//                 <div className={dis.profilePicBox}>
-//                     <img src={entry.profile_picture} alt="" />
-//                 </div>
-//                 <div className={dis.mainEntryContainer}>
-//                     <div className={dis.header}>
-//                         <Link
-//                             to={`/user/${entry.user_id}/profile`}
-//                             className={dis.profileLink}    
-//                         >
-//                             {entry.username}
-//                         </Link>
-//                         <span>•</span>
-//                         <p>{entry.timestamp}</p>
-//                     </div>
-//                     <div className={dis.entryInfo}>
-//                         <h4 className={dis.h4}>{entry.title}</h4>
-//                         <p>{entry.weather}</p>
-//                         <p>{entry.mood}</p>
-//                     </div>
-//                     <div className={dis.entryBody}>
-//                         <p>{entry.content}</p>
-//                         <p>{entry.accomplishments}</p>
-//                         <img src={entry.photo} alt="" />
-//                     </div>
-
-//                 </div>
-//             </div>
-//         ))
-//     };
-
-//     return (
-//         <div>
-//             <div>
-//                 <Navigation />
-//             </div>
-//             {journal.length > 0 ? (
-//                 renderJournalEntries(journal)
-//             ) : (
-//                 <p>No entries found.</p>
-//             )}
-//         </div>
-//     )
-// }
-
-// export default DiscoverPage;
-
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "../../redux/session";
@@ -119,7 +32,6 @@ function DiscoverPage() {
 
         window.addEventListener("scroll", handleScroll);
 
-        // Clean up the event listener
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
@@ -158,10 +70,6 @@ function DiscoverPage() {
                     </div>
                     <div className={dis.entryInfo}>
                         <h4 className={dis.h4}>{entry.title}</h4>
-                        <div className={dis.emojiBox}>
-                            <p>{entry.weather}</p>
-                            <p>{entry.mood}</p>
-                        </div>
                     </div>
                     <div className={dis.entryBody}>
                         <p>{entry.content}</p>

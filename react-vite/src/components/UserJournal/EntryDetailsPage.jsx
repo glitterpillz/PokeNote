@@ -51,8 +51,6 @@ function EntryDetailsPage() {
                 <div className={journ.headerBox}>
                     <h1>{entryDetails.title}</h1>
                     <p>{entryDetails.timestamp}</p>
-                    <p>{entryDetails.weather}</p>
-                    <p>{entryDetails.mood}</p>
                 </div>
                 <div className={journ.detailsContainer}>
                     <p>{entryDetails.content}</p>
