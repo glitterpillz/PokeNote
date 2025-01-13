@@ -55,9 +55,9 @@
 }
 
 .profilePicBox img {
-    width: 100%; /* Make the image fit within the box */
+    width: 100%; 
     height: auto;
-    border-radius: 50%; /* Optional: Make the image circular */
+    border-radius: 50%; 
 }
 
 .mainBodyContainer {
@@ -69,7 +69,7 @@
 .mainEntryContainer {
     flex: 1;
     display: flex;
-    flex-direction: column; /* Arrange content vertically */
+    flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     width: 90%;
