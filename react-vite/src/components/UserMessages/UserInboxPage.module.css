@@ -1,4 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
+
 .mainBoxContainer {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    font-family: "Atma", serif;
+    color: #ffd444;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.flexContainer {
+    display: flex;
+    width: 700px;
+    border: 2px solid white;
+    gap: 40px;
+    padding: 20px 0;
+}
+
+.buttonsContainer {
+    flex: 0 0 auto; 
+    width: 25%; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.messageContainer {
+    flex: 1;
+    font-family: "Baloo Paaji 2", serif;
+    font-size: 1.3rem;
+}
+
+.messageBox {
+    display: flex;
+    align-items: flex-start;
+}
+
+.toFromDiv {
+    display: flex;
+    gap: 30px;
+}
+
+.messageBoxBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.imageBox img {
+    width: 50px;
+    border-radius: 50%;
+    padding: 20px
 }

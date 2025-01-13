@@ -33,7 +33,7 @@ const UserInboxPage = () => {
         return <div>Loading...</div>;
     }
 
-    if (errors) {
+    if (errors && errors.general) {
         return <div>Error: {errors.general || "Something went wrong"}</div>;
     }
 
@@ -46,35 +46,49 @@ const UserInboxPage = () => {
                 <div className={box.header}>
                     <h1>{view === "inbox" ? "Inbox" : "Sent Box"}</h1>
                 </div>
-                <div style={{ margin: "1em 0", display: "flex", gap: "1em" }}>
-                    <button onClick={() => setView("inbox")} style={{ backgroundColor: view === "inbox" ? "#ddd" : "#fff" }}>
-                        Inbox
-                    </button>
-                    <button onClick={() => setView("sent")} style={{ backgroundColor: view === "sent" ? "#ddd" : "#fff" }}>
-                        Sent
-                    </button>
-                    <button onClick={handleSendMessage}>
-                        New Message
-                    </button>
+                <div className={box.flexContainer}>
+                    <div className={box.buttonsContainer}>
+                            <button onClick={handleSendMessage}>
+                                Compose
+                            </button>
+                            <button onClick={() => setView("inbox")}>
+                                Inbox
+                            </button>
+                            <button onClick={() => setView("sent")}>
+                                Sent
+                            </button>
+                    </div>
+
+                    
+
+                    <div className={box.messageContainer}>
+                        {messages && messages.length > 0 ? (
+                            messages.map((message) => (
+                                <div 
+                                    key={message.id} 
+                                    className={box.messageBox}
+                                >
+                                    <div className={box.imageBox}>
+                                        <img src={message.profile_picture} alt={message.sender} />
+                                    </div>
+
+                                    <div className={box.messageBodyBox}>
+                                        <div className={box.toFromDiv}>
+                                            <p><strong>To:</strong> {message.receiver}</p>
+                                            <p><strong>From:</strong> {message.sender}</p>
+                                        </div>
+                                        <div>
+                                            <p><strong>Date:</strong> {message.timestamp}</p>
+                                            <p><strong>Message:</strong> {message.content}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No messages.</p>
+                        )}
+                    </div>
                 </div>
-            </div>
-            <div className={box.messageContainer}>
-                {messages && messages.length > 0 ? (
-                    messages.map((message) => (
-                        <div 
-                            key={message.id} 
-                            style={{ margin: "1em 0", border: "1px solid #ccc", padding: "1em" }}
-                            className={box.messageBox}
-                        >
-                            <p><strong>Date:</strong> {message.timestamp}</p>
-                            <p><strong>To:</strong> {message.receiver}</p>
-                            <p><strong>From:</strong> {message.sender}</p>
-                            <p><strong>Message:</strong> {message.content}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No messages found.</p>
-                )}
             </div>
         </div>
     );

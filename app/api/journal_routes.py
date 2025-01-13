@@ -60,8 +60,6 @@ def create_journal_entry():
             title=form.title.data,
             content=form.content.data,
             accomplishments=form.accomplishments.data,
-            weather=form.weather.data,
-            mood=form.mood.data,
             is_private=form.is_private.data,
             timestamp=timestamp,
         )
@@ -114,8 +112,6 @@ def update_entry(id):
     title = data.get('title', journal_entry.title)
     content = data.get('content', journal_entry.content)
     accomplishments = data.get('accomplishments', journal_entry.accomplishments)
-    weather = data.get('weather', journal_entry.weather)
-    mood = data.get('mood', journal_entry.mood)
     is_private = data.get('is_private', journal_entry.is_private) == 'true'
     timestamp = data.get('timestamp', journal_entry.timestamp)
 
@@ -128,8 +124,6 @@ def update_entry(id):
     journal_entry.title = title
     journal_entry.content = content
     journal_entry.accomplishments = accomplishments
-    journal_entry.weather = weather
-    journal_entry.mood = mood
     journal_entry.is_private = is_private
     journal_entry.timestamp = timestamp
 

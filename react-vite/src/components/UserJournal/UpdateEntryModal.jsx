@@ -10,8 +10,6 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
         title: entryDetails?.title || "",
         content: entryDetails?.content || "",
         accomplishments: entryDetails?.accomplishments || "",
-        weather: entryDetails?.weather || "",
-        mood: entryDetails?.mood || "",
         timestamp: entryDetails?.timestamp?.split("T")[0] || "",
         photo: null,
         is_private: entryDetails?.is_private || false,
@@ -40,8 +38,6 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
         formDataToSend.append("title", formData.title);
         formDataToSend.append("content", formData.content);
         formDataToSend.append("accomplishments", formData.accomplishments);
-        formDataToSend.append("weather", formData.weather);
-        formDataToSend.append("mood", formData.mood);
         formDataToSend.append("is_private", formData.is_private);
         formDataToSend.append("timestamp", formData.timestamp);
         if (formData.photo) {
@@ -100,47 +96,6 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
                         className={ent.formInput}
                         required
                     />
-                </div>
-
-                <div className={ent.inputBox}>
-                    <label htmlFor="weather">Weather:</label>
-                    <select
-                        id="weather"
-                        name="weather"
-                        value={formData.weather}
-                        onChange={handleChange}
-                        className={ent.inputSelect}
-                    >
-                        <option value="">Select Weather</option>
-                        <option value="Sunny">Sunny</option>
-                        <option value="Partly Cloudy">Partly Cloudy</option>
-                        <option value="Cloudy">Cloudy</option>
-                        <option value="Rainy">Rainy</option>
-                        <option value="Stormy">Stormy</option>
-                        <option value="Snowy">Snowy</option>
-                    </select>
-                </div>
-
-                <div className={ent.inputBox}>
-                    <label htmlFor="mood">Mood:</label>
-                    <select
-                        id="mood"
-                        name="mood"
-                        value={formData.mood}
-                        onChange={handleChange}
-                        className={ent.inputSelect}
-                    >
-                        <option value="">Select Mood</option>
-                        <option value="Happy">Happy</option>
-                        <option value="Sad">Sad</option>
-                        <option value="Angry">Angry</option>
-                        <option value="Neutral">Neutral</option>
-                        <option value="Tired">Tired</option>
-                        <option value="Excited">Excited</option>
-                        <option value="Loved">Loved</option>
-                        <option value="Confident">Confident</option>
-                        <option value="Grateful">Grateful</option>
-                    </select>
                 </div>
 
                 <div className={ent.contentBox}>

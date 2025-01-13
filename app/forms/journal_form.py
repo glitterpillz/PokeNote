@@ -21,37 +21,6 @@ class JournalEntryForm(FlaskForm):
         validators=[Length(max=500)]
     )
 
-    weather = SelectField(
-        'Weather',
-        choices=[
-            ('', 'Select Weather'),
-            ('Sunny', '☀️ sunny'),
-            ('Partly Cloudy', '🌤️ partly cloudy'),
-            ('Cloudy', '☁️ cloudy'),
-            ('Rainy', '🌧️ raining'),
-            ('Stormy', '⛈️ storming'),
-            ('Snowy', '❄️ snowing')
-        ],
-        validators=[]
-    )
-
-    mood = SelectField(
-        'Mood',
-        choices=[
-            ('', 'Select Mood'),  
-            ('Happy', '😊 happy'),
-            ('Sad', '😢 sad'),
-            ('Angry', '😡 fuming'),
-            ('Neutral', '😐 fine'),
-            ('Tired', '😴 tired'),
-            ('Excited', '🤩 excited'),
-            ('Loved', '🥰 loved'),
-            ('Confident', '😎 confident'),
-            ('Grateful', '🙏 grateful')
-        ],
-        validators=[]
-    )
-
     timestamp = DateField('Date', format='%Y-%m-%d', validators=[])
 
     photo = StringField('Upload Photo (optional)')

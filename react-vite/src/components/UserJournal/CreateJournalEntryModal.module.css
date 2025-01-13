@@ -4,13 +4,15 @@
     font-family: "Baloo Paaji 2", serif;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 600px;
+    width: 500px;
 }
 
 .form {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 30px;
     margin-top: 20px;
     font-size: 1.5rem;
@@ -26,7 +28,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5px;
+    gap: 30px;
     align-items: flex-start;
     font-size: 1.3rem;
 }
@@ -49,15 +51,6 @@
     width: 200px;
 }
 
-.inputSelect {
-    font-family: "Baloo Paaji 2", serif;
-    font-size: 1.2rem;
-    border: none;
-    color: #fefbe2;
-    width: 150px;
-    background-color: #50587e;
-    border-radius: 3px;
-}
 
 .contentBox, .accomplishBox {
     display: flex;
@@ -69,7 +62,7 @@
 }
 
 .contentTextArea {
-    height: 180px;
+    height: 160px;
     font-size: 1.3rem;
     font-family: "Baloo Paaji 2", serif;
     color: #fefbe2;
@@ -94,7 +87,7 @@
 }
 
 .photoBox {
-    width: 600px;
+    width: 500px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -139,7 +132,7 @@
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin: 30px 0;
+    margin: 10px 0;
 }
 
 
@@ -158,18 +151,18 @@
 
 .mewPic {
     position: absolute;
-    left: 400px;
-    bottom: 750px;
+    left: 420px;
+    bottom: 650px;
 }
 
 .mewPic img {
-    width: 280px;
+    width: 200px;
 }
 
 .butterPic {
     position: absolute;
     left: 400px;
-    bottom: 760px;
+    bottom: 860px;
 }
 
 .butterPic img {

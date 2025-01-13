@@ -11,8 +11,6 @@ function CreateJournalEntryModal() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [accomplishments, setAccomplishments] = useState('');
-    const [weather, setWeather] = useState('');
-    const [mood, setMood] = useState('');
     const [date, setDate] = useState('');
     const [isPrivate, setIsPrivate] = useState(false);
     const [photo, setPhoto] = useState(null);
@@ -24,8 +22,6 @@ function CreateJournalEntryModal() {
         entryData.append('title', title);
         entryData.append('content', content);
         entryData.append('accomplishments', accomplishments);
-        entryData.append('weather', weather);
-        entryData.append('mood', mood);
         entryData.append('date', date);
         entryData.append('is_private', isPrivate);
         if (photo) {
@@ -81,47 +77,6 @@ function CreateJournalEntryModal() {
                             className={ent.formInput}
                             required
                         />
-                    </div>
-
-                    <div className={ent.inputBox}>
-                        <label>
-                            Weather:
-                        </label>
-                        <select
-                            value={weather}
-                            onChange={(e) => setWeather(e.target.value)}
-                            className={ent.inputSelect}
-                        >
-                            <option value="">Select Weather</option>
-                            <option value="Sunny">Sunny</option>
-                            <option value="Partly Cloudy">Partly Cloudy</option>
-                            <option value="Cloudy">Cloudy</option>
-                            <option value="Rainy">Rainy</option>
-                            <option value="Stormy">Stormy</option>
-                            <option value="Snowy">Snowy</option>
-                        </select>
-                    </div>
-
-                    <div className={ent.inputBox}>
-                        <label>
-                            Mood:
-                        </label>
-                        <select
-                            value={mood}
-                            onChange={(e) => setMood(e.target.value)}
-                            className={ent.inputSelect}
-                        >
-                            <option value="">Select Mood</option>
-                            <option value="Happy">Happy</option>
-                            <option value="Sad">Sad</option>
-                            <option value="Angry">Angry</option>
-                            <option value="Neutral">Neutral</option>
-                            <option value="Tired">Tired</option>
-                            <option value="Excited">Excited</option>
-                            <option value="Loved">Loved</option>
-                            <option value="Confident">Confident</option>
-                            <option value="Grateful">Grateful</option>
-                        </select>
                     </div>
                 </div>
 

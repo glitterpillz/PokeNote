@@ -90,8 +90,6 @@ const UserJournalPage = () => {
                                         <h2>{entry.title}</h2>
                                         <p><strong>Accomplishments:</strong> {entry.accomplishments}</p>
                                         <p><strong>Content:</strong> {entry.content}</p>
-                                        <p><strong>Mood:</strong> {entry.mood}</p>
-                                        <p><strong>Weather:</strong> {entry.weather}</p>
                                         <p><strong>Timestamp:</strong> {new Date(entry.timestamp).toLocaleDateString()}</p>
                                         {entry.photo && (
                                             <div>

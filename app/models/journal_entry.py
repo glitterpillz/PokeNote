@@ -11,8 +11,6 @@ class JournalEntry(db.Model):
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text, nullable=False)
     accomplishments = db.Column(db.Text, nullable=True)
-    weather = db.Column(db.String(50), nullable=True)
-    mood = db.Column(db.String(50), nullable=True)
     timestamp = db.Column(db.DateTime, nullable=False, default=None)
     photo = db.Column(db.String(255), nullable=True)
     is_private = db.Column(db.Boolean, nullable=True, default=False)
@@ -46,8 +44,6 @@ class JournalEntry(db.Model):
             'title': self.title,
             'content': self.content,
             'accomplishments': self.accomplishments,
-            'weather': self.weather,
-            'mood': self.mood,
             'timestamp': formatted_timestamp,
             'photo': self.photo,
             'is_private': self.is_private,
