@@ -4,6 +4,17 @@ body {
     background-color: #30385f;
 }
 
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bannerImg {
+    width: 480px;
+    margin-bottom: 20px;
+}
+
 .searchForm {
     font-family: "Baloo Paaji 2", serif;
     justify-self: center;

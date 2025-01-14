@@ -91,10 +91,11 @@ function PokedexPage() {
     };
 
     return (
-        <div>
+        <div className={pok.mainContainer}>
             <div className={pok.navContainer}>
                 <Navigation />
             </div>
+            <img className={pok.bannerImg} src="/images/catch-em-all.png" alt="" />
             <div className={pok.searchContainer}>
                 <form className={pok.searchForm} onSubmit={handleSearch}>
                     <input
