@@ -63,7 +63,9 @@ function PokemonDetailsPage() {
         return <div>No pokemon data available.</div>;
     }
 
-    const { name, image, stats, types } = pokemonDetails;
+    // const isFlyingType = types.includes("Flying");
+
+    const { name, image, stats, types, canFly } = pokemonDetails;
 
     return (
         <div className={det.mainDetailsContainer}>
@@ -71,15 +73,13 @@ function PokemonDetailsPage() {
                 <Navigation />
             </div>
             <div className={det.detailsContainer}>
-                <button
-                    type="button"
-                    className={det.addButton}
-                    onClick={handleAddPokemon}
-                >
-                    Add to Collection
-                </button>
-                <img src={image} alt={name} />
-                <h2>{name}</h2>
+                <img className={det.pokedexImg} src="/images/pokedex-banner.png" alt="" />
+                <img
+                    className={`${det.pokemonImg} ${canFly ? det.flyingPokemonImg : ""}`}
+                    src={image}
+                    alt={name}
+                />
+                <h2 className={det.h2}>{name}</h2>
 
                 <div className={det.typesContainer}>
                     {types.map((type, index) => (
@@ -93,17 +93,32 @@ function PokemonDetailsPage() {
                     ))}
                 </div>
 
-
-                <div>
-                    <h3>Stats</h3>
-                    <ul>
-                        {stats.map((stat, index) => (
-                            <li key={index}>
-                                {stat.stat_name}: {stat.stat_value}
-                            </li>
-                        ))}
-                    </ul>
+                 
+                <div className={det.statsContainer}>
+                    <img className={det.statsImg} src="/images/digital.png" alt="" />
+                    <div className={det.statsBox}>
+                        <h3 className={det.h3}>STATS</h3>
+                        <div className={det.statsDiv}>
+                            {stats.map((stat, index) => (
+                                <div key={index} className={det.statBox}>
+                                    <div className={det.statName}>
+                                        {stat.stat_name}
+                                    </div>
+                                    <div className={det.statValue}>
+                                        {stat.stat_value}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
+                <button
+                    type="button"
+                    className={det.addButton}
+                    onClick={handleAddPokemon}
+                >
+                    Add to Collection
+                </button>
             </div>
         </div>
     );

@@ -1,9 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&family=Press+Start+2P&display=swap");
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Baloo Paaji 2", serif;
+}
+
+.pokedexImg {
+    width: 100%;
+    margin-top: 30px;
+    position: absolute;
+    z-index: 0;
+}
+
+.pokemonImg {
+    z-index: 1000;
+    width: 420px;
+    margin-top: 150px;
+    margin-bottom: 50px;
+}
+
+.flyingTypeImg {
+    position: relative;
+    bottom: 80px;
+}
+
+.h2 {
+    font-family: "Atma", serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin: 10px 0;
+    color: #ffd444;
+}
+
+.typesContainer {
+    display: flex;
+    gap: 10px;
+}
+
 .pokemonType {
-    color: white;
-    border: 2px solid white;
-    padding: 15px 20px;
+    color: #222020;
+    padding: 5px 10px;
     border-radius: 10px;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.4rem;
     margin: 5px;
+    font-weight: bold;
+}
+
+.statsContainer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.statsImg {
+    width: 650px;
+}
+
+.h3 {
+    color: #45C3D9;
+    font-size: 3.5rem;
+    font-style: italic;
+}
+
+.statsBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    font-family: "Press Start 2P", serif;
+}
+
+.statsDiv {
+    border: 2px solid #38abc0;
+    width: 105%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    border-radius: 3px;
+    background-color: #182348;
+}
+
+.statBox {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    font-size: 1.6rem;
+    color: #51FDFF;
+}
+
+.addButton {
+    font-size: 1.8rem;
+    padding: 5px 10px;
+    background-color: #19264b;
+    color: #cacee2;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px 15px;
+    font-family: "Atma", serif;
+    font-weight: 600;
+    margin: 30px 0 50px 0;
 }
