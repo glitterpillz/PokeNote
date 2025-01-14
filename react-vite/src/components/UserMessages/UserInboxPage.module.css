@@ -18,6 +18,7 @@
     width: 800px;
     border: 2px solid #67709c;
     border-radius: 10px;
+    margin-top: 80px;
 }
 
 .buttonsContainer {
@@ -97,4 +98,10 @@
 .imageBox img {
     width: 50px;
     border-radius: 50%;
+}
+
+.pikachu {
+    position: absolute;
+    width: 500px;
+    right: 0;
 }
