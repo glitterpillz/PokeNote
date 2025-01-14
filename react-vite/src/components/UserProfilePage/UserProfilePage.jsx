@@ -66,16 +66,6 @@ function UserProfilePage() {
                         <h2>{username}</h2>
                     </div>
                     <div className={pro.profileDetails}>
-                        <h3>Journal Entries</h3>
-                        {journal_entries && journal_entries.length > 0 ? (
-                            <ul>
-                                {journal_entries.map((entry, index) => (
-                                    <li key={index}>{entry.title || "Untitled Entry"}</li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No journal entries available.</p>
-                        )}
         
                         <h3>Pokemon Collection</h3>
                         {pokemon_collection && pokemon_collection.length > 0 ? (
@@ -87,6 +77,18 @@ function UserProfilePage() {
                         ) : (
                             <p>No Pokémon in collection.</p>
                         )}
+
+                        <h3>Journal Entries</h3>
+                        {journal_entries && journal_entries.length > 0 ? (
+                            <ul>
+                                {journal_entries.map((entry, index) => (
+                                    <li key={index}>{entry.title || "Untitled Entry"}</li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No journal entries available.</p>
+                        )}
+
                     </div>
                 </div>
             </div>
