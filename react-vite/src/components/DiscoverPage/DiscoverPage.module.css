@@ -10,6 +10,7 @@
 
 .bannerImg {
     width: 120%;
+    margin-bottom: 0;
 }
 
 .mainHeader {
@@ -26,6 +27,7 @@
     font-size: 2.8rem;
     text-align: center;
     width: 90%;
+    margin-top: 40px;
 }
 
 .headerMessage {
