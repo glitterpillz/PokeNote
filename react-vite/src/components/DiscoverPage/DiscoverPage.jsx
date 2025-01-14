@@ -15,11 +15,11 @@ function DiscoverPage() {
 
     useEffect(() => {
         dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    }, [dispatch]);
 
-        if (journal.length === 0) {
-            dispatch(journalActions.getAllEntries());
-        }
-    }, [dispatch, journal]);
+    useEffect(() => {
+        dispatch(journalActions.getAllEntries());
+    }, [dispatch])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -104,6 +104,7 @@ function DiscoverPage() {
             )}
 
                 <div className={dis.mainHeader}>
+                    <img className={dis.bannerImg} src="/images/adventure.jpg" alt="" />
                     <h4 className={dis.h4}>Explore the adventures of trainers around the world!</h4>
                     <p className={dis.headerMessage}>Discover stories, milestones, and moments shared by the community</p>
                 </div>

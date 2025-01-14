@@ -75,10 +75,9 @@ function Navigation() {
           </ul>
         </nav>
       </div>
-      <div className={nav.profileButton}>
-        <ProfileButton />
-      </div>
-
+        <div className={nav.profileButton}>
+          <ProfileButton />
+        </div>
     </div>
   );
 }

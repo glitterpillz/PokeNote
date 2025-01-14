@@ -42,7 +42,7 @@ body {
     gap: 30px;
     justify-items: center;
     padding: 40px 30px;
-    background-image: linear-gradient(to bottom right, rgb(151, 224, 244), rgb(232, 149, 228));    
+    background-image: linear-gradient(to bottom right, #86c9dc, #c673c2);    
     width: 85%;
     justify-self: center;
     margin-top: 30px;
