@@ -61,6 +61,7 @@ def seed_pokemon():
     butterfree = Pokemon(
         name="Butterfree",
         types=["Bug", "Flying"],
+        can_fly=True,
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/012.png"
     )
     weedle = Pokemon(
@@ -78,133 +79,216 @@ def seed_pokemon():
         types=["Bug", "Poison"],
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/015.png"
     )
-    # pidgey = Pokemon(
-    #     name="Pidgey",
-    #     types=["Normal", "Flying"],
-    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/016.png"
-    # )
-    # pidgeotto = Pokemon(
-    #     name="Pidgeotto",
-    #     types=["Normal", "Flying"],
-    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/017.png"
-    # )
-    # pidgeot = Pokemon(
-    #     name="Pidgeot",
-    #     types=["Normal", "Flying"],
-    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/018.png"
-    # )
-    # rattata = Pokemon(
-    #     name="Rattata",
-    #     types=["Normal"],
-    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/019.png"
-    # )
-    # raticate = Pokemon(
-    #     name="Raticate",
-    #     types=["Normal"],
-    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/020.png"
-    # )
-    # spearow = Pokemon(
-    #     name="Spearow",
-    #     types=["Normal", "Flying"],
-    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/021.png"
-    # )
-    # fearow = Pokemon(
-    #     name="Fearow",
-    #     types=["Normal", "Flying"],
-    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/022.png"
-    # )
+    pidgey = Pokemon(
+        name="Pidgey",
+        types=["Normal", "Flying"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/016.png"
+    )
+    pidgeotto = Pokemon(
+        name="Pidgeotto",
+        types=["Normal", "Flying"],
+        can_fly=True,
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/017.png"
+    )
+    pidgeot = Pokemon(
+        name="Pidgeot",
+        types=["Normal", "Flying"],
+        can_fly=True,
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/018.png"
+    )
+    rattata = Pokemon(
+        name="Rattata",
+        types=["Normal"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/019.png"
+    )
+    raticate = Pokemon(
+        name="Raticate",
+        types=["Normal"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/020.png"
+    )
+    spearow = Pokemon(
+        name="Spearow",
+        types=["Normal", "Flying"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/021.png"
+    )
+    fearow = Pokemon(
+        name="Fearow",
+        types=["Normal", "Flying"],
+        can_fly=True,
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/022.png"
+    )
     
     
     bulbasaur.stats = [
         PokemonStat(stat_name="hp", stat_value=45),
         PokemonStat(stat_name="attack", stat_value=49),
         PokemonStat(stat_name="defense", stat_value=49),
+        PokemonStat(stat_name="sp attack", stat_value=65),
+        PokemonStat(stat_name="sp defense", stat_value=65),
         PokemonStat(stat_name="speed", stat_value=45)
     ]
     ivysaur.stats = [
         PokemonStat(stat_name="hp", stat_value=60),
         PokemonStat(stat_name="attack", stat_value=62),
         PokemonStat(stat_name="defense", stat_value=63),
+        PokemonStat(stat_name="sp attack", stat_value=80),
+        PokemonStat(stat_name="sp defense", stat_value=80),
         PokemonStat(stat_name="speed", stat_value=60)
     ]
     venusaur.stats = [
         PokemonStat(stat_name="hp", stat_value=80),
         PokemonStat(stat_name="attack", stat_value=82),
         PokemonStat(stat_name="defense", stat_value=83),
+        PokemonStat(stat_name="sp attack", stat_value=100),
+        PokemonStat(stat_name="sp defense", stat_value=100),
         PokemonStat(stat_name="speed", stat_value=80)
     ]
     charmander.stats = [
         PokemonStat(stat_name="hp", stat_value=39),
         PokemonStat(stat_name="attack", stat_value=52),
         PokemonStat(stat_name="defense", stat_value=43),
+        PokemonStat(stat_name="sp attack", stat_value=60),
+        PokemonStat(stat_name="sp defense", stat_value=50),
         PokemonStat(stat_name="speed", stat_value=65)
     ]
     charmeleon.stats = [
         PokemonStat(stat_name="hp", stat_value=58),
         PokemonStat(stat_name="attack", stat_value=64),
         PokemonStat(stat_name="defense", stat_value=58),
+        PokemonStat(stat_name="sp attack", stat_value=80),
+        PokemonStat(stat_name="sp defense", stat_value=65),
         PokemonStat(stat_name="speed", stat_value=80)
     ]
     charizard.stats = [
         PokemonStat(stat_name="hp", stat_value=78),
         PokemonStat(stat_name="attack", stat_value=84),
         PokemonStat(stat_name="defense", stat_value=78),
+        PokemonStat(stat_name="sp attack", stat_value=109),
+        PokemonStat(stat_name="sp defense", stat_value=85),
         PokemonStat(stat_name="speed", stat_value=100)
     ]
     squirtle.stats = [
         PokemonStat(stat_name="hp", stat_value=44),
         PokemonStat(stat_name="attack", stat_value=48),
         PokemonStat(stat_name="defense", stat_value=65),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=64),
         PokemonStat(stat_name="speed", stat_value=43)
     ]
     wartortle.stats = [
         PokemonStat(stat_name="hp", stat_value=59),
         PokemonStat(stat_name="attack", stat_value=63),
         PokemonStat(stat_name="defense", stat_value=80),
+        PokemonStat(stat_name="sp attack", stat_value=65),
+        PokemonStat(stat_name="sp defense", stat_value=80),
         PokemonStat(stat_name="speed", stat_value=58)
     ]
     blastoise.stats = [
         PokemonStat(stat_name="hp", stat_value=79),
         PokemonStat(stat_name="attack", stat_value=83),
         PokemonStat(stat_name="defense", stat_value=100),
+        PokemonStat(stat_name="sp attack", stat_value=85),
+        PokemonStat(stat_name="sp defense", stat_value=105),
         PokemonStat(stat_name="speed", stat_value=78)
     ]
     caterpie.stats = [
         PokemonStat(stat_name="hp", stat_value=45),
         PokemonStat(stat_name="attack", stat_value=30),
         PokemonStat(stat_name="defense", stat_value=35),
+        PokemonStat(stat_name="sp attack", stat_value=20),
+        PokemonStat(stat_name="sp defense", stat_value=20),
         PokemonStat(stat_name="speed", stat_value=45)
     ]
     metapod.stats = [
         PokemonStat(stat_name="hp", stat_value=50),
         PokemonStat(stat_name="attack", stat_value=20),
         PokemonStat(stat_name="defense", stat_value=55),
+        PokemonStat(stat_name="sp attack", stat_value=25),
+        PokemonStat(stat_name="sp defense", stat_value=25),
         PokemonStat(stat_name="speed", stat_value=30)
     ]
     butterfree.stats = [
         PokemonStat(stat_name="hp", stat_value=60),
         PokemonStat(stat_name="attack", stat_value=45),
         PokemonStat(stat_name="defense", stat_value=50),
+        PokemonStat(stat_name="sp attack", stat_value=90),
+        PokemonStat(stat_name="sp defense", stat_value=80),
         PokemonStat(stat_name="speed", stat_value=70)
     ]
     weedle.stats = [
         PokemonStat(stat_name="hp", stat_value=40),
         PokemonStat(stat_name="attack", stat_value=35),
         PokemonStat(stat_name="defense", stat_value=30),
+        PokemonStat(stat_name="sp attack", stat_value=20),
+        PokemonStat(stat_name="sp defense", stat_value=20),
         PokemonStat(stat_name="speed", stat_value=50)
     ]
     kakuna.stats = [
         PokemonStat(stat_name="hp", stat_value=45),
         PokemonStat(stat_name="attack", stat_value=25),
         PokemonStat(stat_name="defense", stat_value=50),
+        PokemonStat(stat_name="sp attack", stat_value=25),
+        PokemonStat(stat_name="sp defense", stat_value=25),
         PokemonStat(stat_name="speed", stat_value=35)
     ]
-    beedrill.stats = [
-        PokemonStat(stat_name="hp", stat_value=65),
-        PokemonStat(stat_name="attack", stat_value=80),
+    pidgey.stats = [
+        PokemonStat(stat_name="hp", stat_value=40),
+        PokemonStat(stat_name="attack", stat_value=45),
         PokemonStat(stat_name="defense", stat_value=40),
-        PokemonStat(stat_name="speed", stat_value=75)
+        PokemonStat(stat_name="sp attack", stat_value=35),
+        PokemonStat(stat_name="sp defense", stat_value=35),
+        PokemonStat(stat_name="speed", stat_value=56)
     ]
+    pidgeotto.stats = [
+        PokemonStat(stat_name="hp", stat_value=63),
+        PokemonStat(stat_name="attack", stat_value=60),
+        PokemonStat(stat_name="defense", stat_value=55),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=50),
+        PokemonStat(stat_name="speed", stat_value=71)
+    ]
+    pidgeot.stats = [
+        PokemonStat(stat_name="hp", stat_value=83),
+        PokemonStat(stat_name="attack", stat_value=80),
+        PokemonStat(stat_name="defense", stat_value=75),
+        PokemonStat(stat_name="sp attack", stat_value=70),
+        PokemonStat(stat_name="sp defense", stat_value=70),
+        PokemonStat(stat_name="speed", stat_value=101)
+    ]
+    rattata.stats = [
+        PokemonStat(stat_name="hp", stat_value=30),
+        PokemonStat(stat_name="attack", stat_value=56),
+        PokemonStat(stat_name="defense", stat_value=35),
+        PokemonStat(stat_name="sp attack", stat_value=25),
+        PokemonStat(stat_name="sp defense", stat_value=35),
+        PokemonStat(stat_name="speed", stat_value=72)
+    ]
+    raticate.stats = [
+        PokemonStat(stat_name="hp", stat_value=55),
+        PokemonStat(stat_name="attack", stat_value=81),
+        PokemonStat(stat_name="defense", stat_value=60),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=70),
+        PokemonStat(stat_name="speed", stat_value=97)
+    ]
+    spearow.stats = [
+        PokemonStat(stat_name="hp", stat_value=40),
+        PokemonStat(stat_name="attack", stat_value=60),
+        PokemonStat(stat_name="defense", stat_value=30),
+        PokemonStat(stat_name="sp attack", stat_value=31),
+        PokemonStat(stat_name="sp defense", stat_value=31),
+        PokemonStat(stat_name="speed", stat_value=70)
+    ]
+    fearow.stats = [
+        PokemonStat(stat_name="hp", stat_value=65),
+        PokemonStat(stat_name="attack", stat_value=90),
+        PokemonStat(stat_name="defense", stat_value=65),
+        PokemonStat(stat_name="sp attack", stat_value=61),
+        PokemonStat(stat_name="sp defense", stat_value=61),
+        PokemonStat(stat_name="speed", stat_value=100)
+    ]
+
+
 
 
     db.session.add(bulbasaur)
@@ -222,7 +306,13 @@ def seed_pokemon():
     db.session.add(weedle)
     db.session.add(kakuna)
     db.session.add(beedrill)
-
+    db.session.add(pidgey)
+    db.session.add(pidgeotto)
+    db.session.add(pidgeot)
+    db.session.add(rattata)
+    db.session.add(raticate)
+    db.session.add(spearow)
+    db.session.add(fearow)
 
     db.session.commit()
 

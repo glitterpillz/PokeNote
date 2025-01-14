@@ -9,6 +9,7 @@ class Pokemon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     types = db.Column(db.JSON, nullable=False)
+    can_fly = db.Column(db.Boolean, nullable=True)
 
     image = db.Column(db.String(255), nullable=True)
 
@@ -29,6 +30,7 @@ class Pokemon(db.Model):
             'id': self.id,
             'name': self.name,
             'types': self.types,
+            'can_fly': self.can_fly,
             'image': self.image,
             'stats': [stat.to_dict() for stat in self.stats] if self.stats else []
         }
