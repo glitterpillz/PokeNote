@@ -58,6 +58,7 @@ const UserInboxPage = () => {
                 <div className={box.header}>
                     <h1>{view === "inbox" ? "Inbox" : "Sent Box"}</h1>
                 </div>
+                <img className={box.pikachu} src="/images/pikachu.png" alt="" />
                 <div className={box.flexContainer}>
                     <div className={box.buttonsContainer}>
                             <button onClick={handleSendMessage} className={box.button}>

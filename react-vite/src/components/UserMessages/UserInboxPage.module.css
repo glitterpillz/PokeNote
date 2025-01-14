@@ -18,6 +18,7 @@
     width: 800px;
     border: 2px solid #67709c;
     border-radius: 10px;
+    margin-top: 65px;
 }
 
 .buttonsContainer {
@@ -49,7 +50,7 @@
     font-family: "Baloo Paaji 2", serif;
     font-size: 1.3rem;
     padding: 20px;
-    background-image: linear-gradient(to bottom right, rgb(151, 224, 244), rgb(232, 149, 228));    
+    background-image: linear-gradient(to bottom right, #86c9dc, #c673c2);
     width: 85%;
 }
 
@@ -97,4 +98,10 @@
 .imageBox img {
     width: 50px;
     border-radius: 50%;
+}
+
+.pikachu {
+    position: absolute;
+    width: 480px;
+    right: -50px;
 }
