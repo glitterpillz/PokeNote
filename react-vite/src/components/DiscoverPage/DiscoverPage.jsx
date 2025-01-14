@@ -15,11 +15,11 @@ function DiscoverPage() {
 
     useEffect(() => {
         dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    }, [dispatch]);
 
-        if (journal.length === 0) {
-            dispatch(journalActions.getAllEntries());
-        }
-    }, [dispatch, journal]);
+    useEffect(() => {
+        dispatch(journalActions.getAllEntries());
+    }, [dispatch])
 
     useEffect(() => {
         const handleScroll = () => {

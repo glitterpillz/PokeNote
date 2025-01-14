@@ -61,9 +61,13 @@
 }
 
 .mainBodyContainer {
-    background-image: linear-gradient(to bottom right, rgb(151, 224, 244), rgb(232, 149, 228));    
-    border-radius: 10px;
+    background-image: linear-gradient(to bottom right, #86c9dc, #c673c2);
+    border-radius: 12px;
     padding: 20px 35px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .mainEntryContainer {
