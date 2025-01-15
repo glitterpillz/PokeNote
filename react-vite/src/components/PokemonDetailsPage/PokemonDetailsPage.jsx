@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"; 
 import { getPokemonDetails, addPokemonToCollection } from "../../redux/pokemon";
+import { useNavigate } from "react-router-dom";
 import Navigation from "../Navigation";
 import det from "./PokemonDetailsPage.module.css";
 
 function PokemonDetailsPage() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { id } = useParams();
     const { pokemonDetails, loading, errors } = useSelector((state) => state.pokemon);
 
@@ -20,6 +22,13 @@ function PokemonDetailsPage() {
     useEffect(() => {
         console.log("POKEMON DETAILS UPDATED:", pokemonDetails);
     }, [pokemonDetails]);
+
+    const handleNavigation = (direction) => {
+        const currentId = parseInt(id, 10);
+        const newId = direction === 'next' ? currentId + 1 : currentId - 1
+        
+        navigate(`/pokemon/${newId}`)
+    }
 
     const handleAddPokemon = () => {
         dispatch(addPokemonToCollection(id))
@@ -48,6 +57,8 @@ function PokemonDetailsPage() {
         Poison: '#c677cf',
         Flying: '#a9c4ec',
         Bug: '#91e0b0',
+        Ground: '#9c7979',
+        Rock: '#ababaf',
     };
 
     
@@ -63,9 +74,7 @@ function PokemonDetailsPage() {
         return <div>No pokemon data available.</div>;
     }
 
-    // const isFlyingType = types.includes("Flying");
-
-    const { name, image, stats, types, canFly } = pokemonDetails;
+    const { name, image, stats, types, can_fly } = pokemonDetails;
 
     return (
         <div className={det.mainDetailsContainer}>
@@ -73,13 +82,32 @@ function PokemonDetailsPage() {
                 <Navigation />
             </div>
             <div className={det.detailsContainer}>
+                
                 <img className={det.pokedexImg} src="/images/pokedex-banner.png" alt="" />
+                
                 <img
-                    className={`${det.pokemonImg} ${canFly ? det.flyingPokemonImg : ""}`}
+                    className={`${det.pokemonImg} ${can_fly ? det.flyingTypeImg : ""}`}
                     src={image}
                     alt={name}
                 />
+                
+                <img 
+                    className={det.prevArrowImg} 
+                    src="/images/arrow-prev.png" 
+                    alt="Previous" 
+                    onClick={() => handleNavigation('previous')}
+                    hidden = {parseInt(id, 10) <= 1}
+                />
+                
                 <h2 className={det.h2}>{name}</h2>
+                
+                <img 
+                    className={det.nextArrowImg} 
+                    src="/images/arrow-next.png" 
+                    alt="" 
+                    onClick={() => handleNavigation('next')}
+                    hidden = {parseInt(id, 10) >= 152}
+                />
 
                 <div className={det.typesContainer}>
                     {types.map((type, index) => (

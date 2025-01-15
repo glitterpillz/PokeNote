@@ -101,23 +101,111 @@ def seed_pokemon():
         types=["Normal"],
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/019.png"
     )
+    #20
     raticate = Pokemon(
         name="Raticate",
         types=["Normal"],
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/020.png"
     )
+    #21
     spearow = Pokemon(
         name="Spearow",
         types=["Normal", "Flying"],
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/021.png"
     )
+    #22
     fearow = Pokemon(
         name="Fearow",
         types=["Normal", "Flying"],
         can_fly=True,
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/022.png"
     )
-    
+    #23
+    ekans = Pokemon(
+        name="Ekans",
+        types=["Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/023.png"
+    )
+    #24
+    arbok = Pokemon(
+        name="Arbok",
+        types=["Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/024.png"
+    )
+    #25
+    pikachu = Pokemon(
+        name="Pikachu",
+        types=["Electric"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png"
+    )
+    #26
+    raichu = Pokemon(
+        name="Raichu",
+        types=["Electric"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/026.png"
+    )
+    #27
+    sandshrew = Pokemon(
+        name="Sandshrew",
+        types=["Ground"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/027.png"
+    )
+    #28
+    sandslash = Pokemon(
+        name="Sandslash",
+        types=["Ground"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/028.png"
+    )
+    #29
+    nidoran_f = Pokemon(
+        name="Nidoran",
+        types=["Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/029.png"
+    )
+    #30
+    nidorina = Pokemon(
+        name="Nidorina",
+        types=["Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/030.png"
+    )
+    #31
+    nidoqueen = Pokemon(
+        name="Nidoqueen",
+        types=["Poison", "Ground"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/031.png"
+    )
+    #32
+    nidoran_m = Pokemon(
+        name="Nidoran",
+        types=["Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/032.png"
+    )
+    #33
+    nidorino = Pokemon(
+        name="Nidorino",
+        types=["Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/033.png"
+    )
+    #34
+    nidoking = Pokemon(
+        name="Nidoking",
+        types=["Poison", "Ground"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/034.png"
+    )
+    #35
+    clefairy = Pokemon(
+        name="Clefairy",
+        types=["Fairy"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/035.png"
+    )
+    #36
+    clefable = Pokemon(
+        name="Clefable",
+        types=["Fairy"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/036.png"
+    )
+
+
     
     bulbasaur.stats = [
         PokemonStat(stat_name="hp", stat_value=45),
@@ -287,8 +375,118 @@ def seed_pokemon():
         PokemonStat(stat_name="sp defense", stat_value=61),
         PokemonStat(stat_name="speed", stat_value=100)
     ]
-
-
+    ekans.stats = [
+        PokemonStat(stat_name="hp", stat_value=35),
+        PokemonStat(stat_name="attack", stat_value=60),
+        PokemonStat(stat_name="defense", stat_value=44),
+        PokemonStat(stat_name="sp attack", stat_value=40),
+        PokemonStat(stat_name="sp defense", stat_value=54),
+        PokemonStat(stat_name="speed", stat_value=55)
+    ]
+    arbok.stats = [
+        PokemonStat(stat_name="hp", stat_value=60),
+        PokemonStat(stat_name="attack", stat_value=95),
+        PokemonStat(stat_name="defense", stat_value=69),
+        PokemonStat(stat_name="sp attack", stat_value=65),
+        PokemonStat(stat_name="sp defense", stat_value=79),
+        PokemonStat(stat_name="speed", stat_value=80)
+    ]
+    pikachu.stats = [
+        PokemonStat(stat_name="hp", stat_value=35),
+        PokemonStat(stat_name="attack", stat_value=55),
+        PokemonStat(stat_name="defense", stat_value=40),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=50),
+        PokemonStat(stat_name="speed", stat_value=90)
+    ]
+    raichu.stats = [
+        PokemonStat(stat_name="hp", stat_value=60),
+        PokemonStat(stat_name="attack", stat_value=90),
+        PokemonStat(stat_name="defense", stat_value=55),
+        PokemonStat(stat_name="sp attack", stat_value=90),
+        PokemonStat(stat_name="sp defense", stat_value=80),
+        PokemonStat(stat_name="speed", stat_value=110)
+    ]
+    sandshrew.stats = [
+        PokemonStat(stat_name="hp", stat_value=50),
+        PokemonStat(stat_name="attack", stat_value=75),
+        PokemonStat(stat_name="defense", stat_value=85),
+        PokemonStat(stat_name="sp attack", stat_value=20),
+        PokemonStat(stat_name="sp defense", stat_value=30),
+        PokemonStat(stat_name="speed", stat_value=40)
+    ]
+    sandslash.stats = [
+        PokemonStat(stat_name="hp", stat_value=75),
+        PokemonStat(stat_name="attack", stat_value=100),
+        PokemonStat(stat_name="defense", stat_value=110),
+        PokemonStat(stat_name="sp attack", stat_value=45),
+        PokemonStat(stat_name="sp defense", stat_value=55),
+        PokemonStat(stat_name="speed", stat_value=65)
+    ]
+    nidoran_f.stats = [
+        PokemonStat(stat_name="hp", stat_value=55),
+        PokemonStat(stat_name="attack", stat_value=47),
+        PokemonStat(stat_name="defense", stat_value=52),
+        PokemonStat(stat_name="sp attack", stat_value=40),
+        PokemonStat(stat_name="sp defense", stat_value=40),
+        PokemonStat(stat_name="speed", stat_value=41)
+    ]
+    nidorina.stats = [
+        PokemonStat(stat_name="hp", stat_value=70),
+        PokemonStat(stat_name="attack", stat_value=62),
+        PokemonStat(stat_name="defense", stat_value=67),
+        PokemonStat(stat_name="sp attack", stat_value=55),
+        PokemonStat(stat_name="sp defense", stat_value=55),
+        PokemonStat(stat_name="speed", stat_value=56)
+    ]
+    nidoqueen.stats = [
+        PokemonStat(stat_name="hp", stat_value=90),
+        PokemonStat(stat_name="attack", stat_value=92),
+        PokemonStat(stat_name="defense", stat_value=87),
+        PokemonStat(stat_name="sp attack", stat_value=75),
+        PokemonStat(stat_name="sp defense", stat_value=85),
+        PokemonStat(stat_name="speed", stat_value=76)
+    ]
+    nidoran_m.stats = [
+        PokemonStat(stat_name="hp", stat_value=46),
+        PokemonStat(stat_name="attack", stat_value=57),
+        PokemonStat(stat_name="defense", stat_value=40),
+        PokemonStat(stat_name="sp attack", stat_value=40),
+        PokemonStat(stat_name="sp defense", stat_value=40),
+        PokemonStat(stat_name="speed", stat_value=50)
+    ]
+    nidorino.stats = [
+        PokemonStat(stat_name="hp", stat_value=61),
+        PokemonStat(stat_name="attack", stat_value=72),
+        PokemonStat(stat_name="defense", stat_value=57),
+        PokemonStat(stat_name="sp attack", stat_value=55),
+        PokemonStat(stat_name="sp defense", stat_value=55),
+        PokemonStat(stat_name="speed", stat_value=65)
+    ]
+    nidoking.stats = [
+        PokemonStat(stat_name="hp", stat_value=81),
+        PokemonStat(stat_name="attack", stat_value=102),
+        PokemonStat(stat_name="defense", stat_value=77),
+        PokemonStat(stat_name="sp attack", stat_value=85),
+        PokemonStat(stat_name="sp defense", stat_value=75),
+        PokemonStat(stat_name="speed", stat_value=85)
+    ]
+    clefairy.stats = [
+        PokemonStat(stat_name="hp", stat_value=70),
+        PokemonStat(stat_name="attack", stat_value=45),
+        PokemonStat(stat_name="defense", stat_value=48),
+        PokemonStat(stat_name="sp attack", stat_value=60),
+        PokemonStat(stat_name="sp defense", stat_value=65),
+        PokemonStat(stat_name="speed", stat_value=35)
+    ]
+    clefable.stats = [
+        PokemonStat(stat_name="hp", stat_value=95),
+        PokemonStat(stat_name="attack", stat_value=70),
+        PokemonStat(stat_name="defense", stat_value=73),
+        PokemonStat(stat_name="sp attack", stat_value=95),
+        PokemonStat(stat_name="sp defense", stat_value=90),
+        PokemonStat(stat_name="speed", stat_value=60)
+    ]
 
 
     db.session.add(bulbasaur)
@@ -313,6 +511,20 @@ def seed_pokemon():
     db.session.add(raticate)
     db.session.add(spearow)
     db.session.add(fearow)
+    db.session.add(ekans)
+    db.session.add(arbok)
+    db.session.add(pikachu)
+    db.session.add(raichu)
+    db.session.add(sandshrew)
+    db.session.add(sandslash)
+    db.session.add(nidoran_f)
+    db.session.add(nidorina)
+    db.session.add(nidoqueen)
+    db.session.add(nidoran_m)
+    db.session.add(nidorino)
+    db.session.add(nidoking)
+    db.session.add(clefairy)
+    db.session.add(clefable)
 
     db.session.commit()
 
