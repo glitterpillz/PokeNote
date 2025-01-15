@@ -50,9 +50,12 @@ export const login = createAsyncThunk(
       const data = await res.json();
 
       if (!res.ok) {
-        throw { errors: data.errors || { general: "Invalid login credentials"} };
+        const error = await res.json();
+        if (res.status === 403) {
+          return rejectWithValue({ error: "Account disabled" });
+        }
+        throw new Error(error.error || "Login failed")
       }
-
       return data.user || data;
     } catch (error) {
       return rejectWithValue(error.message || "Login failed");

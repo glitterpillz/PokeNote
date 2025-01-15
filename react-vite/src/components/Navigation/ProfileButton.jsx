@@ -73,7 +73,7 @@ function ProfileButton() {
                 </li>
                 {user.admin && (
                   <li>
-                    <NavLink className={profile.accountLink} to="/user-accounts">User Accounts</NavLink>
+                    <NavLink className={profile.accountLink} to="/users">User Accounts</NavLink>
                   </li>
                 )}
                 <hr />

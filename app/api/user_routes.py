@@ -23,6 +23,41 @@ def users():
     return {'users': [user.to_dict() for user in users]}
 
 
+
+# ADMIN - DISABLE USER:
+@user_routes.route('/<int:id>/disable', methods=['PUT'])
+@login_required
+def disable_user(id):
+    if not current_user.admin:
+        return {'error': 'Unauthorized. Admin privileges required.'}, 403
+   
+    user = User.query.get(id)
+
+    if user:
+        user.disabled = True
+        db.session.commit()
+        return jsonify({'message': 'User disabled successfully'}), 200
+    return jsonify({'error': 'User not found'}), 404
+
+
+
+# ADMIN - ENABLE USER:
+@user_routes.route('/<int:id>/enable', methods=['PUT'])
+@login_required
+def enable_user(id):
+    if not current_user.admin:
+        return {'error': 'Unauthorized. Admin privileges required.'}, 403
+
+    user = User.query.get(id)
+
+    if user:
+        user.disabled = False  
+        db.session.commit()
+        return jsonify({'message': 'User enabled successfully'}), 200
+    return jsonify({'error': 'User not found'}), 404
+
+
+
 # ADMIN - GET USER DETAILS
 @user_routes.route('/<int:id>')
 @login_required
