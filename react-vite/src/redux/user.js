@@ -32,7 +32,6 @@ export const getAllUsers = createAsyncThunk(
 );
 
 
-
 export const getUserProfile = createAsyncThunk(
     "user/getUserProfile",
     async (id, { rejectWithValue }) => {
@@ -45,6 +44,30 @@ export const getUserProfile = createAsyncThunk(
         }
     }
 );
+
+
+export const toggleUserDisabled = createAsyncThunk(
+    "user/toggleDisabled",
+    async ({ userId, disabled }, { rejectWithValue }) => {
+        try {
+            const res = await fetch(`/api/users/${userId}/${disabled ? 'disable' : 'enable'}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ disabled }),
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.errors || "Failed to update user status");
+            }
+
+            return data;  
+        } catch (error) {
+            return rejectWithValue(error.message || 'Error toggling user status');
+        }
+    }
+);
+
 
 const userSlice = createSlice({
     name: "user",
@@ -75,6 +98,22 @@ const userSlice = createSlice({
             .addCase(getUserProfile.fulfilled, (state, action) => {
                 state.loading = false;
                 state.userProfile = action.payload;
+            })
+            .addCase(toggleUserDisabled.pending, (state) => {
+                state.loading = true;
+                state.errors = null;
+            })
+            .addCase(toggleUserDisabled.rejected, (state, action) => {
+                state.loading = false;
+                state.errors = action.payload;
+            })
+            .addCase(toggleUserDisabled.fulfilled, (state, action) => {
+                state.loading = false;
+                state.errors = null;
+                const updatedUser = action.payload;
+                state.users = state.users.map(user => 
+                    user.id === updatedUser.id ? updatedUser : user
+                );
             });
     }
 })

@@ -66,10 +66,17 @@ def login():
 
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email']).first()
-        login_user(user)
-        return user.to_dict()
+        
+        if user:
+            if user.disabled:
+                return {'error': 'This account has been disabled. Please contact support.'}, 403
+        
+            login_user(user)
+            return user.to_dict()
     
-    return form.errors, 401
+    return {"errors": form.errors or "Invalid credentials"}, 401
+
+
 
 
 @auth_routes.route('/logout')

@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     fname = db.Column(db.String(40), nullable=False)
     lname = db.Column(db.String(40), nullable=False)
     admin = db.Column(db.Boolean, nullable=True)
+    disabled = db.Column(db.Boolean, default=False)
     profile_picture = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/g61kyQY/placeholder-prof-pic.png")
     banner_url = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/QKPFB1t/placeholder-banner.jpg")
 
@@ -75,6 +76,7 @@ class User(db.Model, UserMixin):
             'fname': self.fname,
             'lname': self.lname,
             'admin': self.admin,
+            'disabled': self.disabled,
             'pokemon_collection': [entry.to_dict() for entry in self.pokemon_collection],
             'journal_entries': [entry.to_dict() for entry in self.journal_entries],
             'comments': [entry.to_dict() for entry in self.comments],

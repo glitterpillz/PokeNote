@@ -26,6 +26,7 @@ def seed_users():
         fname='Demo',
         lname='User',
         admin=False,
+        disabled=False,
         profile_picture='https://i.ibb.co/bJPCvPt/profile-picture.jpg',
         banner_url='https://i.ibb.co/864V411/banner.jpg'
     )
@@ -35,7 +36,8 @@ def seed_users():
         password='password',
         fname='Karen',
         lname='Hickey',
-        admin=False
+        admin=False,
+        disabled=False
     )
 
     db.session.add(admin)
