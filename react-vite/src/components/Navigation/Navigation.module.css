@@ -83,8 +83,10 @@
 }
 
 .profileButton {
-  position: absolute;
-  right: 30px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 40px;
 }
 
 .sidePanel nav img {

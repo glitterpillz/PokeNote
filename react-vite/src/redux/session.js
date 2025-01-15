@@ -181,7 +181,6 @@ export const deleteAccount = createAsyncThunk(
 );
 
 
-
 const sessionSlice = createSlice({
   name: "session",
   initialState,
