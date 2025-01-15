@@ -12,7 +12,7 @@ def seed_users():
 
     # Add new users
     admin = User(
-        username='admin',
+        username='admin_user',
         email='admin@example.com',
         password='password',
         fname='Admin',
@@ -20,7 +20,7 @@ def seed_users():
         admin=True
     )    
     demo = User(
-        username='demo',
+        username='demo_user',
         email='demo@example.com',
         password='password',
         fname='Demo',
