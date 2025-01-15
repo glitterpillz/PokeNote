@@ -1,10 +1,37 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
+    users: [],
     userProfile: null,
     loading: false,
     errors: null
 };
+
+export const getAllUsers = createAsyncThunk(
+    "user/getAllUsers",
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetch('/api/users/all', {
+                method: 'GET',
+                credentials: 'include',
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || `Error ${res.status}`);
+            }
+
+            const data = await res.json();
+            return data.users;
+            
+        } catch (error) {
+            console.error("Error fetching users:", error);
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+
 
 export const getUserProfile = createAsyncThunk(
     "user/getUserProfile",
@@ -25,6 +52,18 @@ const userSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(getAllUsers.pending, (state) => {
+                state.loading = true;
+                state.errors = null;
+            })
+            .addCase(getAllUsers.rejected, (state, action) => {
+                state.loading = false;
+                state.errors = action.payload;
+            })
+            .addCase(getAllUsers.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users = action.payload || [];
+            })
             .addCase(getUserProfile.pending, (state) => {
                 state.loading = true;
                 state.errors = null;
@@ -36,7 +75,7 @@ const userSlice = createSlice({
             .addCase(getUserProfile.fulfilled, (state, action) => {
                 state.loading = false;
                 state.userProfile = action.payload;
-            })
+            });
     }
 })
 
