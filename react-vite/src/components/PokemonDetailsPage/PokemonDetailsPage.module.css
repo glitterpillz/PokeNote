@@ -16,14 +16,31 @@
 
 .pokemonImg {
     z-index: 1000;
-    width: 420px;
-    margin-top: 150px;
+    width: 400px;
+    margin-top: 170px;
     margin-bottom: 50px;
 }
 
 .flyingTypeImg {
     position: relative;
     bottom: 80px;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #19264b;
+    width: 110%;
+    padding: 10px 0 30px 0;
+    position: relative;
+    bottom: 25px;
+}
+
+.midHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .h2 {
@@ -35,17 +52,8 @@
 }
 
 .prevArrowImg, .nextArrowImg {
-    position: absolute;
-    top: 760px;
-    width: 140px;
-}
-
-.prevArrowImg {
-    right: 680px;
-}
-
-.nextArrowImg {
-    left: 680px;
+    width: 160px;
+    padding: 15px 80px 0 80px;
 }
 
 .typesContainer {
@@ -68,7 +76,6 @@
     width: 100%;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 30px;
 }
 
 .statsImg {

@@ -91,35 +91,40 @@ function PokemonDetailsPage() {
                     alt={name}
                 />
                 
-                <img 
-                    className={det.prevArrowImg} 
-                    src="/images/arrow-prev.png" 
-                    alt="Previous" 
-                    onClick={() => handleNavigation('previous')}
-                    hidden = {parseInt(id, 10) <= 1}
-                />
-                
-                <h2 className={det.h2}>{name}</h2>
-                
-                <img 
-                    className={det.nextArrowImg} 
-                    src="/images/arrow-next.png" 
-                    alt="" 
-                    onClick={() => handleNavigation('next')}
-                    hidden = {parseInt(id, 10) >= 152}
-                />
+                <div className={det.headerContainer}>
+                    <img 
+                        className={det.prevArrowImg} 
+                        src="/images/arrow-prev.png" 
+                        alt="Previous" 
+                        onClick={() => handleNavigation('previous')}
+                        hidden = {parseInt(id, 10) <= 1}
+                    />
+                    
+                    <div className={det.midHeader}>
+                        <h2 className={det.h2}>{name}</h2>
+                        <div className={det.typesContainer}>
+                        {types.map((type, index) => (
+                            <div
+                                key={index}
+                                className={det.pokemonType}
+                                style={{ backgroundColor: typeColors[type] || '#ccc' }}
+                            >
+                                {type}
+                            </div>
+                        ))}
+                    </div>
 
-                <div className={det.typesContainer}>
-                    {types.map((type, index) => (
-                        <div
-                            key={index}
-                            className={det.pokemonType}
-                            style={{ backgroundColor: typeColors[type] || '#ccc' }}
-                        >
-                            {type}
-                        </div>
-                    ))}
+                    </div>
+                    
+                    <img 
+                        className={det.nextArrowImg} 
+                        src="/images/arrow-next.png" 
+                        alt="" 
+                        onClick={() => handleNavigation('next')}
+                        hidden = {parseInt(id, 10) >= 152}
+                    />
                 </div>
+
 
                  
                 <div className={det.statsContainer}>
