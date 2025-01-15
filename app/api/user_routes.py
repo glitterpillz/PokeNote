@@ -9,7 +9,7 @@ user_routes = Blueprint('users', __name__)
 
 
 # ADMIN - GET ALL USERS:
-@user_routes.route('/')
+@user_routes.route('/all')
 @login_required
 def users():
     """

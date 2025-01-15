@@ -11,6 +11,7 @@ import UserPokemonCollection from '../components/UserPokemon/UserPokemonCollecti
 import UserPokemonDetails from '../components/UserPokemon/UserPokemonDetails.jsx';
 import EntryDetailsPage from '../components/UserJournal/EntryDetailsPage.jsx';
 import UserInboxPage from '../components/UserMessages/UserInboxPage.jsx';
+import AdminAllUsersPage from '../components/Admin/AdminAllUsersPage.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -60,5 +61,9 @@ export const router = createBrowserRouter([
   {
     path: '/inbox',
     element: <UserInboxPage />
+  },
+  {
+    path: '/users',
+    element: <AdminAllUsersPage />
   }
 ]);
