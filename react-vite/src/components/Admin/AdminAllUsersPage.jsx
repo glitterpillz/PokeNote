@@ -45,11 +45,38 @@ function AdminAllUsersPage() {
                     className={all.userCard}
                     style={{ cursor: "pointer" }}
                 >
-                    <img src={user.profile_picture} alt={user.username} />
-                    <h4>{user.username}</h4>
-                    <p>{user.fname} {user.lname}</p>
-                    <p>{user.email}</p>
-                    <p>{user.admin ? 'Admin' : 'User'}</p>
+                    <div className={all.statusBox}>
+                        <label className={all.statusLabel}>status:</label>
+                        <p className={all.adminStatus}>{user.admin ? 'Admin' : 'User'}</p>
+                    </div>
+
+                    <img 
+                        src={user.profile_picture} 
+                        alt={user.username} 
+                        className={all.profilePic}
+                    />
+                    
+                    <div className={all.userDataDiv}>
+                        <div className={all.dataBox}>
+                            <label>username:</label>
+                            <p>{user.username}</p>
+                        </div>
+                        <div className={all.dataBox}>
+                            <label>first name:</label>
+                            <p>{user.fname}</p>
+                        </div>                        
+                    </div>
+
+                    <div className={all.userDataDiv}>
+                        <div className={all.dataBox}>
+                            <label>email:</label>
+                            <p>{user.email}</p>
+                        </div>
+                        <div className={all.dataBox}>
+                            <label>last name:</label>
+                            <p>{user.lname}</p>
+                        </div>
+                    </div>
                 </div>
             );
         });
