@@ -204,6 +204,100 @@ def seed_pokemon():
         types=["Fairy"],
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/036.png"
     )
+    #37#########################################
+    vulpix = Pokemon(
+        name="Vulpix",
+        types=["Fire"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/037.png"
+    )
+    #38
+    ninetales = Pokemon(
+        name="Ninetales",
+        types=["Fire"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/038.png"
+    )
+    #39
+    jigglypuff = Pokemon(
+        name="Jigglepuff",
+        types=["Normal", "Fairy"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/039.png"
+    )
+    #40
+    wigglytuff = Pokemon(
+        name="Wigglytuff",
+        types=["Normal", "Fairy"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/040.png"
+    )
+    #41
+    zubat = Pokemon(
+        name="Zubat",
+        types=["Poison", "Flying"],
+        can_fly=True,
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/041.png"
+    )
+    #42
+    golbat = Pokemon(
+        name="Golbat",
+        types=["Poison", "Flying"],
+        can_fly=True,
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/042.png"
+    )
+    #43
+    oddish = Pokemon(
+        name="Oddish",
+        types=["Grass", "Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/043.png"
+    )
+    #44
+    gloom = Pokemon(
+        name="Gloom",
+        types=["Grass", "Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/044.png"
+
+    )
+    #45
+    vileplume = Pokemon(
+        name="Vileplume",
+        types=["Grass", "Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/045.png"
+    )
+    #46
+    paras = Pokemon(
+        name="Paras",
+        types=["Bug", "Grass"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/046.png"
+    )
+    #47
+    parasect = Pokemon(
+        name="Parasect",
+        types=["Bug", "Grass"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/047.png"
+    )
+    #48
+    venonat = Pokemon(
+        name="Venonat",
+        types=["Bug", "Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/048.png"
+    )
+    #49
+    venomoth = Pokemon(
+        name="Venomoth",
+        types=["Bug", "Poison"],
+        can_fly=True,
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/049.png"
+    )
+    #50
+    diglett = Pokemon(
+        name="Diglett",
+        types=["Ground"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/050.png"
+    )
+    #51
+    dugtrio = Pokemon(
+        name="Dugtrio",
+        types=["Ground"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/051.png"
+    )
 
 
     
@@ -487,6 +581,126 @@ def seed_pokemon():
         PokemonStat(stat_name="sp defense", stat_value=90),
         PokemonStat(stat_name="speed", stat_value=60)
     ]
+    vulpix.stats = [
+        PokemonStat(stat_name="hp", stat_value=38),
+        PokemonStat(stat_name="attack", stat_value=41),
+        PokemonStat(stat_name="defense", stat_value=40),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=65),
+        PokemonStat(stat_name="speed", stat_value=65)
+    ]
+    ninetales.stats = [
+        PokemonStat(stat_name="hp", stat_value=73),
+        PokemonStat(stat_name="attack", stat_value=76),
+        PokemonStat(stat_name="defense", stat_value=75),
+        PokemonStat(stat_name="sp attack", stat_value=81),
+        PokemonStat(stat_name="sp defense", stat_value=100),
+        PokemonStat(stat_name="speed", stat_value=100)
+    ]
+    jigglypuff.stats = [
+        PokemonStat(stat_name="hp", stat_value=115),
+        PokemonStat(stat_name="attack", stat_value=45),
+        PokemonStat(stat_name="defense", stat_value=20),
+        PokemonStat(stat_name="sp attack", stat_value=45),
+        PokemonStat(stat_name="sp defense", stat_value=25),
+        PokemonStat(stat_name="speed", stat_value=20)
+    ]
+    wigglytuff.stats = [
+        PokemonStat(stat_name="hp", stat_value=140),
+        PokemonStat(stat_name="attack", stat_value=70),
+        PokemonStat(stat_name="defense", stat_value=45),
+        PokemonStat(stat_name="sp attack", stat_value=85),
+        PokemonStat(stat_name="sp defense", stat_value=50),
+        PokemonStat(stat_name="speed", stat_value=45)
+    ]
+    zubat.stats = [
+        PokemonStat(stat_name="hp", stat_value=40),
+        PokemonStat(stat_name="attack", stat_value=45),
+        PokemonStat(stat_name="defense", stat_value=35),
+        PokemonStat(stat_name="sp attack", stat_value=30),
+        PokemonStat(stat_name="sp defense", stat_value=40),
+        PokemonStat(stat_name="speed", stat_value=55)
+    ]
+    golbat.stats = [
+        PokemonStat(stat_name="hp", stat_value=75),
+        PokemonStat(stat_name="attack", stat_value=80),
+        PokemonStat(stat_name="defense", stat_value=70),
+        PokemonStat(stat_name="sp attack", stat_value=65),
+        PokemonStat(stat_name="sp defense", stat_value=75),
+        PokemonStat(stat_name="speed", stat_value=90)
+    ]
+    oddish.stats = [
+        PokemonStat(stat_name="hp", stat_value=45),
+        PokemonStat(stat_name="attack", stat_value=50),
+        PokemonStat(stat_name="defense", stat_value=55),
+        PokemonStat(stat_name="sp attack", stat_value=75),
+        PokemonStat(stat_name="sp defense", stat_value=65),
+        PokemonStat(stat_name="speed", stat_value=30)
+    ]
+    gloom.stats = [
+        PokemonStat(stat_name="hp", stat_value=60),
+        PokemonStat(stat_name="attack", stat_value=65),
+        PokemonStat(stat_name="defense", stat_value=70),
+        PokemonStat(stat_name="sp attack", stat_value=85),
+        PokemonStat(stat_name="sp defense", stat_value=75),
+        PokemonStat(stat_name="speed", stat_value=40)
+    ]
+    vileplume.stats = [
+        PokemonStat(stat_name="hp", stat_value=75),
+        PokemonStat(stat_name="attack", stat_value=80),
+        PokemonStat(stat_name="defense", stat_value=85),
+        PokemonStat(stat_name="sp attack", stat_value=110),
+        PokemonStat(stat_name="sp defense", stat_value=90),
+        PokemonStat(stat_name="speed", stat_value=50)
+    ]
+    paras.stats = [
+        PokemonStat(stat_name="hp", stat_value=35),
+        PokemonStat(stat_name="attack", stat_value=70),
+        PokemonStat(stat_name="defense", stat_value=55),
+        PokemonStat(stat_name="sp attack", stat_value=45),
+        PokemonStat(stat_name="sp defense", stat_value=55),
+        PokemonStat(stat_name="speed", stat_value=25)
+    ]
+    parasect.stats = [
+        PokemonStat(stat_name="hp", stat_value=60),
+        PokemonStat(stat_name="attack", stat_value=95),
+        PokemonStat(stat_name="defense", stat_value=80),
+        PokemonStat(stat_name="sp attack", stat_value=60),
+        PokemonStat(stat_name="sp defense", stat_value=80),
+        PokemonStat(stat_name="speed", stat_value=30)
+    ]
+    venonat.stats = [
+        PokemonStat(stat_name="hp", stat_value=60),
+        PokemonStat(stat_name="attack", stat_value=55),
+        PokemonStat(stat_name="defense", stat_value=50),
+        PokemonStat(stat_name="sp attack", stat_value=40),
+        PokemonStat(stat_name="sp defense", stat_value=55),
+        PokemonStat(stat_name="speed", stat_value=45)
+    ]
+    venomoth.stats = [
+        PokemonStat(stat_name="hp", stat_value=70),
+        PokemonStat(stat_name="attack", stat_value=65),
+        PokemonStat(stat_name="defense", stat_value=60),
+        PokemonStat(stat_name="sp attack", stat_value=90),
+        PokemonStat(stat_name="sp defense", stat_value=75),
+        PokemonStat(stat_name="speed", stat_value=90)
+    ]
+    diglett.stats = [
+        PokemonStat(stat_name="hp", stat_value=10),
+        PokemonStat(stat_name="attack", stat_value=55),
+        PokemonStat(stat_name="defense", stat_value=25),
+        PokemonStat(stat_name="sp attack", stat_value=35),
+        PokemonStat(stat_name="sp defense", stat_value=45),
+        PokemonStat(stat_name="speed", stat_value=95)
+    ]
+    dugtrio.stats = [
+        PokemonStat(stat_name="hp", stat_value=35),
+        PokemonStat(stat_name="attack", stat_value=100),
+        PokemonStat(stat_name="defense", stat_value=50),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=70),
+        PokemonStat(stat_name="speed", stat_value=120)
+    ]
 
 
     db.session.add(bulbasaur)
@@ -525,6 +739,21 @@ def seed_pokemon():
     db.session.add(nidoking)
     db.session.add(clefairy)
     db.session.add(clefable)
+    db.session.add(vulpix)
+    db.session.add(ninetales)
+    db.session.add(jigglypuff)
+    db.session.add(wigglytuff)
+    db.session.add(zubat)
+    db.session.add(golbat)
+    db.session.add(oddish)
+    db.session.add(gloom)
+    db.session.add(vileplume)
+    db.session.add(paras)
+    db.session.add(parasect)
+    db.session.add(venonat)
+    db.session.add(venomoth)
+    db.session.add(diglett)
+    db.session.add(dugtrio)
 
     db.session.commit()
 
