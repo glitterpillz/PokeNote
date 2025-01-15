@@ -61,6 +61,8 @@ function PokedexPage() {
         Poison: '#c677cf',
         Flying: '#a9c4ec',
         Bug: '#91e0b0',
+        Ground: '#9c7979',
+        Rock: '#ababaf',
     };
 
 
