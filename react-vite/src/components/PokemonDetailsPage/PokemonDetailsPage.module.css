@@ -1,6 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&family=Press+Start+2P&display=swap");
 
+.mainDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.navbar {
+    width: 90%;
+}
+
 .detailsContainer {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,10 +43,10 @@
     justify-content: space-between;
     align-items: center;
     background-color: #19264b;
-    width: 110%;
+    width: 102%;
     padding: 10px 0 30px 0;
     position: relative;
-    bottom: 25px;
+    bottom: 20px;
 }
 
 .midHeader {

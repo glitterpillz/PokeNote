@@ -15,7 +15,7 @@
     justify-content: center;
     gap: 30px;
     margin-top: 20px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     width: 100%;
     background-color: #30385f;
     color: #fefbe2;
@@ -30,7 +30,7 @@
     justify-content: center;
     gap: 30px;
     align-items: flex-start;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .inputBox {
@@ -62,7 +62,7 @@
 }
 
 .contentTextArea {
-    height: 160px;
+    height: 80px;
     font-size: 1.3rem;
     font-family: "Baloo Paaji 2", serif;
     color: #fefbe2;
@@ -74,7 +74,7 @@
 }
 
 .accomplishTextArea {
-    height: 60px;
+    height: 50px;
     padding: 10px;
     border: 2px solid #fefbe2;
     border-radius: 5px;
@@ -132,16 +132,15 @@
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin: 10px 0;
+    margin: 0;
 }
 
 
 .button {
-    width: 30%;
     align-self: center;
-    padding: 5px;
+    padding: 5px 15px;
     font-family: "Atma", serif;
-    font-size: 30px;
+    font-size: 1.5rem;
     font-weight: 600;
     background-color: #1e2442;
     color: #cacee2;
@@ -152,12 +151,12 @@
 
 .mewPic {
     position: absolute;
-    left: 420px;
-    bottom: 650px;
+    left: 410px;
+    bottom: 530px;
 }
 
 .mewPic img {
-    width: 200px;
+    width: 180px;
 }
 
 .butterPic {

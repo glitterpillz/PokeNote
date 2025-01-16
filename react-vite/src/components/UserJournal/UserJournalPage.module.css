@@ -47,10 +47,10 @@
 }
 
 .entryCard {
-    border: 3px solid #5b2662;
+    border: 3px solid #5d3363;
     border-radius: 8px;
     width: 95%;
-    background-color: #8f6a99;
+    background-color: #8e6b98;
     display: flex;
     flex-direction: column;
 }
@@ -60,11 +60,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    background-color: #5b2662;
+    background-color: #5d3363;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     height: 80px;
-    color: #e6bff1
+    color: #e0c5e7;
 }
 
 .h2 {
@@ -88,19 +88,45 @@
 .contentBox p {
     font-size: 1.3rem;
     margin-top: 0;
-    background-color: #c9a7d3;
-    padding: 0 5px;
+    background-color: #b599be;
+    padding: 5px 10px;
     border-radius: 5px;
 }
 
 .photoBox {
-    width: 80%;
+    width: 90%;
     align-self: center;
-    background-color: #5b2662;
-    padding: 10px;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 .entryPhoto {
     width: 100%;
+    border-radius: 8px;
+}
+
+.buttonsContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0 0 20px;
+}
+
+.button {
+    padding: 5px 10px;
+    font-family: "Atma", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #aa5d93;
+    color: #eac0dd;
+    border: 1px solid #eac0dd;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: #81456f;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 8px;
+
 }
