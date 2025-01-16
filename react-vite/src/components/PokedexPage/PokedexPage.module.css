@@ -10,6 +10,10 @@ body {
     align-items: center;
 }
 
+.navContainer {
+    width: 100%;
+}
+
 .bannerImg {
     width: 480px;
     margin-bottom: 20px;

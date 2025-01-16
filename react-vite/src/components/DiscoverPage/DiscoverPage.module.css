@@ -94,7 +94,7 @@
     font-weight: bold;
     font-size: 1.5rem;
     color: #fefbe2;
-    padding: 45px 0 0 20px;
+    padding: 45px 0 0 10px;
 }
 
 .timestamp {
@@ -128,8 +128,8 @@
 
 .scrollTopButton {
     position: fixed;
-    top: 100px; 
-    right: 40px;
+    top: 30px; 
+    right: 30px;
     z-index: 1000;
 }
 

@@ -86,11 +86,27 @@ const UserJournalPage = () => {
                         <div className={ent.entryCardBox}>
                             {journalEntries.map((entry) => (
                                 <div key={entry.id} className={ent.entryCard}>
-
+                                    
                                     <div className={ent.entryHeader}>
                                         <h2 className={ent.h2}>{entry.title}</h2>
                                         <p className={ent.entryDate}>{new Date(entry.timestamp).toLocaleDateString()}</p>
                                     </div>
+
+                                    <div className={ent.buttonsContainer}>
+                                        <button
+                                            className={ent.button}
+                                            onClick={() => handleUpdateEntry(entry)}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className={ent.button}
+                                            onClick={() => handleDeleteEntry(entry.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+
                                     <div className={ent.entryBody}>
                                         <div className={ent.contentBox}>
                                             <h5 className={ent.h5}>Entry:</h5>
@@ -101,6 +117,7 @@ const UserJournalPage = () => {
                                             <p>{entry.accomplishments}</p>
                                         </div>
                                     </div>
+                                    
                                     {entry.photo && (
                                         <div className={ent.photoBox}>
                                             <img className={ent.entryPhoto} src={entry.photo}
@@ -108,18 +125,6 @@ const UserJournalPage = () => {
                                         />
                                         </div>
                                     )}
-                                    <button
-                                        className={ent.editButton}
-                                        onClick={() => handleUpdateEntry(entry)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        className={ent.deleteButton}
-                                        onClick={() => handleDeleteEntry(entry.id)}
-                                    >
-                                        Delete
-                                    </button>
                                 </div>
                             ))}
                         </div>
