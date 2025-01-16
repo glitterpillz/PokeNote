@@ -42,91 +42,94 @@
     border-radius: 8px;
 }
 
-.entryCard {
-    display: flex;
-    align-items: flex-start;
-    padding: 10px;
-    margin: 20px 0;
-    border-radius: 10px;
-    background-color: #50587e;
-    width: 700px;
-}
-
-.profilePicBox {
-    flex: 0 0 50px;
-    margin: 5px 20px 0 5px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profilePicBox img {
-    width: 100%; 
-    height: auto;
-    border-radius: 50%; 
-}
-
 .mainBodyContainer {
     background-image: linear-gradient(to bottom right, #86c9dc, #c673c2);
     border-radius: 12px;
-    padding: 20px 35px;
+    padding: 30px;
     width: 80%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
+    gap: 20px;
 }
 
-.mainEntryContainer {
-    flex: 1;
+.entryCard {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
     width: 90%;
+    background-color: #8f6a99;
+    border-radius: 10px;
+    margin: 30px 0;
+}
+
+.mainHeaderContainer {
+    display: flex;
+    background-color: #5b2662;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.profilePicBox {
+    background-color: #5b2662;
+    border-top-left-radius: 10px;
+    width: 90px;
+    padding: 20px 20px 10px 20px;
+}
+
+.profilePicBox img {
+    width: 100%;
+    border-radius: 50%;
 }
 
 .header {
     display: flex;
-    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    width: 75%;
     color: #fefbe2;
-    font-size: 1.2rem;
 }
 
-.header .profileLink {
+.profileLink {
     text-decoration: none;
     font-weight: bold;
+    font-size: 1.5rem;
     color: #fefbe2;
+    padding: 45px 0 0 20px;
 }
 
-.header span {
-    margin: 0 10px;
+.timestamp {
+    font-size: 1.4rem;
+    padding-top: 25px;
 }
 
 .entryInfo {
-    margin-bottom: 10px;
-    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    margin-bottom: 20px;
 }
 
 .h1 {
     font-family: "Atma", serif;
     color: #ffd444;
-    font-size: 1.6rem;
+    font-size: 2rem;
+    margin: 20px 0 0 0;
 }
 
 .entryBody {
-    font-size: 1.4rem;
-    color: #fefbe2;
+    font-size: 1.6rem;
+    color: #27112a;
+    margin-top: 5px;
 }
 
 .entryPic {
-    width: 100%;
     border-radius: 8px;
 }
 
 .scrollTopButton {
     position: fixed;
-    top: 20px; 
-    right: 20px;
+    top: 100px; 
+    right: 40px;
     z-index: 1000;
 }
 
