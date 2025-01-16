@@ -53,26 +53,25 @@ function DiscoverPage() {
     }
 
     const renderJournalEntries = (entryList) => {
-        const sortedEntries = [...entryList].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        // const sortedEntries = [...entryList].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-        return sortedEntries.map((entry) => (
+        return entryList.map((entry) => (
             <div key={entry.id} className={dis.entryCard}>
-                <div className={dis.profilePicBox}>
-                    <img src={entry.profile_picture} alt="" />
-                </div>
-                <div className={dis.mainEntryContainer}>
+                <div className={dis.mainHeaderContainer}>
+                    <div className={dis.profilePicBox}>
+                        <img src={entry.profile_picture} alt="" />
+                    </div>
                     <div className={dis.header}>
                         <Link to={`/user/${entry.user_id}/profile`} className={dis.profileLink}>
                             {entry.username}
                         </Link>
-                        <span>•</span>
                         <p className={dis.timestamp}>{entry.timestamp}</p>
                     </div>
-                    <div className={dis.entryInfo}>
-                        <h1 className={dis.h1}>{entry.title}</h1>
-                        <p className={dis.entryBody}>{entry.content}</p>
-                        <img  className={dis.entryPic} src={entry.photo} alt="" />
-                    </div>
+                </div>
+                <div className={dis.entryInfo}>
+                    <h1 className={dis.h1}>{entry.title}</h1>
+                    <p className={dis.entryBody}>{entry.content}</p>
+                    <img  className={dis.entryPic} src={entry.photo} alt="" />
                 </div>
             </div>
         ));

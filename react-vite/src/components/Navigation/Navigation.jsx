@@ -33,6 +33,7 @@ function Navigation() {
 
     dispatch(login({ email, password })).then(() => {
       navigate("/");
+      setIsDropdownOpen(false);
     });
   };
 
