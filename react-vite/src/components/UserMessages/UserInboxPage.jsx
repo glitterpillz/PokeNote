@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDeletedMessages, getUserInbox, getUserSentBox, deleteMessage } from "../../redux/message";
+import { getDeletedMessages, getUserInbox, getUserSentBox, deleteMessage, cleanupDeletedBox } from "../../redux/message";
 import Navigation from "../Navigation";
 import { useMessageContext } from '../../context/MessageContext';
 import SendMessageModal from "./SendMessageModal";
@@ -41,6 +41,12 @@ const UserInboxPage = () => {
         }
     }
 
+    const handleCleanupDeleted = () => {
+        if (window.confirm("This will permanently delete all messages in this folder. Are you sure you want to do that?")) {
+            dispatch(cleanupDeletedBox());
+        }
+    }
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -73,23 +79,29 @@ const UserInboxPage = () => {
                 <img className={box.pikachu} src="/images/pikachu.png" alt="" />
                 <div className={box.flexContainer}>
                     <div className={box.buttonsContainer}>
-                            <button onClick={handleSendMessage} className={box.button}>
-                                Compose
-                            </button >
-                            <button onClick={() => setView("inbox")} className={box.button}>
-                                Inbox
-                            </button>
-                            <button onClick={() => setView("sent")} className={box.button}>
-                                Sent
-                            </button>
-                            <button onClick={() => setView("delete")} className={box.button}>
-                                Deleted
-                            </button>
+                        <button onClick={handleSendMessage} className={box.button}>
+                            Compose
+                        </button >
+                        <button onClick={() => setView("inbox")} className={box.button}>
+                            Inbox
+                        </button>
+                        <button onClick={() => setView("sent")} className={box.button}>
+                            Sent
+                        </button>
+                        <button onClick={() => setView("delete")} className={box.button}>
+                            Deleted
+                        </button>
                     </div>
 
-                    
-
                     <div className={box.messageContainer}>
+                        {view === "delete" && (
+                            <button
+                                className={box.deleteAllButton}
+                                onClick={handleCleanupDeleted}
+                            >
+                                Delete All
+                            </button>
+                        )}
                         {messages && messages.length > 0 ? (
                             messages.map((message) => (
                                 <div 
