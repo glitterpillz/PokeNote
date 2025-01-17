@@ -72,7 +72,7 @@
     flex-direction: column;
     background-color: #30385f;
     color: #fefbe2;
-    padding: 0 15px;
+    padding: 5px 15px;
     font-size: 1.2rem;
 }
 
@@ -81,11 +81,19 @@
     gap: 30px;
 }
 
+.toFromRow p {
+    margin: 0;
+}
+
 .dateDeleteRow {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
+}
+
+.date {
+    margin: 0;
 }
 
 .deleteButton {

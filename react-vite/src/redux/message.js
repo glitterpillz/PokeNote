@@ -106,6 +106,24 @@ export const deleteMessage = createAsyncThunk(
     }
 )
 
+export const cleanupDeletedBox = createAsyncThunk(
+    "/message/cleanupDeletedBox",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch('/api/messages/deleted', {
+                method: 'DELETE'
+            })
+            const data = await response.json();
+            if (!response.ok) {
+                return rejectWithValue(data);
+            }
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.message || "Error fetching delete all messages")
+        }
+    }
+)
+
 
 const MessageSlice = createSlice({
     name: "message",
@@ -181,7 +199,11 @@ const MessageSlice = createSlice({
                 } else {
                     console.error("deleteMessage.fulfilled: action.payload is undefined");
                 }
-            });
+            })
+            .addCase(cleanupDeletedBox.fulfilled, (state, action) => {
+                state.loading = false;
+                state.deleteBox = action.payload || [];
+            })
             
     }
 })
