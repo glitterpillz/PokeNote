@@ -154,7 +154,7 @@ def delete_journal_entry(id):
     if not journal_entry:
         return jsonify({'error': 'Journal entry not found'}), 404
     
-    if journal_entry.user_id != current_user.id:
+    if not current_user.admin and journal_entry.user_id != current_user.id:
         return jsonify({'error': 'You can only view your own journal entries'}), 403
 
     db.session.delete(journal_entry)

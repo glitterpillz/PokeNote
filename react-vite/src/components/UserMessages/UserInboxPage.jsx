@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserInbox, getUserSentBox } from "../../redux/message";
+import { getDeletedMessages, getUserInbox, getUserSentBox, deleteMessage } from "../../redux/message";
 import Navigation from "../Navigation";
 import { useMessageContext } from '../../context/MessageContext';
 import SendMessageModal from "./SendMessageModal";
@@ -13,20 +13,32 @@ const UserInboxPage = () => {
     const { setModalContent } = useModal();
     
 
-    const { inbox, sentBox, loading, errors } = useSelector((state) => state.message);
+    const { inbox, sentBox, deleteBox, loading, errors } = useSelector((state) => state.message);
 
     useEffect(() => {
         if (view === "inbox") {
             dispatch(getUserInbox());
         } else if (view === "sent") {
             dispatch(getUserSentBox());
+        } else if (view === "delete") {
+            dispatch(getDeletedMessages())
         }
     }, [dispatch, view]);
 
-    const messages = view === "inbox" ? inbox : sentBox;
+    const messages = view === "inbox" 
+        ? inbox 
+        : view === "sent" 
+        ? sentBox
+        : deleteBox;
 
     const handleSendMessage = () => {
         setModalContent(<SendMessageModal closeModal={() => setModalContent(null)}/>);
+    }
+
+    const handleDeleteMessage = (messageId) => {
+        if (window.confirm("Are you sure you want to delete this message?")) {
+            dispatch(deleteMessage(messageId));
+        }
     }
 
     if (loading) {
@@ -70,8 +82,8 @@ const UserInboxPage = () => {
                             <button onClick={() => setView("sent")} className={box.button}>
                                 Sent
                             </button>
-                            <button className={box.button}>
-                                Friends
+                            <button onClick={() => setView("delete")} className={box.button}>
+                                Deleted
                             </button>
                     </div>
 
@@ -90,12 +102,22 @@ const UserInboxPage = () => {
 
                                     <div className={box.messageBodyContainer}>
                                         <div className={box.messageBodyBox}>
-                                            <div className={box.toFromDiv}>
+                                            <div className={box.headerDiv}>
                                                 <div className={box.toFromRow}>
                                                     <p><strong>To:</strong> {message.receiver}</p>
                                                     <p><strong>From:</strong> {message.sender}</p>
                                                 </div>
-                                                <p className={box.date}><strong>Date:</strong> {formatTimestamp(message.timestamp)}</p>                                            
+                                                <div className={box.dateDeleteRow}>
+                                                    <p className={box.date}><strong>Date:</strong> {formatTimestamp(message.timestamp)}</p>                                            
+                                                    {view === "inbox" && (
+                                                        <button 
+                                                            onClick={() => handleDeleteMessage(message.id)}
+                                                            className={box.deleteButton}    
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                         <div className={box.messageBody}>
