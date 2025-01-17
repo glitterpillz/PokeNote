@@ -12,6 +12,8 @@ class Message(db.Model):
     receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    is_deleted_by_sender = db.Column(db.Boolean, nullable=False, default=False)
+    is_deleted_by_receiver = db.Column(db.Boolean, nullable=False, default=False)
 
     sender = db.relationship(
         'User',
@@ -33,5 +35,8 @@ class Message(db.Model):
             'profile_picture': self.sender.profile_picture,
             'content': self.content,
             'timestamp': self.timestamp.strftime('%Y-%m-%d %I:%M %p'),            'sender': self.sender.username,
-            'receiver': self.receiver.username
+            'sender': self.sender.username,
+            'receiver': self.receiver.username,
+            'is_deleted_by_sender': self.is_deleted_by_sender,
+            'is_deleted_by_receiver': self.is_deleted_by_receiver
         }

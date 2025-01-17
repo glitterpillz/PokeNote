@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import * as sessionActions from "../../redux/session";
 import * as journalActions from "../../redux/journal";
+import { sendMessage } from "../../redux/message";
 import Navigation from "../Navigation";
 import { Link } from "react-router-dom";
 import { FaArrowCircleUp } from "react-icons/fa";
@@ -9,9 +11,12 @@ import dis from "./DiscoverPage.module.css";
 
 function DiscoverPage() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false);
     const { journal, loading, errors } = useSelector((state) => state.journal);
     const [scrollTopButton, setScrollTopButton] = useState(false);
+
+    const currentUser = useSelector((state) => state.session.user)
 
     useEffect(() => {
         dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
@@ -37,6 +42,29 @@ function DiscoverPage() {
         };
     }, []);
 
+    const handleReport = async (postId, username) => {
+        const userConfirmed = window.confirm(
+            " Are you sure you want to report this entry? WARNING - Admin will be notified, and entry may be removed."
+        );
+
+        if (!userConfirmed) {
+            return;
+        }
+        
+        const messageData = {
+            receiver: 'admin_user',
+            content: `Journal entry reported. Post ID: ${postId}, Username: ${username}`
+        };
+
+        try {
+            await dispatch(sendMessage(messageData)).unwrap();
+            alert('Journal entry reported!')
+        } catch (error) {
+            console.log("Error reporting journal entry", error);
+            alert("Failed to report the journal entry. Please try again.")
+        }
+    }
+
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
@@ -53,7 +81,6 @@ function DiscoverPage() {
     }
 
     const renderJournalEntries = (entryList) => {
-        // const sortedEntries = [...entryList].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
         return entryList.map((entry) => (
             <div key={entry.id} className={dis.entryCard}>
@@ -72,6 +99,23 @@ function DiscoverPage() {
                     <h1 className={dis.h1}>{entry.title}</h1>
                     <p className={dis.entryBody}>{entry.content}</p>
                     <img  className={dis.entryPic} src={entry.photo} alt="" />
+                    {currentUser.admin ? (
+                        <button
+                            className={dis.reviewButton}
+                            onClick={() => navigate(`/journal/${entry.id}`)}
+                        >
+                            Review
+                        </button>
+                    ) : (
+                        <button 
+                            className={dis.reportButton}
+                            onClick={() => handleReport(entry.id, entry.username)}
+                        >
+                            Report
+                        </button>
+                    )}
+                    
+                    
                 </div>
             </div>
         ));
