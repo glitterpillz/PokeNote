@@ -37,6 +37,10 @@ function UserProfilePage() {
     
     const { banner_url, journal_entries, pokemon_collection, profile_picture, username } = userProfile;
 
+    const topPokemon = [...pokemon_collection].sort((a, b) => b.level - a.level).slice(0, 6)
+    
+    const recentJournalEntries = journal_entries.slice(0, 4)
+
     return (
         <div>
             <div className={pro.navbar}>
@@ -66,23 +70,29 @@ function UserProfilePage() {
                         <h2>{username}</h2>
                     </div>
                     <div className={pro.profileDetails}>
-        
-                        <h3>Pokemon Collection</h3>
-                        {pokemon_collection && pokemon_collection.length > 0 ? (
-                            <ul>
-                                {pokemon_collection.map((pokemon, index) => (
-                                    <li key={index}>{pokemon.pokemon.name || "Unnamed Pokemon"}</li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No Pokémon in collection.</p>
-                        )}
 
-                        <h3>Journal Entries</h3>
-                        {journal_entries && journal_entries.length > 0 ? (
+                        <div className={pro.pokemonContainer}>
+                            <h3>Top Pokémon</h3>
+                            {topPokemon.length > 0 ? (
+                                <div>
+                                    {topPokemon.map((pokemon, index) => (
+                                        <div key={index}>
+                                            {pokemon.pokemon.name || "Unnamed Pokémon"} - Level {pokemon.level}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p>No Pokémon in collection.</p>
+                            )}
+                        </div>        
+
+                        <h3>Recent Journal Entries</h3>
+                        {recentJournalEntries.length > 0 ? (
                             <ul>
-                                {journal_entries.map((entry, index) => (
-                                    <li key={index}>{entry.title || "Untitled Entry"}</li>
+                                {recentJournalEntries.map((entry, index) => (
+                                    <li key={index}>
+                                        <strong>{entry.title || "Untitled Entry"}</strong> - {entry.timestamp}
+                                    </li>
                                 ))}
                             </ul>
                         ) : (
