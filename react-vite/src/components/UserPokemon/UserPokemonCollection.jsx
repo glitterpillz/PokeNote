@@ -42,21 +42,36 @@ function UserPokemonCollection() {
             <div>
                 <Navigation />
             </div>
-            <div>
+            <div className={coll.mainBodyContainer}>
                 {pokemonCollection.length > 0 ? (
-                    <div>
+                    <div className={coll.cardsContainer}>
                         {pokemonCollection.map((pokemon) => (
-                            <div key={pokemon.id} style={{ marginBottom: '20px' }}>
-                                <img src={pokemon.pokemon.image} alt={pokemon.pokemon.name} />
-                                <h1>{pokemon.pokemon.name}</h1>
-                                <h2>{pokemon.nickname}</h2>
-                                <button
-                                    type="button"
-                                    className={coll.viewButton}
-                                    onClick={() => navigate(`/pokemon/collection/${pokemon.id}`)}
-                                >
-                                    View
-                                </button>
+                            <div key={pokemon.id} className={coll.pokemonCard}>
+                                <div className={coll.imageBox}>
+                                    <img className={coll.image} src={pokemon.pokemon.image} alt={pokemon.pokemon.name} />
+                                </div>
+                                <div className={coll.bodyBox}>
+                                    <div className={coll.bodyHeader}>
+                                        <h2 className={coll.h2}>{pokemon.pokemon.name}</h2>
+                                        <button
+                                            type="button"
+                                            className={coll.viewButton}
+                                            onClick={() => navigate(`/pokemon/collection/${pokemon.id}`)}
+                                        >
+                                            View
+                                        </button>
+                                    </div>
+                                    <div className={coll.bodyInfo}>
+                                        <div className={coll.bodyDiv}>
+                                            <label>Nickname:</label>
+                                            <p>{pokemon.nickname}</p>
+                                        </div>
+                                        <div className={coll.bodyDiv}>
+                                            <label>Level:</label>
+                                            <p>{pokemon.level}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </div>
