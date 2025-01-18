@@ -36,11 +36,8 @@ const UserAccountPage = () => {
   
     const { user } = userAccount;
     const journalEntries = user.journal_entries || [];
-    // const pokemonCollection = user.pokemon_collection || [];
 
     const pokemonParty = pokemons?.Pokemon || [];
-
-    // console.log("POKEMON COLLECTION!:", pokemonParty);
   
     return (
       <div>
