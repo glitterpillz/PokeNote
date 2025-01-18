@@ -13,6 +13,7 @@ class UserPokemon(db.Model):
     nickname = db.Column(db.String(100), nullable=True)
     level = db.Column(db.Integer, nullable=True, default=1)
     custom_moves = db.Column(db.JSON, nullable=True)
+    selected_party = db.Column(db.Boolean, nullable=True, default=False)
 
     user = db.relationship('User', back_populates='pokemon_collection')
     pokemon = db.relationship('Pokemon', back_populates='user_instances')
@@ -25,5 +26,6 @@ class UserPokemon(db.Model):
             'nickname': self.nickname,
             'level': self.level,
             'custom_moves': self.custom_moves,
+            'selected_party': self.selected_party,
             'pokemon': self.pokemon.to_dict()
         }

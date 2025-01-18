@@ -82,6 +82,25 @@ export const getUserPokemon = createAsyncThunk(
 );
 
 
+export const getPokemonParty = createAsyncThunk(
+    "pokemon/getPokemonParty",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch("/api/pokemon/party");
+            const data = await response.json();
+            if (!response.ok) {
+                return rejectWithValue(data);
+            }
+            return data;
+        } catch (error) {
+            console.error("getPokemonParty error:", error);
+            return rejectWithValue(error.message || "Error fetching user pokemon party");
+        }
+    }
+);
+
+
+
 export const fetchPokemonDetail = createAsyncThunk(
     "pokemon/fetchPokemonDetail",
     async (id, { rejectWithValue }) => {
@@ -202,6 +221,19 @@ const pokemonSlice = createSlice({
                 state.loading = false;
                 state.pokemons = action.payload;
             })
+            .addCase(getPokemonParty.pending, (state) => {
+                state.loading = true;
+                state.errors = null;
+            })
+            .addCase(getPokemonParty.rejected, (state, action) => {
+                state.loading = false;
+                state.errors = action.payload;
+            })
+            .addCase(getPokemonParty.fulfilled, (state, action) => {
+                state.loading = false;
+                state.pokemons = action.payload;
+            })
+
             .addCase(fetchPokemonDetail.pending, (state) => {
                 state.loading = true;
                 state.errors = null;
@@ -224,8 +256,17 @@ const pokemonSlice = createSlice({
             })
             .addCase(editUserPokemon.fulfilled, (state, action) => {
                 state.loading = false;
-                state.pokemonDetails = action.payload;
-            })
+                const updatedPokemon = action.payload;
+                state.pokemons = Array.isArray(state.pokemons)
+                    ? state.pokemons.map((pokemon) =>
+                          pokemon.id === updatedPokemon.id ? updatedPokemon : pokemon
+                      )
+                    : [];
+            
+                if (state.pokemonDetails?.id === updatedPokemon.id) {
+                    state.pokemonDetails = updatedPokemon;
+                }
+            })        
             .addCase(deleteUserPokemon.fulfilled, (state, action) => {
                 state.pokemons = (Array.isArray(state.pokemons) ? state.pokemons : []).filter(
                     (pokemon) => pokemon.id !== action.payload.id

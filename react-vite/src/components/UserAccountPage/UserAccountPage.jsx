@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from '../../redux/session'
+import { getPokemonParty } from "../../redux/pokemon";
 import Navigation from "../Navigation";
 import acc from './UserAccountPage.module.css'
 import { useNavigate } from "react-router-dom";
@@ -10,12 +11,18 @@ const UserAccountPage = () => {
     const navigate = useNavigate();
     const { userAccount, loading, errors } = useSelector((state) => state.session);
 
+    const { pokemons, loading: partyLoading } = useSelector((state) => state.pokemon)
+
     useEffect(() => {
       dispatch(sessionActions.userAccount());
     }, [dispatch]);
 
+    useEffect(() => {
+      dispatch(getPokemonParty())
+    }, [dispatch])
 
-    if (loading) {
+
+    if (loading || partyLoading) {
       return <div>Loading...</div>;
     }
   
@@ -29,9 +36,11 @@ const UserAccountPage = () => {
   
     const { user } = userAccount;
     const journalEntries = user.journal_entries || [];
-    const pokemonCollection = user.pokemon_collection || [];
+    // const pokemonCollection = user.pokemon_collection || [];
 
-    console.log("POKEMON COLLECTION!:", pokemonCollection);
+    const pokemonParty = pokemons?.Pokemon || [];
+
+    // console.log("POKEMON COLLECTION!:", pokemonParty);
   
     return (
       <div>
@@ -76,7 +85,7 @@ const UserAccountPage = () => {
             </div>
             <div className={acc.linkContainer}>
               <div className={acc.linkHeader}>
-                <h2 className={acc.h2}>Pokemon Collection</h2>
+                <h2 className={acc.h2}>Pokemon Party</h2>
                 <button
                   type="button"
                   className={acc.manageButton}
@@ -86,9 +95,9 @@ const UserAccountPage = () => {
                 </button>
               </div>
               <hr />
-              {pokemonCollection.length > 0 ? (
+              {pokemonParty.length > 0 ? (
                 <div className={acc.entryList}>
-                    {pokemonCollection.slice(0, 5).map((pokemon, index) => (
+                    {pokemonParty.slice(0, 5).map((pokemon, index) => (
                       <div key={index} className={acc.listEntry}>
                         <p>{pokemon.pokemon.name || "Unnamed Pokemon"}</p>
                         <p>Level: {pokemon.level}</p>
@@ -132,5 +141,141 @@ const UserAccountPage = () => {
   
   export default UserAccountPage;
   
+// import { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import * as sessionActions from '../../redux/session';
+// import { getPokemonParty } from "../../redux/pokemon";
+// import Navigation from "../Navigation";
+// import acc from './UserAccountPage.module.css';
+// import { useNavigate } from "react-router-dom";
+
+// const UserAccountPage = () => {
+//     const dispatch = useDispatch();
+//     const navigate = useNavigate();
+//     const { userAccount, loading: accountLoading, errors: accountErrors } = useSelector((state) => state.session);
+//     const { pokemonParty, loading: partyLoading } = useSelector((state) => state.pokemon);
+
+//     useEffect(() => {
+//         dispatch(sessionActions.userAccount());
+//         dispatch(getPokemonParty());
+//     }, [dispatch]);
+
+//     if (accountLoading || partyLoading) {
+//         return <div>Loading...</div>;
+//     }
+
+//     if (accountErrors) {
+//         return <div>Error: {accountErrors.general || "Something went wrong"}</div>;
+//     }
+
+//     if (!userAccount || !userAccount.user) {
+//         return <div>No account data available.</div>;
+//     }
+
+//     const { user } = userAccount;
+//     const journalEntries = user.journal_entries || [];
+//     const pokemonPartyList = pokemonParty?.Pokemon || [];
+
+//     return (
+//         <div>
+//             <div className={acc.navbar}>
+//                 <Navigation />
+//             </div>
+//             <div className={acc.accountMainContainer}>
+//                 <img className={acc.backgroundImg} src={user.banner_url} alt="" />
+//                 <div className={acc.header}>
+//                     <div className={acc.profilePicBox}>
+//                         {user.profile_picture ? (
+//                             <img
+//                                 className={acc.profilePicImg}
+//                                 src={user.profile_picture}
+//                                 alt={`${user.username}'s profile picture`}
+//                             />
+//                         ) : (
+//                             <p><strong>Profile Picture:</strong> None</p>
+//                         )}
+//                         <div className={acc.profileInfoBox}>
+//                             <p>
+//                                 <strong>{user.username}</strong> <br />
+//                                 {user.email || "N/A"}
+//                             </p>
+//                         </div>
+//                     </div>
+//                     <button onClick={() => navigate('/account/update')}>
+//                         Edit
+//                     </button>
+//                 </div>
+//                 <hr className={acc.hr} />
+//                 <div className={acc.mainInfoContainer}>
+//                     <div className={acc.nameContainer}>
+//                         <div className={acc.nameBox}>
+//                             <p>First Name</p>
+//                             <p className={acc.nameTitle}>{user.fname}</p>
+//                         </div>
+//                         <div className={acc.nameBox}>
+//                             <p>Last Name</p>
+//                             <p className={acc.nameTitle}>{user.lname}</p>
+//                         </div>
+//                     </div>
+//                     <div className={acc.linkContainer}>
+//                         <div className={acc.linkHeader}>
+//                             <h2 className={acc.h2}>Pokémon Party</h2>
+//                             <button
+//                                 type="button"
+//                                 className={acc.manageButton}
+//                                 onClick={() => navigate('/pokemon/collection')}
+//                             >
+//                                 See All
+//                             </button>
+//                         </div>
+//                         <hr />
+//                         {pokemonPartyList.length > 0 ? (
+//                             <div className={acc.entryList}>
+//                                 {pokemonPartyList.map((pokemon, index) => (
+//                                     <div key={index} className={acc.listEntry}>
+//                                         <p>{pokemon.pokemon.name}</p>
+//                                         {pokemon?.nickname && (
+//                                           <p>{pokemon.nickname}</p>
+//                                         )}
+//                                         <p>Level: {pokemon.level}</p>
+//                                     </div>
+//                                 ))}
+//                             </div>
+//                         ) : (
+//                             <p>No Pokémon in party.</p>
+//                         )}
+//                     </div>
+//                     <div className={acc.linkContainer}>
+//                         <div className={acc.linkHeader}>
+//                             <h2 className={acc.h2}>Journal Entries</h2>
+//                             <button
+//                                 type="button"
+//                                 className={acc.manageButton}
+//                                 onClick={() => navigate('/journal/user')}
+//                             >
+//                                 See All
+//                             </button>
+//                         </div>
+//                         <hr />
+//                         {journalEntries.length > 0 ? (
+//                             <div className={acc.entryList}>
+//                                 {journalEntries.slice(0, 5).map((entry, index) => (
+//                                     <div key={index} className={acc.listEntry}>
+//                                         <p>{entry.timestamp}</p>
+//                                         <p>{entry.title || "Untitled Entry"}</p>
+//                                     </div>
+//                                 ))}
+//                             </div>
+//                         ) : (
+//                             <p>No journal entries available.</p>
+//                         )}
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default UserAccountPage;
 
   
