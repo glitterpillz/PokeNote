@@ -34,7 +34,7 @@ class Message(db.Model):
             'receiver_id': self.receiver_id,
             'profile_picture': self.sender.profile_picture,
             'content': self.content,
-            'timestamp': self.timestamp.strftime('%Y-%m-%d %I:%M %p'),            'sender': self.sender.username,
+            'timestamp': self.timestamp.strftime('%Y-%m-%d %I:%M %p'),            
             'sender': self.sender.username,
             'receiver': self.receiver.username,
             'is_deleted_by_sender': self.is_deleted_by_sender,
