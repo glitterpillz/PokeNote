@@ -5,8 +5,8 @@ import { restoreUser } from "../../redux/session";
 import { fetchPokemonDetail, deleteUserPokemon } from "../../redux/pokemon";
 import { useModal } from '../../context/Modal';
 import EditPokemonModal from "./EditPokemonModal";
-
-
+import dets from './UserPokemonDetails.module.css'
+import Navigation from "../Navigation";
 
 function UserPokemonDetails() {
     const { id } = useParams();
@@ -62,47 +62,117 @@ function UserPokemonDetails() {
 
     const pokemonList = pokemons.pokemons ? Object.values(pokemons.pokemons) : [];
 
+    const typeColors = {
+        Fire: '#f89055',
+        Water: '#469ae4',
+        Grass: '#30d884',
+        Electric: '#fdd75a',
+        Psychic: '#f165ef',
+        Ice: '#98D8D8',
+        Dragon: '#9269f1',
+        Dark: '#604667',
+        Fairy: '#ee99c6',
+        Normal: '#89a6a9',
+        Poison: '#c677cf',
+        Flying: '#a9c4ec',
+        Bug: '#91e0b0',
+        Ground: '#9c7979',
+        Rock: '#ababaf',
+    };
+
     if (isLoading) {
         return <p>Loading Pokémon details...</p>;
     }
 
     return (
-        <div>
-            <h1>Pokemon Details</h1>
+        <div className={dets.mainContainer}>
+            <div className={dets.navbar}>
+                <Navigation />
+            </div>
             {pokemonList.length === 0 ? (
                 <p>No Pokémon found.</p>
             ) : (
                 pokemonList.map((pokemonDetail) => (
-                    <div key={pokemonDetail.id}>
-                        <h2>{pokemonDetail.nickname || "Unnamed Pokémon"}</h2>
-                        <img
-                            src={pokemonDetail.pokemon?.image || "placeholder-image-url"}
-                            alt={pokemonDetail.pokemon?.name || "Unknown Pokémon"}
-                        />
-                        <p>
-                            <strong>Level:</strong> {pokemonDetail.level || "N/A"}
-                        </p>
-                        <p>
-                            <strong>Pokemon Name:</strong> {pokemonDetail.pokemon?.name || "Unknown"}
-                        </p>
-                        <p>
-                            <strong>Custom Moves:</strong> 
-                            {pokemonDetail.custom_moves
-                                ? `${pokemonDetail.custom_moves.move1 || "N/A"} / ${pokemonDetail.custom_moves.move2 || "N/A"}`
-                                : "No moves available"}
-                        </p>
-                        <p>
-                            <strong>Types:</strong> 
-                            {pokemonDetail.pokemon?.types
-                                ? pokemonDetail.pokemon.types.join(", ")
-                                : "Unknown"}
-                        </p>
-                        <button onClick={() => handleEditPokemon(pokemonDetail)}>
-                            Edit Pokemon
-                        </button>
-                        <button onClick={() => handleDeletePokemon(pokemonDetail.id)}>
-                            Delete Pokemon
-                        </button>
+                    <div key={pokemonDetail.id} className={dets.detailsContainer}>
+                        <div className={dets.imageBox}>
+                            <img
+                                className={`${dets.image} ${pokemonDetail.pokemon?.can_fly ? dets.canFly : ""}`}
+                                src={pokemonDetail.pokemon?.image || "placeholder-image-url"}
+                                alt={pokemonDetail.pokemon?.name || "Unknown Pokémon"}
+                            />
+                        </div>
+                        <div className={dets.headerContainer}>
+                            <div className={dets.h1Div}>
+                                <img className={dets.pokeball} src="/images/pokeball.png" alt="" />
+                                <h1 className={dets.h1}>{pokemonDetail.pokemon.name}</h1>
+                                <img className={dets.pokeball} src="/images/pokeball-right.png" alt="" />
+                            </div>
+                            <div className={dets.typesContainer}>
+                                {pokemonDetail.pokemon?.types.map((type, index) => (
+                                    <div
+                                        key={index}
+                                        className={dets.pokemonType}
+                                        style={{ backgroundColor: typeColors[type] || '#ccc' }}
+                                    >
+                                        {type}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className={dets.bioContainer}>
+                            <div className={dets.bioBox}>
+                                <label>Nickname:</label>
+                                <p>{pokemonDetail.nickname}</p>
+                            </div>
+                            <div className={dets.bioBox}>
+                                <label>Level:</label>
+                                <p>{pokemonDetail.level}</p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className={dets.infoContainer}>
+                            <div className={dets.statsContainer}>
+                                <div className={dets.labelDiv}>
+                                    <label>Stats:</label>
+                                </div>
+                                {pokemonDetail.pokemon?.stats.map((stat, index) => (
+                                    <div key={index} className={dets.statBox}>
+                                        <div className={dets.statName}>
+                                            {stat.stat_name}
+                                        </div>
+                                        <div className={dets.statValue}>
+                                            {stat.stat_value}
+                                        </div>
+                                    </div>
+                                ))}                                        
+                            </div>
+                            <div className={dets.movesContainer}>
+                                <div className={dets.labelDiv}>
+                                    <label>Moves:</label>
+                                </div>
+                                {pokemonDetail.custom_moves ? (
+                                    Object.values(pokemonDetail.custom_moves).map((move, index) => (
+                                        <p key={index}>{move || "N/A"}</p>
+                                    ))
+                                ) : (
+                                    <p>No moves available</p>
+                                )}
+                            </div>
+                        </div>
+                        <div className={dets.buttonsContainer}>
+                            <button 
+                                onClick={() => handleEditPokemon(pokemonDetail)}
+                                className={dets.editButton}
+                            >
+                                Edit Pokemon
+                            </button>
+                            <button 
+                                onClick={() => handleDeletePokemon(pokemonDetail.id)}
+                                className={dets.deleteButton}
+                            >
+                                Delete Pokemon
+                            </button>
+                        </div>
                     </div>
                 ))
             )}
