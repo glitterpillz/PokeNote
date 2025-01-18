@@ -162,15 +162,15 @@ function UserPokemonDetails() {
                         <div className={dets.buttonsContainer}>
                             <button 
                                 onClick={() => handleEditPokemon(pokemonDetail)}
-                                className={dets.editButton}
+                                className={dets.button}
                             >
-                                Edit Pokemon
+                                Edit
                             </button>
                             <button 
                                 onClick={() => handleDeletePokemon(pokemonDetail.id)}
-                                className={dets.deleteButton}
+                                className={dets.button}
                             >
-                                Delete Pokemon
+                                Remove
                             </button>
                         </div>
                     </div>
