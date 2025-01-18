@@ -75,9 +75,8 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 270px;
-    /* height: 250px; */
-    overflow: hidden; /* Ensure content stays within the boundaries of the card */
-    cursor: pointer; /* Change cursor to pointer to show it’s clickable */
+    overflow: hidden; 
+    cursor: pointer;
 }
   
 

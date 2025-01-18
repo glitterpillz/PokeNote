@@ -14,10 +14,13 @@ function EditPokemonModal({ pokemon }) {
             ...stat,
         }))
     );
-    const [customMoves, setCustomMoves] = useState(
-        pokemon.custom_moves || { move1: '', move2: '', move3: '', move4: '' }
-    );
-
+    const [customMoves, setCustomMoves] = useState({
+        move1: pokemon.custom_moves?.move1 || '',
+        move2: pokemon.custom_moves?.move2 || '',
+        move3: pokemon.custom_moves?.move3 || '',
+        move4: pokemon.custom_moves?.move4 || '',
+    });
+    
     const handleStatChange = (index, value) => {
         setStats((prevStats) =>
             prevStats.map((stat, i) =>
@@ -96,15 +99,13 @@ function EditPokemonModal({ pokemon }) {
             ))}
             <h3>Custom Moves:</h3>
             <div>
-                {Object.entries(customMoves).map(([moveKey, moveValue], index) => (
+                {['move1', 'move2', 'move3', 'move4'].map((moveKey, index) => (
                     <label key={index}>
                         {`Move ${index + 1}:`}
                         <input
                             type="text"
-                            value={moveValue}
-                            onChange={(e) =>
-                                handleCustomMoveChange(moveKey, e.target.value)
-                            }
+                            value={customMoves[moveKey]}
+                            onChange={(e) => handleCustomMoveChange(moveKey, e.target.value)}
                         />
                     </label>
                 ))}
