@@ -132,9 +132,9 @@ def edit_user_pokemon(collection_id):
     user_pokemon.level = data.get('level', user_pokemon.level)
     selected_party = data.get('selected_party', None)
     if selected_party is not None:
-        if isinstance(selected_party, str):  # If it's a string, convert it to boolean
+        if isinstance(selected_party, str): 
             user_pokemon.selected_party = selected_party.lower() == 'true'
-        else:  # If it's already a boolean, just set it
+        else: 
             user_pokemon.selected_party = bool(selected_party)
 
 
