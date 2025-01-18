@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { editUserPokemon, fetchPokemonDetail } from '../../redux/pokemon';
 import { useState } from 'react';
+import edit from './EditPokemonModal.module.css'
 
 function EditPokemonModal({ pokemon }) {
     const dispatch = useDispatch();
@@ -64,56 +65,72 @@ function EditPokemonModal({ pokemon }) {
     
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Edit Pokémon</h2>
-            <label>
-                Nickname:
+        <form className={edit.form} onSubmit={handleSubmit}>
+            <div className={edit.header}>
+                <h2 className={edit.h2}>Edit Pokémon</h2>
+            </div>
+            <div className={edit.inputBox}>
+                <label className={edit.label}>
+                    Nickname:
+                </label>
                 <input
                     type="text"
                     value={nickname}
                     onChange={(e) => setNickname(e.target.value)}
+                    className={edit.input}
                 />
-            </label>
-            <label>
-                Level:
+            </div>
+            <div className={edit.inputBox}>
+                <label className={edit.label}>
+                    Level:
+                </label>
                 <input
                     type="number"
                     value={level}
                     onChange={(e) => setLevel(e.target.value)}
+                    className={edit.input}
                 />
-            </label>
-            <h3>Stats:</h3>
-            {stats.map((stat, index) => (
-                <div key={index}>
-                    <label>
-                        {stat.stat_name}
+            </div>
+            <h3 className={edit.h3}>Stats:</h3>
+            <div className={edit.inputContainer}>
+                {stats.map((stat, index) => (
+                    <div key={index} className={edit.inputBox}>
+                        <label className={edit.label}>
+                            {stat.stat_name}:
+                        </label>
                         <input
                             type="number"
                             value={stat.stat_value}
                             onChange={(e) =>
                                 handleStatChange(index, e.target.value)
                             }
+                            className={edit.input}
                         />
-                    </label>
-                </div>
-            ))}
-            <h3>Custom Moves:</h3>
-            <div>
+                    </div>
+                ))}
+            </div>
+            <h3 className={edit.h3}>Moves:</h3>
+            <div className={edit.inputContainer}>
                 {['move1', 'move2', 'move3', 'move4'].map((moveKey, index) => (
-                    <label key={index}>
-                        {`Move ${index + 1}:`}
+                    <div key={index} className={edit.inputBox}>
+                        <label className={edit.label}>
+                            {`Move ${index + 1}:`}
+                        </label>
                         <input
                             type="text"
                             value={customMoves[moveKey]}
                             onChange={(e) => handleCustomMoveChange(moveKey, e.target.value)}
+                            className={edit.input}
                         />
-                    </label>
+                    </div>
                 ))}
             </div>
-            <button type="submit">Save</button>
-            <button type="button" onClick={closeModal}>
-                Cancel
-            </button>
+            <div className={edit.buttonsContainer}>
+                <button className={edit.button} type="submit">Save</button>
+                <button className={edit.button} type="button" onClick={closeModal}>
+                    Cancel
+                </button>
+            </div>
         </form>
     );
 }
