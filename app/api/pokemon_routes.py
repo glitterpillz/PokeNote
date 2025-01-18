@@ -43,7 +43,11 @@ def add_pokemon_to_user(id):
     if not pokemon:
         return jsonify({'error': 'Pokemon not found'}), 404
     
-    new_entry = UserPokemon(user_id=current_user.id, pokemon_id=pokemon.id)
+    new_entry = UserPokemon(
+        user_id=current_user.id,
+        pokemon_id=pokemon.id,
+        selected_party=False,
+    )
     db.session.add(new_entry)
     db.session.commit()
 
@@ -83,6 +87,20 @@ def get_user_pokemons():
     return jsonify({"Pokemon": pokemons_dict})
 
 
+# GET USER POKEMON PARTY:
+@pokemon_routes.route('/party', methods=['GET'])
+def get_user_party():
+    if not current_user.is_authenticated:
+        return jsonify({'message': 'User not authenticated'})
+    
+    pokemons = UserPokemon.query.filter(
+        UserPokemon.user_id == current_user.id,
+        UserPokemon.selected_party == True
+    ).all()
+    pokemons_dict = [pokemon.to_dict() for pokemon in pokemons]
+    return jsonify({"Pokemon": pokemons_dict})
+
+
 # GET USER POKEMON DETAILS:
 @pokemon_routes.route('/collection/<int:collection_id>', methods=['GET'])
 def get_user_pokemon_by_collection_id(collection_id):
@@ -112,6 +130,13 @@ def edit_user_pokemon(collection_id):
 
     user_pokemon.nickname = data.get('nickname', user_pokemon.nickname)
     user_pokemon.level = data.get('level', user_pokemon.level)
+    selected_party = data.get('selected_party', None)
+    if selected_party is not None:
+        if isinstance(selected_party, str):  # If it's a string, convert it to boolean
+            user_pokemon.selected_party = selected_party.lower() == 'true'
+        else:  # If it's already a boolean, just set it
+            user_pokemon.selected_party = bool(selected_party)
+
 
     update_stats(user_pokemon, data.get('stats', []))
 

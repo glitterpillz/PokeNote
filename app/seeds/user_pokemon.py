@@ -24,7 +24,8 @@ def seed_user_pokemon():
         pokemon_id=7,
         nickname="Shellshock",
         level=8,
-        custom_moves={"move1": "Water Gun", "move2": "Tackle"}
+        custom_moves={"move1": "Water Gun", "move2": "Tackle"},
+        selected_party=True
     )
     user2_pokemon2 = UserPokemon(
         user_id=2,

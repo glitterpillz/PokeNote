@@ -21,6 +21,7 @@ function EditPokemonModal({ pokemon }) {
         move3: pokemon.custom_moves?.move3 || '',
         move4: pokemon.custom_moves?.move4 || '',
     });
+    const [selectedParty, setSelectedParty] = useState(pokemon.selected_party)
     
     const handleStatChange = (index, value) => {
         setStats((prevStats) =>
@@ -48,6 +49,7 @@ function EditPokemonModal({ pokemon }) {
                 stat_value: Number(stat.stat_value),
             })),
             custom_moves: customMoves,
+            selected_party: selectedParty,
         };
     
         try {
@@ -125,6 +127,12 @@ function EditPokemonModal({ pokemon }) {
                     </div>
                 ))}
             </div>
+            <label>Add to Party</label>
+            <input
+                type="checkbox"
+                checked={selectedParty}
+                onChange={(e) => setSelectedParty(e.target.checked)}
+            />
             <div className={edit.buttonsContainer}>
                 <button className={edit.button} type="submit">Save</button>
                 <button className={edit.button} type="button" onClick={closeModal}>
