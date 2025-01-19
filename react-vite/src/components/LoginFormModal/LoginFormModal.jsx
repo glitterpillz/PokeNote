@@ -39,8 +39,8 @@ function LoginFormModal({ navigate }) {
             className={login.formInput}
             required
           />
-          {errors.email && <p className={login.errorText}>{errors.email}</p>}
         </div>
+        {errors.email && <p className={login.errorText}>{errors.email}</p>}
         <div className={login.inputBox}>
           <label>Password</label>
           <input
@@ -50,8 +50,8 @@ function LoginFormModal({ navigate }) {
             className={login.formInput}
             required
           />
-          {errors.password && <p className={login.errorText}>{errors.password}</p>}
         </div>
+        {errors.password && <p className={login.errorText}>{errors.password}</p>}
         {errors.general && <p className={login.errorText}>{errors.general}</p>}
         <button type="submit" className={login.loginSubmit}>
           Submit

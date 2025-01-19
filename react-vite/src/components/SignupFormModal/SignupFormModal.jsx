@@ -61,7 +61,7 @@ function SignupFormModal({ navigate }) {
   return (
     <div className={sign.signupModalContainer}>
       <h1 className={sign.h1}>Sign Up</h1>
-      {errors.server && <p>{errors.server}</p>}
+      {errors.server && <p className={sign.errorText}>{errors.server}</p>}
       <form className={sign.form} onSubmit={handleSubmit}>
         <div className={sign.inputBox}>
           <label>
@@ -74,8 +74,8 @@ function SignupFormModal({ navigate }) {
             className={sign.formInput}
             required
           />
-          {errors.payload?.email && <p>{errors.payload.email}</p>}
         </div>
+        {errors.payload?.email && <p className={sign.errorText}>{errors.payload.email}</p>}
 
         <div className={sign.inputBox}>
           <label>
@@ -88,8 +88,8 @@ function SignupFormModal({ navigate }) {
             className={sign.formInput}
             required
           />
-          {errors.payload?.username && <p>{errors.payload.username}</p>}
         </div>
+        {errors.payload?.username && <p className={sign.errorText}>{errors.payload.username}</p>}
 
         <div className={sign.inputBox}>
           <label>
@@ -102,8 +102,8 @@ function SignupFormModal({ navigate }) {
             className={sign.formInput}
             required
           />
-          {errors.fname && <p>{errors.fname}</p>}
         </div>
+        {errors.fname && <p className={sign.errorText}>{errors.fname}</p>}
 
         <div className={sign.inputBox}>
           <label>
@@ -116,8 +116,8 @@ function SignupFormModal({ navigate }) {
             className={sign.formInput}
             required
           />
-          {errors.lname && <p>{errors.lname}</p>}
         </div>
+        {errors.lname && <p className={sign.errorText}>{errors.lname}</p>}
 
         <div className={sign.inputBox}>
           <label>
@@ -142,8 +142,8 @@ function SignupFormModal({ navigate }) {
             className={sign.formInput}
             required
           />
-          {errors.password && <p>{errors.password}</p>}
         </div>
+        {errors.password && <p className={sign.errorText}>{errors.password}</p>}
 
         <div className={sign.inputBox}>
           <label>
@@ -156,8 +156,8 @@ function SignupFormModal({ navigate }) {
             className={sign.formInput}
             required
           />
-          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         </div>
+        {errors.confirmPassword && <p className={sign.errorText}>{errors.confirmPassword}</p>}
         <button 
           type="submit"
           className={sign.signupSubmit}
