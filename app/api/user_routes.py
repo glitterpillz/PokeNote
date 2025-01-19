@@ -94,6 +94,7 @@ def public_profile(id):
         'lname': user.lname,
         'profile_picture': user.profile_picture,
         'banner_url': user.banner_url,
+        'disabled': user.disabled,
         'pokemon_collection': [pokemon.to_dict() for pokemon in user.pokemon_collection],
         'journal_entries': [entry.to_dict() for entry in user.journal_entries]
     })
