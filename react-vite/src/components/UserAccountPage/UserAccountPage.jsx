@@ -94,7 +94,7 @@ const UserAccountPage = () => {
               <hr />
               {pokemonParty.length > 0 ? (
                 <div className={acc.entryList}>
-                    {pokemonParty.slice(0, 5).map((pokemon, index) => (
+                    {pokemonParty.slice(0, 6).map((pokemon, index) => (
                       <div 
                         key={index} 
                         className={acc.listEntry}
