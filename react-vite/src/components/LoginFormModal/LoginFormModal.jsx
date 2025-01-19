@@ -19,7 +19,7 @@ function LoginFormModal({ navigate }) {
     );
 
     if (serverResponse.type === "session/login/rejected") {
-      setErrors(serverResponse);
+      setErrors(serverResponse.payload || {});
     } else {
       navigate("/");
       closeModal();
@@ -31,9 +31,7 @@ function LoginFormModal({ navigate }) {
       <h1 className={login.h1}>Log In</h1>
       <form className={login.form} onSubmit={handleSubmit}>
         <div className={login.inputBox}>
-          <label>
-            Email
-          </label>
+          <label>Email</label>
           <input
             type="text"
             value={email}
@@ -41,12 +39,10 @@ function LoginFormModal({ navigate }) {
             className={login.formInput}
             required
           />
-          {errors.payload?.email && <p>{errors.payload?.email}</p>}
+          {errors.email && <p className={login.errorText}>{errors.email}</p>}
         </div>
         <div className={login.inputBox}>
-          <label>
-            Password
-          </label>
+          <label>Password</label>
           <input
             type="password"
             value={password}
@@ -54,8 +50,9 @@ function LoginFormModal({ navigate }) {
             className={login.formInput}
             required
           />
-        {errors.payload?.password && <p>{errors.payload?.password}</p>}
+          {errors.password && <p className={login.errorText}>{errors.password}</p>}
         </div>
+        {errors.general && <p className={login.errorText}>{errors.general}</p>}
         <button type="submit" className={login.loginSubmit}>
           Submit
         </button>

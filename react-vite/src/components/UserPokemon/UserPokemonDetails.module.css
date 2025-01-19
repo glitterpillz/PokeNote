@@ -89,16 +89,16 @@
     gap: 10px;
 }
 
-label {
+.detailsContainer label {
     font-weight: bold;
     font-size: 1.2rem;
 }
 
-p {
+.detailsContainer p {
     font-size: 1.4rem;
 }
 
-hr {
+.hr {
     padding: 1px;
     background-color: #ffd444;
     border-color:#ffd444;

@@ -47,21 +47,20 @@ export const login = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
+
       const data = await res.json();
 
       if (!res.ok) {
-        const error = await res.json();
-        if (res.status === 403) {
-          return rejectWithValue({ error: "Account disabled" });
-        }
-        throw new Error(error.error || "Login failed")
+        return rejectWithValue(data.errors || { general: "Login failed" });
       }
+
       return data.user || data;
     } catch (error) {
-      return rejectWithValue(error.message || "Login failed");
+      return rejectWithValue({ general: error.message || "Login failed" });
     }
   }
 );
+
 
 export const signup = createAsyncThunk(
   "session/signup",
