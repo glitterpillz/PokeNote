@@ -40,6 +40,7 @@ function SendMessageModal() {
                     <input 
                         type="text" 
                         value={receiver}
+                        placeholder='username'
                         onChange={(e) => setReceiver(e.target.value)}
                         className={mod.input}
                         required

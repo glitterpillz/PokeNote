@@ -53,6 +53,7 @@ body {
     background-color: #1e2442;
     color: #cacee2;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .resultsContainer {

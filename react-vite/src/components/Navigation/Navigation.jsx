@@ -82,18 +82,18 @@ function Navigation() {
                 Discover
               </NavLink>
               <hr />
-              <NavLink
-                to=""
+              <p
+                onClick={() => window.alert('Feature coming soon!')}
                 className={nav.navLink}
               >
                 About
-              </NavLink>
-              <NavLink
-                to=""
+              </p>
+              <p
+                onClick={() => window.alert('Feature coming soon!')}
                 className={nav.navLink}
               >
                 Contact Us
-              </NavLink>
+              </p>
             </li>
           </ul>
         </nav>

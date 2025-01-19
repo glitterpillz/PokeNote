@@ -10,7 +10,7 @@
     border-radius: 8px;
     font-family: "Baloo Paaji 2", serif;
     font-size: 1.4rem;
-    color: #15141a;
+    color: #1e2442;
     padding: 20px;
 }
 
@@ -22,11 +22,17 @@
 
 .input {
     background-color: #6f77a1;
+    color: #cacee2;
     border: none;
     border-radius: 5px;
     font-size: 1.3rem;
     padding: 5px 10px;
     width: 180px;
+}
+
+.input::placeholder {
+    color: #cacee2;
+    font-style: italic;
 }
 
 .messageBox {
@@ -41,6 +47,8 @@
     resize: none;
     height: 100px;
     font-size: 1.3rem;
+    padding: 5px 10px;
+    color: #cacee2;
 }
 
 .buttonsBox {
@@ -51,36 +59,12 @@
 
 .button {
     align-self: center;
-    padding: 5px 15px;
+    padding: 5px 10px;
     font-family: "Atma", serif;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 600;
     background-color: #1e2442;
     color: #cacee2;
     border-radius: 8px;
     cursor: pointer;
 }
-
-/* .receiverBox {
-    font-weight: 600;
-    display: flex;
-    gap: 10px;
-    padding-top: 10px;
-    padding-left: 5px;
-    font-size: 1.3rem;
-}
-
-.input {
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid #fefbe2;
-    height: 25px;
-}
-
-
-.messageBox {
-    display: flex;
-    flex-direction: column;
-    font-weight: 600;
-    font-size: 1.3rem;
-} */

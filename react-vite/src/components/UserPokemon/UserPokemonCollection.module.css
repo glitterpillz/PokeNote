@@ -1,11 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Baloo+Paaji+2:wght@400..800&display=swap");
 
+
 .mainBodyContainer {
     font-family: "Baloo Paaji 2", serif;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9eb1e4;
+    font-family: "Atma", serif;
+    font-size: 1.4rem;
+    background-color: #19264b;
+    width: 650px;
+    padding: 10px 15px;
+    margin: 40px 0 40px 0;
+    align-self: center;
+    border-radius: 10px;
+}
+
+.h1 {
+    margin: 0;
 }
 
 .cardsContainer {
