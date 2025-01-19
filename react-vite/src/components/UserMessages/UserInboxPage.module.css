@@ -96,8 +96,25 @@
     margin: 0;
 }
 
-.deleteButton {
-    padding: 0;
+.deleteButton, .deleteAllButton {
+    padding: 3px 5px;
+    background-color: #ad5aa9;
+    border: none;
+    border-radius: 5px;
+    color: #fefbe2;
+    cursor: pointer;
+    font-family: "Baloo Paaji 2", serif;
+    margin-bottom: 5px;
+}
+
+.deleteButton:hover, .deleteAllButton:hover {
+    background-color: #8e4a8a;
+}
+
+.deleteAllButton {
+    position: relative;
+    bottom: 20px;
+    left: 70px;
 }
 
 .messageBody {
