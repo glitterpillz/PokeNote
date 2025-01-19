@@ -96,3 +96,46 @@
   align-self: center;
   padding: 20px 0 0 10px;
 }
+
+.dropdownButton {
+  margin-top: 30px;
+  background-color: transparent;
+  border: none;
+  font-family: "Baloo Paaji 2", serif;
+  font-size: 1.2rem;
+  color: #fefbe2;
+  cursor: pointer;
+}
+
+.dropdownButton:hover {
+  font-size: 1.3rem;
+}
+
+.dropdownMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  position: fixed;
+  right: 90px;
+  top: 80px;
+  width: 80px;
+  color: #fefbe2;
+  background-color: #23283c;
+  border-radius: 10px;
+  padding: 15px 20px;
+  min-width: 120px;
+  z-index: 10;
+}
+
+.dropButton {
+  background-color: transparent;
+  border: none;
+  color: #fefbe2;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.dropButton:hover {
+  color: #8cfbeb;
+}

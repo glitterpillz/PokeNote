@@ -111,8 +111,8 @@ function Navigation() {
             </button>
             {isDropdownOpen && (
               <div className={nav.dropdownMenu}>
-                <button onClick={() => handleLogin("demoUser")}>Demo User</button>
-                <button onClick={() => handleLogin("demoAdmin")}>Demo Admin</button>
+                <button className={nav.dropButton} onClick={() => handleLogin("demoUser")}>Demo User</button>
+                <button className={nav.dropButton} onClick={() => handleLogin("demoAdmin")}>Demo Admin</button>
               </div>
             )}
           </div>
