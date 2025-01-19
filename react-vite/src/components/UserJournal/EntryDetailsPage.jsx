@@ -90,6 +90,12 @@ function EntryDetailsPage() {
                         <label className={journ.label}>Content:</label>
                         <p>{entryDetails.content}</p>
                     </div>
+                    {canEdit && (
+                        <div className={journ.contentDiv}>
+                            <label className={journ.label}>Accomplishments:</label>
+                            <p>{entryDetails.accomplishments}</p>
+                        </div>
+                    )}
                     <div className={journ.photoDiv}>
                         <label className={journ.label}>Entry Photo:</label>
                         {entryDetails.photo ? (

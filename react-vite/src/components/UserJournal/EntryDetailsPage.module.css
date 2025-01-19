@@ -68,7 +68,7 @@
     font-weight: bold;
 }
 
-.contentDiv p {
+.contentDiv p, .photoDiv p {
     margin-top: 0;
 }
 
