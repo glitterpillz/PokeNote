@@ -104,16 +104,10 @@
     border-radius: 8px;
 }
 
-.buttonsContainer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin: 20px 0 0 20px;
-}
-
 .button {
+    align-self: flex-start;
     padding: 5px 10px;
+    margin: 20px 0 0 20px;
     font-family: "Atma", serif;
     font-size: 1rem;
     font-weight: 600;
@@ -128,5 +122,19 @@
     cursor: pointer;
     background-color: #81456f;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 8px;
+}
 
+.scrollTopButton {
+    position: fixed;
+    top: 30px; 
+    right: 30px;
+    z-index: 1000;
+}
+
+.scrollTopButton.show {
+    display: block; 
+}
+
+.scrollTopButton {
+    transition: opacity 0.3s ease;
 }

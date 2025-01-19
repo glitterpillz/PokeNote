@@ -6,7 +6,7 @@ import * as journalActions from "../../redux/journal";
 import { sendMessage } from "../../redux/message";
 import Navigation from "../Navigation";
 import { Link } from "react-router-dom";
-import { FaArrowCircleUp } from "react-icons/fa";
+import { IoMdArrowRoundUp } from "react-icons/io";
 import dis from "./DiscoverPage.module.css";
 
 function DiscoverPage() {
@@ -121,14 +121,12 @@ function DiscoverPage() {
         ));
     };
 
-    const upArrow = <FaArrowCircleUp 
+    const upArrow = <IoMdArrowRoundUp 
         className={dis.upArrow} 
         style={{ 
-            'color': '#ffd444', 
-            'backgroundColor': 'black',
+            'color': '#ffd444',
             'borderRadius': '50%',
             'fontSize': '40px',
-            'boxShadow': '0 4px 8px rgba(0, 0, 0, 0.2)',
             'cursor': 'pointer'
         }}
     />

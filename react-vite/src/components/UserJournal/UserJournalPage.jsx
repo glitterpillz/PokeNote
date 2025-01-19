@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { deleteEntry, getUserJournal } from "../../redux/journal";
+import { useEffect, useState } from "react";
+import { getUserJournal } from "../../redux/journal";
 import { useModal } from "../../context/Modal";
 import Navigation from "../Navigation";
 import CreateJournalEntryModal from "./CreateJournalEntryModal";
 import ent from './UserJournalPage.module.css'
-import UpdateEntryModal from "./UpdateEntryModal";
 import { useNavigate } from "react-router-dom";
+import { IoMdArrowRoundUp } from "react-icons/io";
+
 
 const UserJournalPage = () => {
     const dispatch = useDispatch();
@@ -14,47 +15,40 @@ const UserJournalPage = () => {
     const { setModalContent } = useModal();
     const currentUser = useSelector((state) => state.session.user);
     const { journal, loading, errors } = useSelector((state) => state.journal);
+    const [scrollTopButton, setScrollTopButton] = useState(false);
+    
 
     useEffect(() => {
         dispatch(getUserJournal());
     }, [dispatch]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 300) {
+                setScrollTopButton(true);
+            } else {
+                setScrollTopButton(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+
     const handleCreateJournal = () => {
         setModalContent(<CreateJournalEntryModal closeModal={() => setModalContent(null)} />);
+    };        
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
     };
-
-    const handleUpdateEntry = (entryDetails) => {
-        setModalContent(
-            <UpdateEntryModal
-                entryDetails={entryDetails}
-                closeModal={() => setModalContent(null)} 
-            />
-        )
-    }
-
-    const handleDeleteEntry = async (entryId) => {
-        const isConfirmed = window.confirm("Are you sure you want to delete this entry?");
-            
-        if (isConfirmed) {
-            try {
-                dispatch(deleteEntry(entryId)).unwrap();
-                
-                const updatedJournal = journal?.Journal.filter(entry => entry.id !== entryId);
-                dispatch({ type: 'SET_JOURNAL', payload: { Journal: updatedJournal } });
-    
-                alert("Entry deleted successfully");
-
-                dispatch(getUserJournal());
-                navigate('/journal/user');  
-            } catch (error) {
-                console.error("Error deleting entry:", error);
-                alert("Error deleting entry");
-            }
-        } else {
-            console.log("Deletion canceled");
-        }
-    };
-        
 
     if (loading) {
         return <div>Loading...</div>;
@@ -63,13 +57,32 @@ const UserJournalPage = () => {
     if (errors) {
         return <div>Error: {errors.general || "Something went wrong"}</div>;
     }
-
+    
     const journalEntries = journal?.Journal || [];
+    
+    const upArrow = <IoMdArrowRoundUp 
+        className={ent.upArrow} 
+        style={{ 
+            'color': '#ffd444',
+            'borderRadius': '50%',
+            'fontSize': '40px',
+            'cursor': 'pointer'
+        }}
+    />
 
     return (
         <div>
             <div className={ent.navbar}>
                 <Navigation />
+                {scrollTopButton && (
+                    <div
+                        className={`${ent.scrollTopButton} ${scrollTopButton ? ent.show : ''}`}
+                        onClick={scrollToTop}
+                    >
+                        {upArrow}
+                    </div>
+                )}
+                
             </div>
             <div className={ent.mainBodyContainer}>
                 <div className={ent.headerBox}>
@@ -92,20 +105,12 @@ const UserJournalPage = () => {
                                         <p className={ent.entryDate}>{new Date(entry.timestamp).toLocaleDateString()}</p>
                                     </div>
 
-                                    <div className={ent.buttonsContainer}>
-                                        <button
-                                            className={ent.button}
-                                            onClick={() => handleUpdateEntry(entry)}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            className={ent.button}
-                                            onClick={() => handleDeleteEntry(entry.id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
+                                    <button
+                                        className={ent.button}
+                                        onClick={() => navigate(`/journal/${entry.id}`)}
+                                    >
+                                        View
+                                    </button>
 
                                     <div className={ent.entryBody}>
                                         <div className={ent.contentBox}>

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import ent from "./CreateJournalEntryModal.module.css";
-import { getUserJournal } from "../../redux/journal";
+import { fetchEntryDetails } from "../../redux/journal";
+
 
 const UpdateEntryModal = ({ entryDetails, closeModal }) => {
     const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
 
             alert("Journal entry updated successfully!");
 
-            dispatch(getUserJournal())
+            dispatch(fetchEntryDetails(entryDetails.id))
 
             closeModal();
         } catch (error) {
