@@ -3,12 +3,13 @@
 .signupModalContainer {
     background-color: #50587e;
     width: 450px;
-    height: auto;
+    height: 500px;  /* Set a fixed height */
     color: #fefbe2;
-    padding: 5px 20px;
+    padding: 20px;
     font-family: "Baloo Paaji 2", serif;
     border: 3px solid #fefbe2;
     border-radius: 8px;
+    overflow-y: auto;  /* Enable vertical scrolling */
 }
 
 .h1 {

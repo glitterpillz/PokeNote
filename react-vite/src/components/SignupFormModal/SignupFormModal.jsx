@@ -74,7 +74,7 @@ function SignupFormModal({ navigate }) {
             className={sign.formInput}
             required
           />
-          {errors.email && <p>{errors.email}</p>}
+          {errors.payload?.email && <p>{errors.payload.email}</p>}
         </div>
 
         <div className={sign.inputBox}>
@@ -88,7 +88,7 @@ function SignupFormModal({ navigate }) {
             className={sign.formInput}
             required
           />
-          {errors.username && <p>{errors.username}</p>}
+          {errors.payload?.username && <p>{errors.payload.username}</p>}
         </div>
 
         <div className={sign.inputBox}>

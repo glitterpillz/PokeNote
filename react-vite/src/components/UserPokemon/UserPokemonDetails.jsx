@@ -129,7 +129,7 @@ function UserPokemonDetails() {
                                 <p>{pokemonDetail.level}</p>
                             </div>
                         </div>
-                        <hr />
+                        <hr className={dets.hr}/>
                         <div className={dets.infoContainer}>
                             <div className={dets.statsContainer}>
                                 <div className={dets.labelDiv}>
