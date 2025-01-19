@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as sessionActions from "../../redux/session";
 import * as pokemonActions from "../../redux/pokemon";
 import Navigation from "../Navigation";
+import { IoMdArrowRoundUp } from "react-icons/io";
 import pok from "./PokedexPage.module.css";
 
 function PokedexPage() {
@@ -12,6 +13,7 @@ function PokedexPage() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [scrollTopButton, setScrollTopButton] = useState(false);
 
     const { pokemons, loading, errors } = useSelector((state) => state.pokemon);
 
@@ -22,6 +24,22 @@ function PokedexPage() {
             dispatch(pokemonActions.getAllPokemon());
         }
     }, [dispatch, pokemons]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 300) {
+                setScrollTopButton(true);
+            } else {
+                setScrollTopButton(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -65,6 +83,12 @@ function PokedexPage() {
         Rock: '#ababaf',
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
 
     const renderPokemonCards = (pokemonList) => {
         return pokemonList.map((pokemon) => (
@@ -92,10 +116,28 @@ function PokedexPage() {
         ));
     };
 
+    const upArrow = <IoMdArrowRoundUp 
+        className={pok.upArrow} 
+        style={{ 
+            'color': '#ffd444',
+            'borderRadius': '50%',
+            'fontSize': '40px',
+            'cursor': 'pointer'
+        }}
+    />
+    
     return (
         <div className={pok.mainContainer}>
             <div className={pok.navContainer}>
                 <Navigation />
+                    {scrollTopButton && (
+                        <div
+                            className={`${pok.scrollTopButton} ${scrollTopButton ? pok.show : ''}`}
+                            onClick={scrollToTop}
+                        >
+                            {upArrow}
+                        </div>
+                    )}            
             </div>
             <img className={pok.bannerImg} src="/images/catch-em-all.png" alt="" />
             <div className={pok.searchContainer}>

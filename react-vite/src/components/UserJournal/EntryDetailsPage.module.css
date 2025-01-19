@@ -87,5 +87,29 @@
     color: #eac0dd;
     border: 1px solid #eac0dd;
     border-radius: 3px;
+    cursor: pointer;
+}
+
+.buttonsContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.button {
+    padding: 5px 10px;
+    font-family: "Atma", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #aa5d93;
+    color: #eac0dd;
+    border: 1px solid #eac0dd;
+    border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: #81456f;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 8px;
 }

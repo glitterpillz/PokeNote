@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEntryDetails } from "../../redux/journal";
-import { deleteEntry } from "../../redux/journal";
-import { useParams } from "react-router-dom";
+import { fetchEntryDetails, deleteEntry } from "../../redux/journal";
+import { useModal } from "../../context/Modal";
+import UpdateEntryModal from "./UpdateEntryModal";
+import { useParams, useNavigate } from "react-router-dom";
 import Navigation from "../Navigation";
 import { restoreUser } from "../../redux/session";
 import journ from './EntryDetailsPage.module.css';
@@ -10,6 +11,8 @@ import journ from './EntryDetailsPage.module.css';
 function EntryDetailsPage() {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { setModalContent } = useModal();
     const entryDetails = useSelector((state) => state.journal.entryDetails);
     const isLoading = useSelector((state) => state.journal.loading);
     const errors = useSelector((state) => state.journal.errors);
@@ -27,6 +30,15 @@ function EntryDetailsPage() {
         }
     }, [dispatch, currentUser, id]);
 
+    const handleUpdateEntry = (entryDetails) => {
+        setModalContent(
+            <UpdateEntryModal
+                entryDetails={entryDetails}
+                closeModal={() => setModalContent(null)} 
+            />
+        );
+    };
+
     const handleDelete = async (id) => {
         const userConfirmed = window.confirm(
             "Are you sure you want to delete this entry?"
@@ -37,10 +49,10 @@ function EntryDetailsPage() {
         try {
             await dispatch(deleteEntry(id)).unwrap();
             alert("Journal entry successfully deleted!");
-            dispatch(fetchEntryDetails(id));
+            navigate('/journal/user');
         } catch (error) {
             console.error("Error deleting journal entry", error);
-            alert("Failed to delete entry. Please try again.")
+            alert("Failed to delete entry. Please try again.");
         }
     };
 
@@ -56,9 +68,8 @@ function EntryDetailsPage() {
         return <div className={journ.pageDiv}>Journal entry not found.</div>;
     }
 
-    if (entryDetails.user_id !== currentUser.id && entryDetails.is_private) {
-        return <div className={journ.pageDiv}>You do not have permission to view this page.</div>;
-    }
+    const canEdit = currentUser.id === entryDetails.user_id;
+    const canDelete = currentUser.id === entryDetails.user_id || currentUser.admin;
 
     return (
         <div className={journ.mainContainer}>
@@ -68,7 +79,7 @@ function EntryDetailsPage() {
             <div className={journ.mainDetailsContainer}>
                 <div className={journ.headerBox}>
                     <h1 className={journ.h1}>{entryDetails.title}</h1>
-                    <p className={journ.date}>{entryDetails.timestamp}</p>
+                    <p className={journ.date}>{new Date(entryDetails.timestamp).toLocaleDateString()}</p>
                 </div>
                 <div className={journ.detailsContainer}>
                     <div className={journ.usernameDiv}>
@@ -81,16 +92,31 @@ function EntryDetailsPage() {
                     </div>
                     <div className={journ.photoDiv}>
                         <label className={journ.label}>Entry Photo:</label>
-                        <img className={journ.photo} src={entryDetails.photo} alt="" />
+                        {entryDetails.photo ? (
+                            <img className={journ.photo} src={entryDetails.photo} alt="Entry Photo" />
+                        ) : (
+                            <p>No photo</p>
+                        )}
                     </div>
-                    {currentUser.admin && (
-                        <button
-                            className={journ.deleteButton}
-                            onClick={() => handleDelete(entryDetails.id)}
-                        >
-                            Delete Entry
-                        </button>
-                    )}
+                    <div className={journ.buttonsContainer}>
+
+                        {canEdit && (
+                            <button
+                                className={journ.button}
+                                onClick={() => handleUpdateEntry(entryDetails)}
+                            >
+                                Edit
+                            </button>
+                        )}
+                        {canDelete && (
+                            <button
+                                className={journ.button}
+                                onClick={() => handleDelete(entryDetails.id)}
+                            >
+                                Delete
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,3 +124,4 @@ function EntryDetailsPage() {
 }
 
 export default EntryDetailsPage;
+
