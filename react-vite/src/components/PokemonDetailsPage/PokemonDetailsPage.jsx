@@ -25,11 +25,21 @@ function PokemonDetailsPage() {
 
     const handleNavigation = (direction) => {
         const currentId = parseInt(id, 10);
-        const newId = direction === 'next' ? currentId + 1 : currentId - 1
-        
-        navigate(`/pokemon/${newId}`)
-    }
-
+        const newId = direction === 'next' ? currentId + 1 : currentId - 1;
+    
+        if ((direction === 'next' && currentId >= maxId) || (direction === 'previous' && currentId <= minId)) {
+            return;
+        }
+    
+        navigate(`/pokemon/${newId}`);
+    };
+    
+    const minId = 1; 
+    const maxId = 151;
+    
+    const isNextDisabled = parseInt(id, 10) >= maxId;
+    const isPreviousDisabled = parseInt(id, 10) <= minId;
+    
     const handleAddPokemon = () => {
         dispatch(addPokemonToCollection(id))
             .unwrap()
@@ -93,35 +103,41 @@ function PokemonDetailsPage() {
                 
                 <div className={det.headerContainer}>
                     <img 
-                        className={det.prevArrowImg} 
+                        className={`${det.prevArrowImg} ${isPreviousDisabled ? det.disabledArrow : ""}`}
                         src="/images/arrow-prev.png" 
                         alt="Previous" 
                         onClick={() => handleNavigation('previous')}
-                        hidden = {parseInt(id, 10) <= 1}
+                        style={{
+                            cursor: isPreviousDisabled ? 'not-allowed' : 'pointer',
+                            opacity: isPreviousDisabled ? 0.5 : 1,
+                        }}
                     />
                     
                     <div className={det.midHeader}>
                         <h2 className={det.h2}>{name}</h2>
                         <div className={det.typesContainer}>
-                        {types.map((type, index) => (
-                            <div
-                                key={index}
-                                className={det.pokemonType}
-                                style={{ backgroundColor: typeColors[type] || '#ccc' }}
-                            >
-                                {type}
-                            </div>
-                        ))}
-                    </div>
+                            {types.map((type, index) => (
+                                <div
+                                    key={index}
+                                    className={det.pokemonType}
+                                    style={{ backgroundColor: typeColors[type] || '#ccc' }}
+                                >
+                                    {type}
+                                </div>
+                            ))}
+                        </div>
 
                     </div>
                     
                     <img 
-                        className={det.nextArrowImg} 
+                        className={`${det.nextArrowImg} ${isNextDisabled ? det.disabledArrow : ""}`}
                         src="/images/arrow-next.png" 
-                        alt="" 
+                        alt="Next" 
                         onClick={() => handleNavigation('next')}
-                        hidden = {parseInt(id, 10) >= 152}
+                        style={{
+                            cursor: isNextDisabled ? 'not-allowed' : 'pointer',
+                            opacity: isNextDisabled ? 0.5 : 1,
+                        }}
                     />
                 </div>
 

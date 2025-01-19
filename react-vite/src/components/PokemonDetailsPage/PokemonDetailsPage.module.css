@@ -66,7 +66,15 @@
 .prevArrowImg, .nextArrowImg {
     width: 160px;
     padding: 15px 80px 0 80px;
+    cursor: pointer;
 }
+
+.disabledArrow {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 
 .typesContainer {
     display: flex;

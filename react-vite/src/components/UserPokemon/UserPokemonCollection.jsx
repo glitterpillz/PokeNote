@@ -43,6 +43,9 @@ function UserPokemonCollection() {
                 <Navigation />
             </div>
             <div className={coll.mainBodyContainer}>
+                <div className={coll.header}>
+                    <h1 className={coll.h1}>{currentUser.fname}&apos;s Pokémon Collection</h1>
+                </div>
                 {pokemonCollection.length > 0 ? (
                     <div className={coll.cardsContainer}>
                         {pokemonCollection.map((pokemon) => (
