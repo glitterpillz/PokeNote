@@ -49,7 +49,7 @@
 .entryCard {
     border: 3px solid #5d3363;
     border-radius: 8px;
-    width: 95%;
+    width: 90%;
     background-color: #8e6b98;
     display: flex;
     flex-direction: column;
@@ -76,7 +76,7 @@
 }
 
 .contentBox {
-    padding: 0 20px;
+    padding: 0 40px;
 }
 
 .h5 {
@@ -107,7 +107,7 @@
 .button {
     align-self: flex-start;
     padding: 5px 10px;
-    margin: 20px 0 0 20px;
+    margin: 20px 0 0 40px;
     font-family: "Atma", serif;
     font-size: 1rem;
     font-weight: 600;

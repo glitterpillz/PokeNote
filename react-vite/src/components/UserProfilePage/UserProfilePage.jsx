@@ -23,13 +23,8 @@ function UserProfilePage() {
 
     useEffect(() => {
         dispatch(getPokemonParty())
-      }, [dispatch])
+    }, [dispatch])
     
-    // useEffect(() => {
-    //     console.log("USER PROFILE UPDATED:", userProfile);  
-    // }, [userProfile]);  
-    
-
     if (loading || partyLoading) { 
         return <div className={pro.loading}>Loading...</div>;
     }
@@ -44,10 +39,12 @@ function UserProfilePage() {
     
     const { banner_url, journal_entries, profile_picture, username } = userProfile;
 
-    // const topPokemon = [...pokemon_collection].sort((a, b) => b.level - a.level).slice(0, 6)
     const pokemonParty = pokemons?.Pokemon || [];
 
-    const recentJournalEntries = journal_entries.slice(0, 4)
+    const recentJournalEntries = [...journal_entries]
+        .filter((entry) => entry.is_private === false)
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .slice(0, 5);
 
     return (
         <div>
@@ -55,32 +52,42 @@ function UserProfilePage() {
                 <Navigation />
             </div>
             <div className={pro.profileContainer}>
-                {banner_url ? (
-                    <img
-                        className={pro.bannerPic}
-                        src={banner_url}
-                        alt=""
-                    />
-                ) : (
-                    <div className={pro.bannerPic}>No banner picture available</div>
-                )}
+                <img
+                    className={pro.bannerPic}
+                    src={banner_url}
+                    alt=""
+                />
                 <div className={pro.profileBox}>
                     <div className={pro.profileHeader}>
-                        {profile_picture ? (
-                            <img
-                                className={pro.profilePic}
-                                src={profile_picture}
-                                alt={`${username}'s profile`}
-                            />
-                        ) : (
-                            <div className={pro.noProfilePic}>No Profile Picture</div>
-                        )}
-                        <h2>{username}</h2>
+                        <img
+                            className={pro.profilePic}
+                            src={profile_picture}
+                            alt={`${username}'s profile`}
+                        />
+                        <div className={pro.usernameDiv}>
+                            <button 
+                                className={pro.friendButton}
+                                onClick={() => window.alert("Feature coming soon!")}
+                            >
+                                Add Friend
+                            </button>
+                            <h2>{username}</h2>
+                            <button
+                                className={pro.messageButton}
+                                onClick={() => window.alert("Feature coming soon!")}
+                            >
+                                Send Message
+                            </button>
+                        </div>
                     </div>
                     <div className={pro.profileDetails}>
 
                         <div className={pro.pokemonContainer}>
-                            <h3 className={pro.h3}>Pokémon Party</h3>
+                            <div className={pro.pokemonPartyHeader}>
+                                <img src="/images/pokeball.png" alt="" />
+                                <h3 className={pro.h3}>Pokémon Party</h3>
+                                <img src="/images/pokeball-right.png" alt="" />
+                            </div>
                             {pokemonParty.length > 0 ? (
                             <div className={pro.pokemonBox}>
                                 {pokemonParty.slice(0, 6).map((pokemon, index) => (
@@ -96,11 +103,14 @@ function UserProfilePage() {
                                             />
                                         </div>
                                         <div className={pro.cardBody}>
-                                            <p>{pokemon.pokemon.name}</p>
+                                            <p className={pro.name}>{pokemon.pokemon.name}</p>
                                             {pokemon?.nickname && (
-                                                <p>Nickname: {pokemon.nickname}</p>
+                                                <p><strong>{pokemon.nickname}</strong></p>
                                             )}
-                                            <p>Level: {pokemon.level}</p>
+                                            <div className={pro.levelBox}>
+                                                <label>Level:</label>
+                                                <p>{pokemon.level}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
@@ -110,19 +120,31 @@ function UserProfilePage() {
                             )}
                         </div>        
 
-                        <h3>Recent Journal Entries</h3>
-                        {recentJournalEntries.length > 0 ? (
-                            <ul>
-                                {recentJournalEntries.map((entry, index) => (
-                                    <li key={index}>
-                                        <strong>{entry.title || "Untitled Entry"}</strong> - {entry.timestamp}
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No journal entries available.</p>
-                        )}
-
+                        <div className={pro.journalContainer}>
+                            <h3 className={pro.h3}>Recent Journal Entries</h3>
+                            <div className={pro.journalBodyContainer}>
+                                {recentJournalEntries.length > 0 ? (
+                                    <div className={pro.journalBox}>
+                                        {recentJournalEntries.map((entry, index) => (
+                                            <div key={index} className={pro.journalCard}>
+                                                <div className={pro.journalHeader}>
+                                                    <h2 className={pro.h2}>{entry.title}</h2>
+                                                    <p className={pro.date}>{entry.timestamp}</p>
+                                                </div>
+                                                <div className={pro.journalBody}>
+                                                    <p>{entry.content}</p>
+                                                </div>
+                                                <div className={pro.journalImgBox}>
+                                                    <img src={entry.photo} alt="" />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p>No journal entries available.</p>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

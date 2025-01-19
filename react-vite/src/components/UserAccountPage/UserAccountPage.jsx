@@ -35,7 +35,10 @@ const UserAccountPage = () => {
     }
   
     const { user } = userAccount;
-    const journalEntries = user.journal_entries || [];
+
+    const journalEntries = [...(user.journal_entries || [])]
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      .slice(0, 5);
 
     const pokemonParty = pokemons?.Pokemon || [];
   
