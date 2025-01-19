@@ -118,6 +118,13 @@ h3 {
     min-width: 50px;
 }
 
+.loading, .errors {
+    color: #1e2442;
+    font-family: "Atma", serif;
+    font-size: 2rem;
+    align-self: center;
+}
+
 .scrollTopButton {
     position: fixed;
     top: 30px; 
