@@ -26,11 +26,11 @@ function AdminAllUsersPage() {
     };
 
     if (loading || !isLoaded) {
-        return <div>Loading...</div>;
+        return <div className={all.loading}>Loading...</div>;
     }
 
     if (errors) {
-        return <div>Error: {errors}</div>;
+        return <div className={all.errors}>Error: {errors}</div>;
     }
 
     const renderUsers = (userList) => {

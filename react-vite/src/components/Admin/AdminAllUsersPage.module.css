@@ -32,6 +32,10 @@
     align-items: center;
 }
 
-/* .dataBox label {
-
-} */
+.loading, .errors {
+    color: #ffd444;
+    font-family: "Atma", serif;
+    font-size: 2rem;
+    text-align: center;
+    margin: 50px;
+}
