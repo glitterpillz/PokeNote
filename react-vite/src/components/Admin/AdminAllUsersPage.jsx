@@ -48,7 +48,6 @@ function AdminAllUsersPage() {
                     className={all.userCard}
                 >
                     <div className={all.statusBox}>
-                        <label className={all.statusLabel}>status:</label>
                         <p className={all.adminStatus}>{user.admin ? 'Admin' : 'User'}</p>
                     </div>
 
@@ -95,6 +94,9 @@ function AdminAllUsersPage() {
         <div className={all.mainContainer}>
             <div>
                 <Navigation />
+            </div>
+            <div className={all.header}>
+                <h2>Manage Users</h2>
             </div>
             <div className={all.mainBodyContainer}>
                 {renderUsers(users || [])}

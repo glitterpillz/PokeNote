@@ -24,15 +24,15 @@ function UserProfilePage() {
     
 
     if (loading) { 
-        return <div>Loading...</div>;
+        return <div className={pro.loading}>Loading...</div>;
     }
 
     if (errors) {
-        return <div>Error: {errors || "Something went wrong."}</div>;
+        return <div className={pro.errors}>Error: {errors || "Something went wrong."}</div>;
     }
 
-    if (!userProfile) {
-        return <div>No profile data available.</div>;
+    if (!userProfile || userProfile.disabled) {
+        return <div className={pro.errors}>No profile found.</div>;
     }
     
     const { banner_url, journal_entries, pokemon_collection, profile_picture, username } = userProfile;
