@@ -39,15 +39,9 @@ app.register_blueprint(message_routes, url_prefix='/api/messages')
 db.init_app(app)
 Migrate(app, db)
 
-# Application Security
 CORS(app)
 
 
-# Since we are deploying with Docker and Flask,
-# we won't be using a buildpack when we deploy to Heroku.
-# Therefore, we need to make sure that in production any
-# request made over http is redirected to https.
-# Well.........
 @app.before_request
 def https_redirect():
     if os.environ.get('FLASK_ENV') == 'production':
@@ -71,9 +65,6 @@ def inject_csrf_token(response):
 
 @app.route("/api/docs")
 def api_help():
-    """
-    Returns all API routes and their doc strings
-    """
     acceptable_methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
     route_list = { rule.rule: [[ method for method in rule.methods if method in acceptable_methods ],
                     app.view_functions[rule.endpoint].__doc__ ]
@@ -84,11 +75,6 @@ def api_help():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def react_root(path):
-    """
-    This route will direct to the public directory in our
-    react builds in the production environment for favicon
-    or index.html requests
-    """
     if path == 'favicon.ico':
         return app.send_from_directory('public', 'favicon.ico')
     return app.send_static_file('index.html')
