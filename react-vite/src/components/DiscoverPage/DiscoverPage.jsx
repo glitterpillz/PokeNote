@@ -60,7 +60,6 @@ function DiscoverPage() {
             await dispatch(sendMessage(messageData)).unwrap();
             alert('Journal entry reported!')
         } catch (error) {
-            console.log("Error reporting journal entry", error);
             alert("Failed to report the journal entry. Please try again.")
         }
     }
