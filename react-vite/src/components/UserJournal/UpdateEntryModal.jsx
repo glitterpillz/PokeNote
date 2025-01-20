@@ -6,6 +6,7 @@ import { fetchEntryDetails } from "../../redux/journal";
 
 const UpdateEntryModal = ({ entryDetails, closeModal }) => {
     const dispatch = useDispatch();
+    const [errors, setErrors] = useState({});
 
     const [formData, setFormData] = useState({
         title: entryDetails?.title || "",
@@ -35,6 +36,22 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const errors = {};
+        if (formData.title.length > 100) {
+            errors.title = "Title cannot exceed 100 characters.";
+        }
+        if (formData.content.length > 2000) {
+            errors.content = "Content cannot exceed 2000 characters.";
+        }
+        if (formData.accomplishments.length > 1000) {
+            errors.accomplishments = "Accomplishments cannot exceed 1000 characters.";
+        }
+
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+            return;
+        }
+
         const formDataToSend = new FormData();
         formDataToSend.append("title", formData.title);
         formDataToSend.append("content", formData.content);
@@ -55,9 +72,6 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
                 const error = await response.json();
                 throw new Error(error.message || "Failed to update journal entry");
             }
-
-            const updatedEntry = await response.json();
-            console.log("Entry updated:", updatedEntry);
 
             alert("Journal entry updated successfully!");
 
@@ -98,6 +112,7 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
                         required
                     />
                 </div>
+                {errors.title && <div className={ent.error}>{errors.title}</div>}
 
                 <div className={ent.contentBox}>
                     <label 
@@ -115,6 +130,7 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
                         required
                     ></textarea>
                 </div>
+                {errors.content && <div className={ent.error}>{errors.content}</div>}
 
                 <div className={ent.accomplishBox}>
                     <label 
@@ -130,6 +146,7 @@ const UpdateEntryModal = ({ entryDetails, closeModal }) => {
                         className={ent.accomplishTextArea}
                     ></textarea>
                 </div>
+                {errors.accomplishments && <div className={ent.error}>{errors.accomplishments}</div>}
 
                 <div className={ent.photoBox}>
                     <label htmlFor="photo">Upload Photo:</label>

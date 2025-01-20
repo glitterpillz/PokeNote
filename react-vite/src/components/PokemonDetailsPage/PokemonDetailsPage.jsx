@@ -67,15 +67,15 @@ function PokemonDetailsPage() {
 
     
     if (loading) { 
-        return <div>Loading...</div>;
+        return <div className={det.loading}>Loading...</div>;
     }
 
     if (errors) {
-        return <div>Error: {errors || "Something went wrong."}</div>;
+        return <div className={det.errors}>Error: {errors || "Something went wrong."}</div>;
     }
 
     if (!pokemonDetails) {
-        return <div>No pokemon data available.</div>;
+        return <div className={det.errors}>No pokemon data available.</div>;
     }
 
     const { name, image, stats, types, can_fly } = pokemonDetails;

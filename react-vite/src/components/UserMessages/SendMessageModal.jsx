@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { sendMessage } from '../../redux/message';
 import { getUserSentBox } from '../../redux/message';
-import mod from './SendMessageModal.module.css'
+import mod from './SendMessageModal.module.css';
+
+const MAX_CONTENT_LENGTH = 1000;
 
 function SendMessageModal() {
     const dispatch = useDispatch();
@@ -11,9 +13,15 @@ function SendMessageModal() {
 
     const [receiver, setReceiver] = useState('');
     const [content, setContent] = useState('');
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
+        if (content.length > MAX_CONTENT_LENGTH) {
+            setErrors({ content: `Message cannot be longer than ${MAX_CONTENT_LENGTH} characters.` });
+            return;
+        }
     
         const messageData = {
             receiver,
@@ -27,18 +35,22 @@ function SendMessageModal() {
             closeModal();
         } catch (error) {
             console.error("Error sending direct message", error);
-            alert("Failed to send DM. Please try again.");
+    
+            if (error.error) {
+                setErrors({ receiver: error.error });
+            } else {
+                alert("Failed to send DM. Please try again.");
+            }
         }
     };
     
-
     return (
         <div>
             <form onSubmit={handleSubmit} className={mod.form}>
                 <div className={mod.receiverBox}>
                     <label>To:</label>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         value={receiver}
                         placeholder='username'
                         onChange={(e) => setReceiver(e.target.value)}
@@ -46,6 +58,7 @@ function SendMessageModal() {
                         required
                     />
                 </div>
+                {errors.receiver && <div className={mod.errors}>{errors.receiver}</div>}
 
                 <div className={mod.messageBox}>
                     <label>Message:</label>
@@ -56,11 +69,11 @@ function SendMessageModal() {
                         required
                     />
                 </div>
+                {errors.content && <div className={mod.errors}>{errors.content}</div>}
 
                 <div className={mod.buttonsBox}>
                     <button 
                         type="submit" 
-                        onSubmit={handleSubmit}
                         className={mod.button}
                     >
                         Send
@@ -75,7 +88,7 @@ function SendMessageModal() {
                 </div>
             </form>
         </div>
-    )
+    );
 }
 
 export default SendMessageModal;

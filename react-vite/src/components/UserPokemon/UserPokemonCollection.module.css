@@ -18,7 +18,7 @@
     font-size: 1.2rem;
     background-color: #19264b;
     padding: 10px 20px;
-    margin: 40px 0 40px 0;
+    margin: 50px 0;
     align-self: center;
     border-radius: 10px;
 }
@@ -105,4 +105,12 @@
 .bodyDiv p {
     margin: 0;
     font-size: 1.4rem;
+}
+
+.loading, .errors {
+    color: #ffd444;
+    font-family: "Atma", serif;
+    font-size: 2rem;
+    text-align: center;
+    margin: 50px;
 }

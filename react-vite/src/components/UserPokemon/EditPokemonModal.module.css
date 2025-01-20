@@ -83,3 +83,10 @@
     width: 100%;
     margin-top: 10px;
 }
+
+.errors {
+    color: #ef88bb;
+    font-size: 1.2rem;
+    margin: 0;
+    align-self: flex-start
+}

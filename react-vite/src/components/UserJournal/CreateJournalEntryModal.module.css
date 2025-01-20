@@ -172,3 +172,8 @@
 .hiddenFileInput {
     display: none;
 }
+
+.error {
+    color: #ef88bb;
+    font-size: 1.2rem;
+}

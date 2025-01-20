@@ -98,3 +98,11 @@
     width: 140px;
     margin: 20px;
 }
+
+.loading {
+    color: #ffd444;
+    font-family: "Atma", serif;
+    font-size: 2rem;
+    text-align: center;
+    margin: 50px;
+}

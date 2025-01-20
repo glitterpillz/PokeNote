@@ -70,7 +70,7 @@ function PokedexPage() {
     };
 
     if (loading || !isLoaded) {
-        return <div className={pok.laoding}>Loading...</div>;
+        return <div className={pok.loading}>Loading...</div>;
     }
 
     if (errors) {

@@ -14,8 +14,6 @@ const UpdateAccountPage = () => {
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
   const [bannerUrl, setBannerUrl] = useState(null);
   const [errors, setErrors] = useState({});
@@ -30,8 +28,6 @@ const UpdateAccountPage = () => {
     if (currentUser) {
       setUsername(currentUser.username || "");
       setEmail(currentUser.email || "");
-      setFname(currentUser.fname || "");
-      setLname(currentUser.lname || "");
     }
   }, [currentUser]);
 
@@ -39,32 +35,42 @@ const UpdateAccountPage = () => {
     e.preventDefault();
   
     if (!currentUser) {
-      setErrors({ message: "User not found" });
+      setErrors({ general: "User not found" });
       return;
     }
   
     const updatedData = new FormData();
-    
     updatedData.append("username", username !== currentUser.username ? username : currentUser.username);
     updatedData.append("email", email !== currentUser.email ? email : currentUser.email);
-    updatedData.append("fname", fname || currentUser.fname);
-    updatedData.append("lname", lname || currentUser.lname);
-
+  
     if (profilePicture instanceof File) {
       updatedData.append("profile_picture", profilePicture);
     }
     if (bannerUrl instanceof File) {
       updatedData.append("banner_url", bannerUrl);
     }
-
+  
     try {
-      await dispatch(sessionActions.updateAccount({ userId: currentUser.id, formData: updatedData })).unwrap();
+      await dispatch(
+        sessionActions.updateAccount({ userId: currentUser.id, formData: updatedData })
+      ).unwrap();
+  
       alert("Account updated successfully!");
-      navigate('/account')
+      navigate("/account");
     } catch (backendErrors) {
-      setErrors(backendErrors);
+      try {
+        const parsedErrors = JSON.parse(backendErrors);
+        if (parsedErrors.errors) {
+          setErrors(parsedErrors.errors); 
+        } else {
+          setErrors({ general: "An unexpected error occurred." });
+        }
+      } catch (error) {
+        setErrors({ general: "An error occurred while processing the response." });
+      }
     }
   };
+    
   
   const handleProfilePictureChange = (e) => {
     setProfilePicture(e.target.files[0]);
@@ -108,8 +114,8 @@ const UpdateAccountPage = () => {
               placeholder="Username"
               required
             />            
-            {errors.username && <div className={update.error}>{errors.username}</div>}
           </div> 
+          {errors.username && <div className={update.validateError}>{errors.username}</div>}
           <div className={update.formField}>
             <label>Email</label>
               <input
@@ -121,19 +127,8 @@ const UpdateAccountPage = () => {
                 placeholder="Email"
                 required
               />
-              {errors.email && <div className={update.error}>{errors.email}</div>} 
           </div> 
-          <div className={update.formField}>
-            <label>First Name</label>
-            <input
-              className={update.input}
-              name="fname"
-              value={fname}
-              onChange={(e) => setFname(e.target.value)}
-              placeholder="First Name"
-            />
-            {errors.fname && <div className={update.error}>{errors.fname}</div>}
-          </div>
+          {errors.email && <div className={update.validateError}>{errors.email}</div>} 
           <div className={update.fileFormField}>
             <label htmlFor="profilePicture">Profile Picture</label>
             <input

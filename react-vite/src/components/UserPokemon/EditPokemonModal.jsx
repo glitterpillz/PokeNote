@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { editUserPokemon, fetchPokemonDetail } from '../../redux/pokemon';
 import { useState } from 'react';
-import edit from './EditPokemonModal.module.css'
+import edit from './EditPokemonModal.module.css';
 
 function EditPokemonModal({ pokemon }) {
     const dispatch = useDispatch();
@@ -21,8 +21,13 @@ function EditPokemonModal({ pokemon }) {
         move3: pokemon.custom_moves?.move3 || '',
         move4: pokemon.custom_moves?.move4 || '',
     });
-    const [selectedParty, setSelectedParty] = useState(pokemon.selected_party)
+    const [selectedParty, setSelectedParty] = useState(pokemon.selected_party);
     
+    const [errors, setErrors] = useState({
+        level: '',
+        nickname: '',
+    });
+
     const handleStatChange = (index, value) => {
         setStats((prevStats) =>
             prevStats.map((stat, i) =>
@@ -41,6 +46,21 @@ function EditPokemonModal({ pokemon }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
+        let validationErrors = {};
+        
+        if (level < 1) {
+            validationErrors.level = 'Level must be at least 1';
+        }
+    
+        if (nickname.length > 100) {
+            validationErrors.nickname = 'Nickname cannot be longer than 100 characters';
+        }
+    
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+    
         const payload = {
             nickname,
             level,
@@ -55,16 +75,13 @@ function EditPokemonModal({ pokemon }) {
         try {
             await dispatch(editUserPokemon({ id: pokemon.id, payload })).unwrap();
             alert('Pokémon updated successfully!');
-    
             dispatch(fetchPokemonDetail(pokemon.id));
-    
             closeModal();
         } catch (error) {
             console.error('Error updating Pokémon:', error);
             alert('Failed to update Pokémon. Please try again.');
         }
     };
-    
 
     return (
         <form className={edit.form} onSubmit={handleSubmit}>
@@ -82,6 +99,7 @@ function EditPokemonModal({ pokemon }) {
                     className={edit.input}
                 />
             </div>
+            {errors.nickname && <div className={edit.errors}>{errors.nickname}</div>}
             <div className={edit.inputBox}>
                 <label className={edit.label}>
                     Level:
@@ -93,6 +111,7 @@ function EditPokemonModal({ pokemon }) {
                     className={edit.input}
                 />
             </div>
+            {errors.level && <div className={edit.errors}>{errors.level}</div>}
             <h3 className={edit.h3}>Stats:</h3>
             <div className={edit.inputContainer}>
                 {stats.map((stat, index) => (

@@ -13,27 +13,22 @@ function UserPokemonCollection() {
     const { pokemons, loading, errors } = useSelector((state) => state.pokemon);
 
     useEffect(() => {
-        if (!currentUser) {
-            dispatch(restoreUser());
-        }
-    }, [dispatch, currentUser]);
-
-    useEffect(() => {
         if (currentUser) {
             dispatch(pokemonActions.getUserPokemon());
         }
     }, [dispatch, currentUser]);
 
-
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className={coll.loading}>Loading...</div>;
     }
 
     if (errors) {
-        return <div>Error: {errors.general || "Something went wrong"}</div>;
+        return <div className={coll.errors}>Error: {errors.general || "Something went wrong"}</div>;
     }
 
     const pokemonCollection = pokemons?.Pokemon || [];
+
+    const userName = currentUser ? `${currentUser.fname}'s Pokémon Collection` : 'Pokémon Collection';
 
     return (
         <div>
@@ -42,7 +37,7 @@ function UserPokemonCollection() {
             </div>
             <div className={coll.mainBodyContainer}>
                 <div className={coll.header}>
-                    <h1 className={coll.h1}>{currentUser.fname}&apos;s Pokémon Collection</h1>
+                    <h1 className={coll.h1}>{userName}</h1>
                 </div>
                 {pokemonCollection.length > 0 ? (
                     <div className={coll.cardsContainer}>
@@ -76,13 +71,12 @@ function UserPokemonCollection() {
                             </div>
                         ))}
                     </div>
-                
                 ) : (
-                    <p>No pokemon collection found.</p>
+                    <p className={coll.errors}>No pokemon collection found.</p>
                 )}
             </div>
         </div>
-    )
+    );
 }
 
 export default UserPokemonCollection;
