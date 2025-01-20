@@ -99,6 +99,11 @@
     width: 90%;
 }
 
+.noEntries {
+    font-size: 1.4rem;
+    color: #fefbe2
+}
+
 .pokemonCard {
     text-align: center;
     background-color: #50587e;
@@ -126,7 +131,7 @@
     color: #ffd444;
     font-family: "Atma", serif;
     font-weight: 500;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 30px 0;
     background-color: #19264b;
     padding: 10px 30px;
     border-radius: 5px;
@@ -173,7 +178,7 @@
 
 .journalBodyContainer {
     background-image: linear-gradient(to bottom right, #86c9dc, #c673c2);    
-    padding: 20px;
+    padding: 40px 20px 20px 20px;
     border-radius: 10px;
     width: 90%;
     display: flex;
@@ -189,6 +194,8 @@
     flex-direction: column;
     padding-bottom: 20px;
     margin-bottom: 30px;
+    width: 100%;
+    min-width: 800px;
 }
 
 .journalHeader {

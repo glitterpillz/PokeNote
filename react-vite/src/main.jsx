@@ -14,7 +14,7 @@ if (import.meta.env.MODE !== "production") {
   window.sessionActions = sessionActions;
 }
 
-const AppProviders = ({ children }) => (
+export const AppProviders = ({ children }) => (
   <ReduxProvider store={store}>
     <MessageProvider>
       <ModalProvider>{children}</ModalProvider>
