@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .message import Message
@@ -21,37 +21,37 @@ class User(db.Model, UserMixin):
     banner_url = db.Column(db.String(255), nullable=True, default="https://i.ibb.co/QKPFB1t/placeholder-banner.jpg")
 
     pokemon_collection = db.relationship(
-        'UserPokemon',
+        add_prefix_for_prod('UserPokemon'),
         back_populates='user',
         cascade='all, delete-orphan'
     )
 
     journal_entries = db.relationship(
-        'JournalEntry',
+        add_prefix_for_prod('JournalEntry'),
         back_populates='user',
         cascade='all, delete-orphan'
     )
 
     comments = db.relationship(
-        'Comment',
+        add_prefix_for_prod('Comment'),
         back_populates='user',
         cascade='all, delete-orphan'
     )
 
     likes = db.relationship(
-        'Like',
+        add_prefix_for_prod('Like'),
         back_populates='user',
         cascade='all, delete-orphan'
     )
 
     sent_messages = db.relationship(
-        'Message',
+        add_prefix_for_prod('Message'),
         foreign_keys=[Message.sender_id],
         back_populates='sender'
     )
 
     received_messages = db.relationship(
-        'Message',
+        add_prefix_for_prod('Message'),
         foreign_keys=[Message.receiver_id],
         back_populates='receiver'
     )

@@ -15,8 +15,15 @@ class UserPokemon(db.Model):
     custom_moves = db.Column(db.JSON, nullable=True)
     selected_party = db.Column(db.Boolean, nullable=True, default=False)
 
-    user = db.relationship('User', back_populates='pokemon_collection')
-    pokemon = db.relationship('Pokemon', back_populates='user_instances')
+    user = db.relationship(
+        add_prefix_for_prod('User'),
+        back_populates='pokemon_collection'
+    )
+    
+    pokemon = db.relationship(
+        add_prefix_for_prod('Pokemon'),
+        back_populates='user_instances'
+    )
 
     def to_dict(self):
         return {

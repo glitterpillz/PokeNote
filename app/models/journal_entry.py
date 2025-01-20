@@ -16,18 +16,18 @@ class JournalEntry(db.Model):
     is_private = db.Column(db.Boolean, nullable=True, default=False)
 
     user = db.relationship(
-        'User',
+        add_prefix_for_prod('User'),
         back_populates='journal_entries'
     )
 
     comments = db.relationship(
-        'Comment',
+        add_prefix_for_prod('Comment'),
         back_populates='journal_entry',
         cascade='all, delete-orphan'
     )
 
     likes = db.relationship(
-        'Like',
+        add_prefix_for_prod('Like'),
         back_populates='journal_entry',
         cascade='all, delete-orphan'
     )

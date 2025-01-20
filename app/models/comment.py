@@ -14,8 +14,15 @@ class Comment(db.Model):
 
     journal_entry_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('journal_entries.id')), nullable=False)
 
-    user = db.relationship('User', back_populates='comments')
-    journal_entry = db.relationship('JournalEntry', back_populates='comments')
+    user = db.relationship(
+        add_prefix_for_prod('User'),
+        back_populates='comments'
+    )
+
+    journal_entry = db.relationship(
+        add_prefix_for_prod('JournalEntry'), 
+        back_populates='comments'
+    )
 
     def to_dict(self):
         return {

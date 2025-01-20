@@ -15,13 +15,13 @@ class Pokemon(db.Model):
     image = db.Column(db.String(255), nullable=True)
 
     stats = db.relationship(
-        'PokemonStat',
+        add_prefix_for_prod('PokemonStat'),
         back_populates='pokemon',
         cascade='all, delete-orphan'
     )
 
     user_instances = db.relationship(
-        'UserPokemon',
+        add_prefix_for_prod('UserPokemon'),
         back_populates='pokemon',
         cascade='all, delete-orphan'
     )
