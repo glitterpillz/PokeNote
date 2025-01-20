@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDeletedMessages, getUserInbox, getUserSentBox, deleteMessage, cleanupDeletedBox } from "../../redux/message";
+import * as messageActions from '../../redux/message'
 import Navigation from "../Navigation";
 import { useMessageContext } from '../../context/MessageContext';
 import SendMessageModal from "./SendMessageModal";
@@ -17,11 +17,11 @@ const UserInboxPage = () => {
 
     useEffect(() => {
         if (view === "inbox") {
-            dispatch(getUserInbox());
+            dispatch(messageActions.getUserInbox());
         } else if (view === "sent") {
-            dispatch(getUserSentBox());
+            dispatch(messageActions.getUserSentBox());
         } else if (view === "delete") {
-            dispatch(getDeletedMessages())
+            dispatch(messageActions.getDeletedMessages())
         }
     }, [dispatch, view]);
 
@@ -35,15 +35,21 @@ const UserInboxPage = () => {
         setModalContent(<SendMessageModal closeModal={() => setModalContent(null)}/>);
     }
 
-    const handleDeleteMessage = (messageId) => {
+    const handleDeleteInboxMessage = (messageId) => {
         if (window.confirm("Are you sure you want to delete this message?")) {
-            dispatch(deleteMessage(messageId));
+            dispatch(messageActions.deleteInboxMessage(messageId));
+        }
+    }
+
+    const handleDeleteSentMessage = (messageId) => {
+        if (window.confirm("Are you sure you want to delete this message?")) {
+            dispatch(messageActions.deleteSentMessage(messageId));
         }
     }
 
     const handleCleanupDeleted = () => {
         if (window.confirm("This will permanently delete all messages in this folder. Are you sure you want to do that?")) {
-            dispatch(cleanupDeletedBox());
+            dispatch(messageActions.cleanupDeletedBox());
         }
     }
 
@@ -123,8 +129,16 @@ const UserInboxPage = () => {
                                                     <p className={box.date}><strong>Date:</strong> {formatTimestamp(message.timestamp)}</p>                                            
                                                     {view === "inbox" && (
                                                         <button 
-                                                            onClick={() => handleDeleteMessage(message.id)}
+                                                            onClick={() => handleDeleteInboxMessage(message.id)}
                                                             className={box.deleteButton}    
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    )}
+                                                    {view === 'sent' && (
+                                                        <button
+                                                            onClick={() => handleDeleteSentMessage(message.id)}
+                                                            className={box.deleteButton}
                                                         >
                                                             Delete
                                                         </button>

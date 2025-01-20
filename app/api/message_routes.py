@@ -104,6 +104,7 @@ def get_inbox():
 def get_sent_box():
     sent_box = Message.query.filter(
         Message.sender_id == current_user.id,
+        Message.receiver_id != current_user.id,
         Message.is_deleted_by_sender == False
     ).all()
 
