@@ -89,6 +89,7 @@ def delete_sent_message(message_id):
 def get_inbox():
     inbox = Message.query.filter(
         Message.receiver_id == current_user.id,
+        Message.sender_id != current_user.id,
         Message.is_deleted_by_receiver == False
     ).all()
 

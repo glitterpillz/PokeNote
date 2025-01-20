@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as pokemonActions from "../../redux/pokemon"
 import Navigation from "../Navigation";
-import { restoreUser } from "../../redux/session"
 import coll from './UserPokemonCollection.module.css'
 import { useNavigate } from "react-router-dom";
 

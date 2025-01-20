@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEntryDetails, deleteEntry } from "../../redux/journal";
 import { useModal } from "../../context/Modal";
 import UpdateEntryModal from "./UpdateEntryModal";
+import { sendMessage } from "../../redux/message";
 import { useParams, useNavigate } from "react-router-dom";
 import Navigation from "../Navigation";
 import { restoreUser } from "../../redux/session";
@@ -48,6 +49,11 @@ function EntryDetailsPage() {
 
         try {
             await dispatch(deleteEntry(id)).unwrap();
+            const messageData = {
+                receiver: entryDetails.username,
+                content: `Your journal entry (ID: ${id}) has been removed by Admin)`
+            };
+            await dispatch(sendMessage(messageData)).unwrap();
             alert("Journal entry successfully deleted!");
             navigate('/journal/user');
         } catch (error) {

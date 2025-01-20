@@ -69,6 +69,13 @@ function Navigation() {
                 Journal
               </NavLink>
               <NavLink
+                to="/pokemon/collection"
+                className={nav.navLink}
+                onClick={closeSidePanel}
+              >
+                Collection
+              </NavLink>
+              <NavLink
                 to="/pokedex"
                 className={nav.navLink}
                 onClick={closeSidePanel}
