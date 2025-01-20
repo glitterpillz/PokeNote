@@ -18,8 +18,6 @@ S3_REGION = os.environ.get('AWS_BUCKET_REGION')
 S3_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
 S3_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
-if not S3_BUCKET or not S3_REGION or not S3_ACCESS_KEY or not S3_SECRET_KEY:
-    raise ValueError("One or more AWS environment variables are missing or empty.")
 
 s3_client = boto3.client(
     's3',
@@ -28,22 +26,26 @@ s3_client = boto3.client(
     aws_secret_access_key=S3_SECRET_KEY
 )
 
-def upload_to_s3(file, bucket_name, folder='uploads'):
+def upload_to_s3(file, bucket_name, folder='images'):
     try:
         filename = secure_filename(file.filename)
         unique_filename = f"{folder}/{uuid.uuid4().hex}_{filename}"
 
-        s3_client.upload_fileobj(
-            file,
-            bucket_name,
-            unique_filename,
-            ExtraArgs={'ContentType': file.content_type}
-        )
+        try:
+            s3_client.upload_fileobj(
+                file,
+                bucket_name,
+                unique_filename,
+                ExtraArgs={'ContentType': file.content_type}
+            )
+        except Exception as s3_error:
+            print(f"S3 upload error: {str(s3_error)}")
+            raise
 
-        return f"https://{bucket_name}.s3.{S3_REGION}.amazonaws.com/{unique_filename}"
-
+        file_url = f"https://{bucket_name}.s3.{S3_REGION}.amazonaws.com/{unique_filename}"
+        return file_url
     except Exception as e:
-        raise ValueError(f"Failed to upload to S3: {e}")
+        raise ValueError(f"Issue uploading file: {e}")
 
 
 
