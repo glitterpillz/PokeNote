@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 class Pokemon(db.Model):
     __tablename__='pokemons'
@@ -45,7 +45,7 @@ class PokemonStat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     stat_name = db.Column(db.String(50), nullable=False)
     stat_value = db.Column(db.Integer, nullable=False)
-    pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemons.id'), nullable=False)
+    pokemon_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('pokemons.id')), nullable=False)
 
     pokemon = db.relationship('Pokemon', back_populates='stats')
 
