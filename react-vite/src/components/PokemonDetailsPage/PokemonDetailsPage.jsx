@@ -13,15 +13,10 @@ function PokemonDetailsPage() {
     const { pokemonDetails, loading, errors } = useSelector((state) => state.pokemon);
 
     useEffect(() => {
-        console.log("DISPATCHING POKEMON WITH ID:", id);
         if (id) {
             dispatch(getPokemonDetails(id));
         }
     }, [dispatch, id]);
-
-    useEffect(() => {
-        console.log("POKEMON DETAILS UPDATED:", pokemonDetails);
-    }, [pokemonDetails]);
 
     const handleNavigation = (direction) => {
         const currentId = parseInt(id, 10);
@@ -43,8 +38,7 @@ function PokemonDetailsPage() {
     const handleAddPokemon = () => {
         dispatch(addPokemonToCollection(id))
             .unwrap()
-            .then((data) => {
-                console.log("Pokemon added successfully", data);
+            .then(() => {
                 alert("The Pokémon was added to your collection!");
             })
             .catch((error) => {

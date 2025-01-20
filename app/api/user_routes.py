@@ -7,21 +7,15 @@ from app.models import db, User
 user_routes = Blueprint('users', __name__)
 
 
-
 # ADMIN - GET ALL USERS:
 @user_routes.route('/all')
 @login_required
 def users():
-    """
-    Query for all users and returns them in a list of user dictionaries.
-    Restricted to admin users.
-    """
     if not current_user.admin:
         return {'error': 'Unauthorized. Admin privileges required.'}, 403
 
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
-
 
 
 # ADMIN - DISABLE USER:
@@ -40,7 +34,6 @@ def disable_user(id):
     return jsonify({'error': 'User not found'}), 404
 
 
-
 # ADMIN - ENABLE USER:
 @user_routes.route('/<int:id>/enable', methods=['PUT'])
 @login_required
@@ -57,15 +50,10 @@ def enable_user(id):
     return jsonify({'error': 'User not found'}), 404
 
 
-
 # ADMIN - GET USER DETAILS
 @user_routes.route('/<int:id>')
 @login_required
 def user(id):
-    """
-    Query for a user by id and returns that user in a dictionary.
-    Restricted to admin users.
-    """
     if not current_user.admin:
         return {'error': 'Unauthorized. Admin privileges required.'}, 403
 
@@ -79,10 +67,6 @@ def user(id):
 # GET USER PUBLIC PROFILE
 @user_routes.route('/<int:id>/profile')
 def public_profile(id):
-    """
-    Query for a user's public profile by id and returns limited information.
-    Publicly accessible.
-    """
     user = User.query.get(id)
     if not user:
         return {'error': 'User not found'}, 404

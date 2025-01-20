@@ -34,8 +34,6 @@ function UserPokemonCollection() {
     }
 
     const pokemonCollection = pokemons?.Pokemon || [];
-    console.log('CURRENT USER:', currentUser)
-    console.log('POKEMON COLLECTION:', pokemonCollection)
 
     return (
         <div>

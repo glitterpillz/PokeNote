@@ -88,11 +88,11 @@
     font-family: "Atma", serif;
     font-size: 1rem;
     font-weight: 600;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: #0000003d 0px 3px 8px;
 }
 
 .disableButton:hover {
     cursor: pointer;
     background-color: #81456f;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 8px;
+    box-shadow: #00000059 0px 3px 8px;
 }

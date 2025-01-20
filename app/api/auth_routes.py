@@ -46,21 +46,18 @@ def upload_to_s3(file, bucket_name, folder='uploads'):
 
 auth_routes = Blueprint('auth', __name__)
 
+
+# AUTHENTICATE USER
 @auth_routes.route('/session')
 def authenticate():
-    """
-    Authenticates a user.
-    """
     if current_user.is_authenticated:
         return jsonify(current_user.to_dict())
     return {'errors': {'message': 'Unauthorized'}}, 401
 
 
+# LOGIN
 @auth_routes.route('/login', methods=['POST'])
 def login():
-    """
-    Logs a user in
-    """
     form = LoginForm()
 
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -72,7 +69,6 @@ def login():
             if user.disabled:
                 return {'error': 'This account has been disabled. Please contact support.'}, 403
 
-            # Check if the password matches
             if not check_password_hash(user.password, form.data['password']):
                 return {'errors': {'password': 'Invalid password'}}, 401
 
@@ -82,21 +78,16 @@ def login():
     return {"errors": form.errors or {"general": "Invalid credentials"}}, 401
 
 
-
+# LOGOUT
 @auth_routes.route('/logout')
 def logout():
-    """
-    Logs a user out
-    """
     logout_user()
     return {'message': 'User logged out'}
 
 
+# SIGNUP
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
-    """
-    Creates a new user and logs them in
-    """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -126,14 +117,10 @@ def sign_up():
     return form.errors, 401
 
 
+# RETURNS UNAUTHORIZED RESPONSE
 @auth_routes.route('/unauthorized')
 def unauthorized():
-    """
-    Returns unauthorized JSON when flask-login authentication fails
-    """
     return {'errors': {'message': 'Unauthorized'}}, 401
-
-
 
 
 # GET USER ACCOUNT

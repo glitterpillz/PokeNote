@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { createJournalEntry, getUserJournal } from '../../redux/journal'; // Ensure getUserJournal is imported
+import { createJournalEntry, getUserJournal } from '../../redux/journal';
 import ent from './CreateJournalEntryModal.module.css'
 
 function CreateJournalEntryModal() {
@@ -29,7 +29,6 @@ function CreateJournalEntryModal() {
         }
 
         try {
-            console.log('ENTRY DATA:', entryData);
             await dispatch(createJournalEntry(entryData)).unwrap();
             alert('Journal entry created successfully!');
 
@@ -51,7 +50,6 @@ function CreateJournalEntryModal() {
             <div className={ent.mewPic}>
                 <img src="/images/mew.png" alt="" />
             </div>
-            {/* <h2 className={edit.}>Create Journal Entry</h2> */}
             <form className={ent.form} onSubmit={handleSubmit}>
                 <div className={ent.formHeading}>
                     <div className={ent.inputBox}>
@@ -111,7 +109,7 @@ function CreateJournalEntryModal() {
                             id="photo"
                             type="file"
                             onChange={handlePhotoChange}
-                            className={`${ent.fileInput} ${ent.hiddenFileInput}`} // Add hiddenFileInput class
+                            className={`${ent.fileInput} ${ent.hiddenFileInput}`}
                         />
                     </div>
                     <div className={ent.fileButtonField}>

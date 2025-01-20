@@ -67,7 +67,7 @@
 }
 
 .fileInput {
-    display: none; /* Hides the native file input */
+    display: none;
 }
   
 .customFileButton {
@@ -124,20 +124,3 @@
     font-size: 25px;
     align-self: flex-start;
 }
-
-/* .backButton {
-    align-self: flex-start;
-    margin: 60px 120px;
-    background-color: transparent;
-    border: none;
-    font-family: "Atma", serif;
-    font-size: 40px;
-    font-weight: 600;
-    color: #ffd444;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */

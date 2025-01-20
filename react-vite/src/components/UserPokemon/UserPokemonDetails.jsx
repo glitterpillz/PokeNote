@@ -33,7 +33,6 @@ function UserPokemonDetails() {
         }
     }, [dispatch, currentUser, id]);
 
-
     const handleEditPokemon = (pokemon) => {
         setModalContent(
             <EditPokemonModal 
@@ -43,7 +42,6 @@ function UserPokemonDetails() {
         );
     };
     
-
     const handleDeletePokemon = async (pokemonId) => {
         try {
             const result = await dispatch(deleteUserPokemon(pokemonId)).unwrap();
@@ -59,7 +57,6 @@ function UserPokemonDetails() {
         }
     };
     
-
     const pokemonList = pokemons.pokemons ? Object.values(pokemons.pokemons) : [];
 
     const typeColors = {
