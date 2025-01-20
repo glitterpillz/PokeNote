@@ -1,9 +1,8 @@
-from app.models import UserPokemon
-from app.models.db import db, environment, SCHEMA
+from app.models import db, UserPokemon, environment, SCHEMA
+# from app.models.db import db, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_user_pokemon():
-    # User 1's Pokémon
     user1_pokemon1 = UserPokemon(
         user_id=1,
         pokemon_id=1,

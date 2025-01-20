@@ -1,5 +1,5 @@
-from app.models import Pokemon, PokemonStat
-from app.models.db import db, environment, SCHEMA
+from app.models import db, Pokemon, PokemonStat, environment, SCHEMA
+# from app.models.db import db, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
