@@ -38,11 +38,30 @@
     justify-content: space-between;
 }
 
+.friendButton, .messageButton {
+    width: 140px;
+    font-family: "Atma", serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #aa5d93;
+    color: #f7d6ed;
+    border: 1px solid #eac0dd;
+    border-radius: 3px;
+    position: relative;
+    bottom: 100px;
+    cursor: pointer;
+}
+
+.friendButton:hover, .messageButton:hover {
+    cursor: pointer;
+    background-color: #81456f;
+}
+
 .profilePic {
     border: 2px solid #b3bdd7;
     border-radius: 50%;
     width: 250px;
-    margin-top: 80px;
+    margin-top: 90px;
 }
 
 .profileDetails {

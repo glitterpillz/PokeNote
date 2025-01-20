@@ -197,11 +197,11 @@ function PokedexPage() {
 
     useEffect(() => {
         dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    }, [dispatch]);
 
-        if (pokemons.length === 0) {
-            dispatch(pokemonActions.getAllPokemon());
-        }
-    }, [dispatch, pokemons]);
+    useEffect(() => {
+        dispatch(pokemonActions.getAllPokemon())
+    }, [dispatch])
 
     useEffect(() => {
         const handleScroll = () => {
