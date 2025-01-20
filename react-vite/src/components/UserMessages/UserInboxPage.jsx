@@ -47,11 +47,11 @@ const UserInboxPage = () => {
         }
     }
 
-    const handleCleanupDeleted = () => {
-        if (window.confirm("This will permanently delete all messages in this folder. Are you sure you want to do that?")) {
-            dispatch(messageActions.cleanupDeletedBox());
-        }
-    }
+    // const handleCleanupDeleted = () => {
+    //     if (window.confirm("This will permanently delete all messages in this folder. Are you sure you want to do that?")) {
+    //         dispatch(messageActions.cleanupDeletedBox());
+    //     }
+    // }
 
     if (loading) {
         return <div className={box.loading}>Loading...</div>;
@@ -103,10 +103,16 @@ const UserInboxPage = () => {
                         {view === "delete" && (
                             <button
                                 className={box.deleteAllButton}
-                                onClick={handleCleanupDeleted}
+                                onClick={() => window.alert('Feature coming soon!')}
                             >
                                 Delete All
                             </button>
+                            // <button
+                            //     className={box.deleteAllButton}
+                            //     onClick={handleCleanupDeleted}
+                            // >
+                            //     Delete All
+                            // </button>
                         )}
                         {messages && messages.length > 0 ? (
                             messages.map((message) => (
