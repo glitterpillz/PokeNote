@@ -43,20 +43,26 @@ function UserPokemonDetails() {
     };
     
     const handleDeletePokemon = async (pokemonId) => {
-        try {
-            const result = await dispatch(deleteUserPokemon(pokemonId)).unwrap();
-            alert(result.message || "Pokémon deleted successfully!");
-            navigate("/pokemon/collection");
-        } catch (error) {
-            console.error("Error deleting Pokémon:", error);
-            alert(
-                typeof error === 'string'
-                    ? error
-                    : "Failed to delete Pokémon. Please try again."
-            );
+        const isConfirmed = window.confirm('Are you sure you want to remove this Pokémon from your collection?');
+    
+        if (isConfirmed) {
+            try {
+                const result = await dispatch(deleteUserPokemon(pokemonId)).unwrap();
+                alert(result.message || "Pokémon deleted successfully!");
+                navigate("/pokemon/collection");
+            } catch (error) {
+                console.error("Error deleting Pokémon:", error);
+                alert(
+                    typeof error === 'string'
+                        ? error
+                        : "Failed to delete Pokémon. Please try again."
+                );
+            }
+        } else {
+            return;
         }
     };
-    
+        
     const pokemonList = pokemons.pokemons ? Object.values(pokemons.pokemons) : [];
 
     const typeColors = {
@@ -78,7 +84,7 @@ function UserPokemonDetails() {
     };
 
     if (isLoading) {
-        return <p>Loading Pokémon details...</p>;
+        return <p className={dets.loading}>Loading Pokémon details...</p>;
     }
 
     return (
@@ -87,7 +93,7 @@ function UserPokemonDetails() {
                 <Navigation />
             </div>
             {pokemonList.length === 0 ? (
-                <p>No Pokémon found.</p>
+                <p className={dets.errors}>No Pokémon found.</p>
             ) : (
                 pokemonList.map((pokemonDetail) => (
                     <div key={pokemonDetail.id} className={dets.detailsContainer}>

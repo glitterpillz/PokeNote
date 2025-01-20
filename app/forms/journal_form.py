@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, FileField, SelectField, DateField, BooleanField, StringField
-from wtforms.validators import DataRequired, Length, ValidationError
-from werkzeug.utils import secure_filename
+from wtforms import TextAreaField, DateField, BooleanField, StringField
+from wtforms.validators import DataRequired, Length
 
 class JournalEntryForm(FlaskForm):
     title = StringField(
@@ -12,13 +11,13 @@ class JournalEntryForm(FlaskForm):
 
     content = TextAreaField(
         'Content',
-        validators=[DataRequired(), Length(min=1, max=500)],
+        validators=[DataRequired(), Length(min=1, max=2000)],
         render_kw={'placeholder': 'Write your journal entry...'}
     )
 
     accomplishments = TextAreaField(
         'Accomplishments',
-        validators=[Length(max=500)]
+        validators=[Length(max=1000)]
     )
 
     timestamp = DateField('Date', format='%Y-%m-%d', validators=[])

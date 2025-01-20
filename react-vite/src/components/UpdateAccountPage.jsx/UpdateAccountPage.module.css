@@ -124,3 +124,9 @@
     font-size: 25px;
     align-self: flex-start;
 }
+
+.validateError {
+    color: #ef88bb;
+    font-size: 1.3rem;
+    margin: 0;
+}

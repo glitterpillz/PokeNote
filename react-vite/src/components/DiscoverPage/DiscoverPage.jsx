@@ -72,11 +72,11 @@ function DiscoverPage() {
     };
 
     if (loading || !isLoaded) {
-        return <div>Loading...</div>;
+        return <div className={dis.loading}>Loading...</div>;
     }
 
     if (errors) {
-        return <div>Error: {errors}</div>;
+        return <div className={dis.errors}>Error: {errors}</div>;
     }
 
     const renderJournalEntries = (entryList) => {
@@ -150,7 +150,7 @@ function DiscoverPage() {
                 </div>
 
             <div className={dis.mainBodyContainer}>
-                {journal.length > 0 ? renderJournalEntries(journal) : <p>No entries found.</p>}
+                {journal.length > 0 ? renderJournalEntries(journal) : <p className={dis.errors}>No entries found.</p>}
             </div>
         </div>
     );

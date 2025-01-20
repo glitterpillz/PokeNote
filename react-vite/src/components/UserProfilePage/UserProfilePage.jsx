@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 function UserProfilePage() {
     const dispatch = useDispatch();
     const { id } = useParams(); 
-    console.log('ID FROM URL', id)
     const { userProfile, loading, errors } = useSelector((state) => state.user); 
 
     const { pokemons, loading: partyLoading } = useSelector((state) => state.pokemon)
@@ -81,12 +80,12 @@ function UserProfilePage() {
                     </div>
                     <div className={pro.profileDetails}>
 
+                        <div className={pro.pokemonPartyHeader}>
+                            <img src="/images/pokeball.png" alt="" />
+                            <h3 className={pro.h3}>Pokémon Party</h3>
+                            <img src="/images/pokeball-right.png" alt="" />
+                        </div>
                         <div className={pro.pokemonContainer}>
-                            <div className={pro.pokemonPartyHeader}>
-                                <img src="/images/pokeball.png" alt="" />
-                                <h3 className={pro.h3}>Pokémon Party</h3>
-                                <img src="/images/pokeball-right.png" alt="" />
-                            </div>
                             {pokemonParty.length > 0 ? (
                             <div className={pro.pokemonBox}>
                                 {pokemonParty.slice(0, 6).map((pokemon, index) => (
@@ -115,7 +114,7 @@ function UserProfilePage() {
                                 ))}
                             </div>
                             ) : (
-                            <p className={pro.noEntries}>No Pokémon in party.</p>
+                            <p className={pro.noPokemon}>No Pokémon in party.</p>
                             )}
                         </div>        
 

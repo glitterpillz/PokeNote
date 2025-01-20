@@ -23,15 +23,15 @@ const UserAccountPage = () => {
 
 
     if (loading || partyLoading) {
-      return <div>Loading...</div>;
+      return <div className={acc.loading}>Loading...</div>;
     }
   
     if (errors) {
-      return <div>Error: {errors.general || "Something went wrong"}</div>;
+      return <div className={acc.errors}>Error: {errors.general || "Something went wrong"}</div>;
     }
   
     if (!userAccount || !userAccount.user) {
-      return <div>No account data available.</div>;
+      return <div className={acc.errors}>No account data available.</div>;
     }
   
     const { user } = userAccount;
@@ -112,7 +112,7 @@ const UserAccountPage = () => {
                     ))}
                 </div>
               ) : (
-                <p>No Pokémon in collection.</p>
+                <p className={acc.noEntries}>No Pokémon in collection.</p>
               )}
             </div>
             <div className={acc.linkContainer}>
@@ -141,7 +141,7 @@ const UserAccountPage = () => {
                     ))}
                 </div>
                 ) : (
-                <p>No journal entries available.</p>
+                <p className={acc.noEntries}>No journal entries yet.</p>
                 )}          
               </div>            
             </div>

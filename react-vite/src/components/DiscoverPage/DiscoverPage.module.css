@@ -155,3 +155,11 @@
 .scrollTopButton {
     transition: opacity 0.3s ease;
 }
+
+.loading, .errors {
+    color: #ffd444;
+    font-family: "Atma", serif;
+    font-size: 2rem;
+    text-align: center;
+    margin: 50px;
+}

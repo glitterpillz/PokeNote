@@ -14,6 +14,7 @@ function CreateJournalEntryModal() {
     const [date, setDate] = useState('');
     const [isPrivate, setIsPrivate] = useState(false);
     const [photo, setPhoto] = useState(null);
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,6 +38,7 @@ function CreateJournalEntryModal() {
             closeModal();
         } catch (error) {
             console.error('Error creating journal entry:', error);
+            setErrors(error.errors || {}); 
             alert('Failed to create journal entry. Please try again.');
         }
     };
@@ -76,6 +78,10 @@ function CreateJournalEntryModal() {
                             required
                         />
                     </div>
+                    {errors.title && (
+                        <div className={ent.error}>{errors.title[0]}</div> 
+                    )}
+
                 </div>
 
                 <div className={ent.contentBox}>
@@ -88,6 +94,9 @@ function CreateJournalEntryModal() {
                         className={ent.contentTextArea}
                         required
                     />
+                    {errors.content && (
+                        <div className={ent.error}>{errors.content[0]}</div> 
+                    )}
                 </div>
 
                 <div className={ent.accomplishBox}>
@@ -99,11 +108,14 @@ function CreateJournalEntryModal() {
                         onChange={(e) => setAccomplishments(e.target.value)}
                         className={ent.accomplishTextArea}
                     />
+                    {errors.accomplishments && (
+                        <div className={ent.error}>{errors.accomplishments[0]}</div>
+                    )}
                 </div>
 
                 <div className={ent.photoBox}>
                     <div className={ent.photoLabelBox}>
-                        <label className={ent.formLabel}htmlFor="photo">Upload Photo:</label>
+                        <label className={ent.formLabel} htmlFor="photo">Upload Photo:</label>
                         <label className={ent.optional}>(optional)</label>
                         <input
                             id="photo"
@@ -155,4 +167,3 @@ function CreateJournalEntryModal() {
 }
 
 export default CreateJournalEntryModal;
-

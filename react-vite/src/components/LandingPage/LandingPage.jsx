@@ -15,7 +15,7 @@ function LandingPage() {
   }, [dispatch]);
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div className={lan.loading}>Loading...</div>;
   }
 
   return (

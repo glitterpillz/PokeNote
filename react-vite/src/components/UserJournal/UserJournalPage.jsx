@@ -51,11 +51,11 @@ const UserJournalPage = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className={ent.loading}>Loading...</div>;
     }
 
     if (errors) {
-        return <div>Error: {errors.general || "Something went wrong"}</div>;
+        return <div className={ent.errors}>Error: {errors.general || "Something went wrong"}</div>;
     }
     
     const journalEntries = journal?.Journal || [];
@@ -134,7 +134,7 @@ const UserJournalPage = () => {
                             ))}
                         </div>
                     ) : (
-                        <p>No journal entries found.</p>
+                        <p className={ent.errors}>No journal entries found.</p>
                     )}
                 </div>
             </div>

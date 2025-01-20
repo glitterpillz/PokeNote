@@ -133,3 +133,19 @@
     width: 480px;
     right: -50px;
 }
+
+.loading, .errors {
+    color: #ffd444;
+    font-family: "Atma", serif;
+    font-size: 2rem;
+    text-align: center;
+    margin: 50px;
+}
+
+.noMessages {
+    margin-left: 20px;
+    color: #a13881;
+    font-family: "Atma", serif;
+    font-size: 2rem;
+    font-weight: 500;
+}

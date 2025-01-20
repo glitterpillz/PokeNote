@@ -192,9 +192,6 @@ def update_account(id):
 @auth_routes.route('/account', methods=['DELETE'])
 @login_required
 def delete_account(user_id=None):
-    """
-    Deletes the account of the user with the given ID, or the current user's account if no ID is provided.
-    """
     if user_id is None:
         user = User.query.get(current_user.id)
     else:

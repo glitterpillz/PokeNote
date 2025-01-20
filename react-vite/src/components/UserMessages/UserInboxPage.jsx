@@ -48,11 +48,11 @@ const UserInboxPage = () => {
     }
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className={box.loading}>Loading...</div>;
     }
 
     if (errors && errors.general) {
-        return <div>Error: {errors.general || "Something went wrong"}</div>;
+        return <div className={box.errors}>Error: {errors.general || "Something went wrong"}</div>;
     }
 
     const formatTimestamp = (timestamp) => {
@@ -139,7 +139,7 @@ const UserInboxPage = () => {
                                 </div>
                             ))
                         ) : (
-                            <p>No messages.</p>
+                            <p className={box.noMessages}>No messages.</p>
                         )}
                     </div>
                 </div>

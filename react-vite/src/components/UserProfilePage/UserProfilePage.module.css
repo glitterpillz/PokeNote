@@ -99,9 +99,21 @@
     width: 90%;
 }
 
+.noPokemon {
+    font-size: 1.4rem;
+    color: #fefbe2;
+    background-image: linear-gradient(to bottom right, #86c9dc, #c673c2);    
+    width: 90%;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 0;
+}
+
 .noEntries {
     font-size: 1.4rem;
-    color: #fefbe2
+    color: #fefbe2;
+    margin: 0;
 }
 
 .pokemonCard {
@@ -195,7 +207,7 @@
     padding-bottom: 20px;
     margin-bottom: 30px;
     width: 100%;
-    min-width: 800px;
+    min-width: 600px;
 }
 
 .journalHeader {
