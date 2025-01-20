@@ -78,7 +78,7 @@ function PokemonDetailsPage() {
         return <div className={det.errors}>No pokemon data available.</div>;
     }
 
-    const { name, image, stats, types, can_fly } = pokemonDetails;
+    const { name, image, stats, types, can_fly, is_floating } = pokemonDetails;
 
     return (
         <div className={det.mainDetailsContainer}>
@@ -90,7 +90,7 @@ function PokemonDetailsPage() {
                 <img className={det.pokedexImg} src="/images/pokedex-banner.png" alt="" />
                 
                 <img
-                    className={`${det.pokemonImg} ${can_fly ? det.flyingTypeImg : ""}`}
+                    className={`${det.pokemonImg} ${can_fly ? det.flyingTypeImg : ""} ${is_floating ? det.floatingImg : ""}`}
                     src={image}
                     alt={name}
                 />

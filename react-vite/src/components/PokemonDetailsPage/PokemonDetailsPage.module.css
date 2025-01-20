@@ -38,6 +38,11 @@
     bottom: 80px;
 }
 
+.floatingImg {
+    position: relative;
+    top: 30px;
+}
+
 .headerContainer {
     display: flex;
     justify-content: space-between;
