@@ -16,6 +16,7 @@ def seed_pokemon():
     venusaur = Pokemon(
         name="Venusaur",
         types=["Grass", "Poison"],
+        is_floating=True,
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png"
     )
     charmander = Pokemon(
@@ -31,6 +32,7 @@ def seed_pokemon():
     charizard = Pokemon(
         name="Charizard",
         types=["Fire", "Flying"],
+        is_floating=True,
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png"
     )
     squirtle = Pokemon(
@@ -99,6 +101,7 @@ def seed_pokemon():
     rattata = Pokemon(
         name="Rattata",
         types=["Normal"],
+        is_floating=True,
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/019.png"
     )
     #20
@@ -154,6 +157,7 @@ def seed_pokemon():
     sandslash = Pokemon(
         name="Sandslash",
         types=["Ground"],
+        is_floating=True,
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/028.png"
     )
     #29
@@ -190,6 +194,7 @@ def seed_pokemon():
     nidoking = Pokemon(
         name="Nidoking",
         types=["Poison", "Ground"],
+        is_floating=True,
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/034.png"
     )
     #35
@@ -265,6 +270,7 @@ def seed_pokemon():
     paras = Pokemon(
         name="Paras",
         types=["Bug", "Grass"],
+        is_floating=True,
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/046.png"
     )
     #47
