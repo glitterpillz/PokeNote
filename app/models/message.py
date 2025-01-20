@@ -16,13 +16,13 @@ class Message(db.Model):
     is_deleted_by_receiver = db.Column(db.Boolean, nullable=False, default=False)
 
     sender = db.relationship(
-        'User',
+        add_prefix_for_prod('User'),
         foreign_keys=[sender_id],
         back_populates='sent_messages'
     )
 
     receiver = db.relationship(
-        'User',
+        add_prefix_for_prod('User'),
         foreign_keys=[receiver_id],
         back_populates='received_messages'
     )
