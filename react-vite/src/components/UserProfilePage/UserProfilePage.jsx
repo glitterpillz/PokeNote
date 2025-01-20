@@ -15,7 +15,6 @@ function UserProfilePage() {
     const { pokemons, loading: partyLoading } = useSelector((state) => state.pokemon)
 
     useEffect(() => {
-        console.log('DISPATCHING PROFILE WITH ID:', id);
         if (id) {
             dispatch(getUserProfile(id)); 
         }
@@ -116,7 +115,7 @@ function UserProfilePage() {
                                 ))}
                             </div>
                             ) : (
-                            <p>No Pokémon in collection.</p>
+                            <p className={pro.noEntries}>No Pokémon in party.</p>
                             )}
                         </div>        
 
@@ -141,7 +140,7 @@ function UserProfilePage() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <p>No journal entries available.</p>
+                                    <p className={pro.noEntries}>No journal entries yet.</p>
                                 )}
                             </div>
                         </div>

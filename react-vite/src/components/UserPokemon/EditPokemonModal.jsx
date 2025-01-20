@@ -127,12 +127,14 @@ function EditPokemonModal({ pokemon }) {
                     </div>
                 ))}
             </div>
-            <label>Add to Party</label>
-            <input
-                type="checkbox"
-                checked={selectedParty}
-                onChange={(e) => setSelectedParty(e.target.checked)}
-            />
+            <div className={edit.addPartyDiv}>
+                <label>Add to Party</label>
+                <input
+                    type="checkbox"
+                    checked={selectedParty}
+                    onChange={(e) => setSelectedParty(e.target.checked)}
+                />
+            </div>
             <div className={edit.buttonsContainer}>
                 <button className={edit.button} type="submit">Save</button>
                 <button className={edit.button} type="button" onClick={closeModal}>

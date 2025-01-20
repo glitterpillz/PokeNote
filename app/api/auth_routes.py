@@ -2,6 +2,7 @@ import os
 import boto3
 import uuid
 from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 from flask import Blueprint,jsonify, request
 from app.models import User, db
@@ -66,16 +67,19 @@ def login():
 
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email']).first()
-        
+
         if user:
             if user.disabled:
                 return {'error': 'This account has been disabled. Please contact support.'}, 403
-        
+
+            # Check if the password matches
+            if not check_password_hash(user.password, form.data['password']):
+                return {'errors': {'password': 'Invalid password'}}, 401
+
             login_user(user)
             return user.to_dict()
-    
-    return {"errors": form.errors or "Invalid credentials"}, 401
 
+    return {"errors": form.errors or {"general": "Invalid credentials"}}, 401
 
 
 

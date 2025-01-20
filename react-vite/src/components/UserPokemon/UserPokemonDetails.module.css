@@ -24,7 +24,7 @@
 }
 
 .imageBox {
-    background-image: url('../../../public/images/spotlight.jpg');
+    background-image: url('../../../images/spotlight.jpg');
     background-size: cover;
     background-position: center;
     width: 500px;

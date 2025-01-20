@@ -10,6 +10,11 @@
     border-radius: 8px;
     color: #fefbe2;
     width: 280px;
+    font-size: 1.2rem;
+    height: 600px;
+    overflow-y: auto;  
+    scrollbar-width: thin;
+    scrollbar-color: #2d3f6f #19264b;
 }
 
 .h2 {
@@ -69,4 +74,12 @@
     padding: 5px 10px;
     font-family: "Atma", serif;
     font-weight: 600;
+}
+
+.addPartyDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
 }

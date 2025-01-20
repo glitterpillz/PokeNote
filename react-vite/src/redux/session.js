@@ -51,7 +51,7 @@ export const login = createAsyncThunk(
       const data = await res.json();
 
       if (!res.ok) {
-        return rejectWithValue(data.errors || { general: "Login failed" });
+        return rejectWithValue(data.errors || { general: "Account disabled. Please contact support." });
       }
 
       return data.user || data;
