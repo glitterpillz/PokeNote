@@ -60,6 +60,28 @@ def delete_inbox_message(message_id):
     except Exception as e:
         return jsonify({'error': f'An unexpected error occurred: {str(e)}'}), 500
 
+                             
+# DELETE MESSAGE FROM SENT BOX
+@message_routes.route('/sent/<int:message_id>', methods=['DELETE'])
+@login_required
+def delete_sent_message(message_id):
+    try:
+        message = Message.query.get(message_id)
+
+        if not message:
+            return jsonify({'error': 'Message not found'}), 404
+
+        if message.sender_id != current_user.id:
+            return jsonify({'error': 'Unauthorized'}), 403
+
+        message.is_deleted_by_sender = True
+        db.session.commit()
+
+        return jsonify({'message': 'Message deleted successfully'}), 200
+
+    except Exception as e:
+        return jsonify({'error': f'An unexpected error occurred: {str(e)}'}), 500
+
 
 # GET USER INBOX
 @message_routes.route('/inbox')
@@ -89,23 +111,25 @@ def get_sent_box():
         return jsonify([message.to_dict() for message in sent_box])
     else:
         return jsonify({'error': f'No messages found for User {current_user.id}.'}), 404
-    
-
+      
 
 # GET DELETED MESSAGES
 @message_routes.route('/deleted')
 @login_required
 def get_deleted_messages():
     deleted_box = Message.query.filter(
-        Message.receiver_id == current_user.id,
-        Message.is_deleted_by_receiver == True
+        (
+            (Message.receiver_id == current_user.id) & (Message.is_deleted_by_receiver == True)
+        ) | (
+            (Message.sender_id == current_user.id) & (Message.is_deleted_by_sender == True)
+        )
     ).all()
 
     if deleted_box:
         return jsonify([message.to_dict() for message in deleted_box])
     else:
         return jsonify({'error': f'No messages found'}), 404
-    
+
 
 # CLEANUP DELETED MESSAGES
 @message_routes.route('/deleted', methods=['DELETE'])
@@ -113,13 +137,16 @@ def get_deleted_messages():
 def cleanup_deleted_messages():
     try:
         messages_to_delete = Message.query.filter(
-            Message.receiver_id == current_user.id,
-            Message.is_deleted_by_receiver == True
+            (
+                (Message.receiver_id == current_user.id) & (Message.is_deleted_by_receiver == True)
+            ) | (
+                (Message.sender_id == current_user.id) & (Message.is_deleted_by_sender == True)
+            )
         ).all()
 
         if not messages_to_delete:
             return jsonify({'message': 'No messages to delete'}), 200
-        
+
         for message in messages_to_delete:
             db.session.delete(message)
 
