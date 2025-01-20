@@ -1,4 +1,5 @@
-from app.models import UserPokemon, db, environment, SCHEMA
+from app.models import UserPokemon
+from app.models.db import db, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_user_pokemon():

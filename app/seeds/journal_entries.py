@@ -1,4 +1,5 @@
-from app.models import db, JournalEntry
+from app.models import JournalEntry
+from app.models.db import db, environment, SCHEMA
 from datetime import datetime
 
 def seed_journal_entries():
