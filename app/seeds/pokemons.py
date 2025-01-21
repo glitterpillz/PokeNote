@@ -210,7 +210,7 @@ def seed_pokemon():
         types=["Fairy"],
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/036.png"
     )
-    #37#########################################
+    #37
     vulpix = Pokemon(
         name="Vulpix",
         types=["Fire"],
@@ -305,6 +305,182 @@ def seed_pokemon():
         types=["Ground"],
         image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/051.png"
     )
+    #52
+    meowth = Pokemon(
+        name="Meowth",
+        types=["Normal"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/052.png"
+    )
+    #53
+    persian = Pokemon(
+        name="Persian",
+        types=["Normal"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/053.png"
+    )
+    #54
+    psyduck = Pokemon(
+        name="Psyduck",
+        types=["Water"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png"
+    )
+    #55
+    golduck = Pokemon(
+        name="Golduck",
+        types=["Water"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/055.png"
+    )
+    #56
+    mankey = Pokemon(
+        name="Mankey",
+        types=["Fighting"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/056.png"
+    )
+    #57
+    primeape = Pokemon(
+        name="Primeape",
+        types=["Fighting"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/057.png"
+    )
+    #58
+    growlithe = Pokemon(
+        name="Growlithe",
+        types=["Fire"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/058.png"
+    )
+    #59
+    arcanine = Pokemon(
+        name="Arcanine",
+        types=["Fire"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/059.png"
+    )
+    #60
+    poliwag = Pokemon(
+        name="Poliwag",
+        types=["Water"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/060.png"
+    )
+    #61
+    poliwhirl = Pokemon(
+        name="Poliwhirl",
+        types=["Water"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/061.png"
+    )
+    #62
+    poliwrath = Pokemon(
+        name="Poliwrath",
+        types=["Water", "Fighting"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/062.png"
+    )
+    #63
+    abra = Pokemon(
+        name="Abra",
+        types=["Psychic"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/063.png"
+    )
+    #64
+    kadabra = Pokemon(
+        name="Kadabra",
+        types=["Psychic"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/064.png"
+    )
+    #65
+    alakazam = Pokemon(
+        name="Alakazam",
+        types=["Psychic"],
+        can_fly=True,
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/065.png"
+    )
+    #66
+    machop = Pokemon(
+        name="Machop",
+        types=["Fighting"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/066.png"
+    )
+    #67
+    machoke = Pokemon(
+        name="Machoke",
+        types=["Fighting"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/067.png"
+    )
+    #68
+    machamp = Pokemon(
+        name="Machamp",
+        types=["Fighting"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/068.png"
+    )
+    #69
+    bellsprout = Pokemon(
+        name="Bellsprout",
+        types=["Grass", "Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/069.png"
+    )
+    #70
+    weepinbell = Pokemon(
+        name="Weepinbell",
+        types=["Grass", "Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/070.png"
+    )
+    #71
+    victreebel = Pokemon(
+        name="Victreebel",
+        types=["Grass", "Poison"],
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    )
+    #72
+    tentacool = Pokemon(
+        name="Tentacool",
+        types=["Water", "Poison"],
+        can_fly=True,
+        image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/072.png"
+    )
+    #73 ########################################################
+    # tentacruel = Pokemon(
+    #     name="Tentacruel",
+    #     types=["Water", "Poison"],
+    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    # )
+    # #74
+    # geodude = Pokemon(
+    #     name="Geodude",
+    #     types=["Rock", "Ground"],
+    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    # )
+    # #75
+    # graveler = Pokemon(
+    #     name="Graveler",
+    #     types=["Rock", "Ground"],
+    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    # )
+    # #76
+    # golem = Pokemon(
+    #     name="Golem",
+    #     types=["Rock", "Ground"],
+    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    # )
+    # #77
+    # ponyta = Pokemon(
+    #     name="Ponyta",
+    #     types=["Fire"],
+    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    # )
+    # #78
+    # rapidash = Pokemon(
+    #     name="Rapidash",
+    #     types=["Grass", "Poison"],
+    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    # )
+    # #79
+    # slowpoke = Pokemon(
+    #     name="Slowpoke",
+    #     types=["Water", "Psychic"],
+    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    # )
+    # #80
+    # slowbro = Pokemon(
+    #     name="Slowbro",
+    #     types=["Water", "Psychic"],
+    #     image="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/071.png"
+    # )
 
 
     
@@ -708,7 +884,175 @@ def seed_pokemon():
         PokemonStat(stat_name="sp defense", stat_value=70),
         PokemonStat(stat_name="speed", stat_value=120)
     ]
-
+    ########################################################
+    meowth.stats = [
+        PokemonStat(stat_name="hp", stat_value=50),
+        PokemonStat(stat_name="attack", stat_value=65),
+        PokemonStat(stat_name="defense", stat_value=55),
+        PokemonStat(stat_name="sp attack", stat_value=40),
+        PokemonStat(stat_name="sp defense", stat_value=40),
+        PokemonStat(stat_name="speed", stat_value=40)
+    ]
+    persian.stats = [
+        PokemonStat(stat_name="hp", stat_value=65),
+        PokemonStat(stat_name="attack", stat_value=70),
+        PokemonStat(stat_name="defense", stat_value=60),
+        PokemonStat(stat_name="sp attack", stat_value=65),
+        PokemonStat(stat_name="sp defense", stat_value=65),
+        PokemonStat(stat_name="speed", stat_value=115)
+    ]
+    psyduck.stats = [
+        PokemonStat(stat_name="hp", stat_value=50),
+        PokemonStat(stat_name="attack", stat_value=52),
+        PokemonStat(stat_name="defense", stat_value=48),
+        PokemonStat(stat_name="sp attack", stat_value=65),
+        PokemonStat(stat_name="sp defense", stat_value=50),
+        PokemonStat(stat_name="speed", stat_value=55)
+    ]
+    golduck.stats = [
+        PokemonStat(stat_name="hp", stat_value=80),
+        PokemonStat(stat_name="attack", stat_value=82),
+        PokemonStat(stat_name="defense", stat_value=78),
+        PokemonStat(stat_name="sp attack", stat_value=95),
+        PokemonStat(stat_name="sp defense", stat_value=80),
+        PokemonStat(stat_name="speed", stat_value=85)
+    ]
+    mankey.stats = [
+        PokemonStat(stat_name="hp", stat_value=40),
+        PokemonStat(stat_name="attack", stat_value=80),
+        PokemonStat(stat_name="defense", stat_value=35),
+        PokemonStat(stat_name="sp attack", stat_value=35),
+        PokemonStat(stat_name="sp defense", stat_value=45),
+        PokemonStat(stat_name="speed", stat_value=70)
+    ]
+    primeape.stats = [
+        PokemonStat(stat_name="hp", stat_value=65),
+        PokemonStat(stat_name="attack", stat_value=105),
+        PokemonStat(stat_name="defense", stat_value=60),
+        PokemonStat(stat_name="sp attack", stat_value=60),
+        PokemonStat(stat_name="sp defense", stat_value=70),
+        PokemonStat(stat_name="speed", stat_value=95)
+    ]
+    growlithe.stats = [
+        PokemonStat(stat_name="hp", stat_value=55),
+        PokemonStat(stat_name="attack", stat_value=70),
+        PokemonStat(stat_name="defense", stat_value=45),
+        PokemonStat(stat_name="sp attack", stat_value=70),
+        PokemonStat(stat_name="sp defense", stat_value=50),
+        PokemonStat(stat_name="speed", stat_value=60)
+    ]
+    arcanine.stats = [
+        PokemonStat(stat_name="hp", stat_value=90),
+        PokemonStat(stat_name="attack", stat_value=110),
+        PokemonStat(stat_name="defense", stat_value=80),
+        PokemonStat(stat_name="sp attack", stat_value=100),
+        PokemonStat(stat_name="sp defense", stat_value=80),
+        PokemonStat(stat_name="speed", stat_value=95)
+    ]
+    poliwag.stats = [
+        PokemonStat(stat_name="hp", stat_value=40),
+        PokemonStat(stat_name="attack", stat_value=50),
+        PokemonStat(stat_name="defense", stat_value=40),
+        PokemonStat(stat_name="sp attack", stat_value=40),
+        PokemonStat(stat_name="sp defense", stat_value=40),
+        PokemonStat(stat_name="speed", stat_value=90)
+    ]
+    poliwhirl.stats = [
+        PokemonStat(stat_name="hp", stat_value=65),
+        PokemonStat(stat_name="attack", stat_value=65),
+        PokemonStat(stat_name="defense", stat_value=65),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=50),
+        PokemonStat(stat_name="speed", stat_value=90)
+    ]
+    poliwrath.stats = [
+        PokemonStat(stat_name="hp", stat_value=90),
+        PokemonStat(stat_name="attack", stat_value=95),
+        PokemonStat(stat_name="defense", stat_value=95),
+        PokemonStat(stat_name="sp attack", stat_value=70),
+        PokemonStat(stat_name="sp defense", stat_value=90),
+        PokemonStat(stat_name="speed", stat_value=70)
+    ]
+    abra.stats = [
+        PokemonStat(stat_name="hp", stat_value=25),
+        PokemonStat(stat_name="attack", stat_value=20),
+        PokemonStat(stat_name="defense", stat_value=15),
+        PokemonStat(stat_name="sp attack", stat_value=105),
+        PokemonStat(stat_name="sp defense", stat_value=55),
+        PokemonStat(stat_name="speed", stat_value=90)
+    ]
+    kadabra.stats = [
+        PokemonStat(stat_name="hp", stat_value=40),
+        PokemonStat(stat_name="attack", stat_value=35),
+        PokemonStat(stat_name="defense", stat_value=30),
+        PokemonStat(stat_name="sp attack", stat_value=120),
+        PokemonStat(stat_name="sp defense", stat_value=70),
+        PokemonStat(stat_name="speed", stat_value=105)
+    ]
+    alakazam.stats = [
+        PokemonStat(stat_name="hp", stat_value=55),
+        PokemonStat(stat_name="attack", stat_value=50),
+        PokemonStat(stat_name="defense", stat_value=65),
+        PokemonStat(stat_name="sp attack", stat_value=175),
+        PokemonStat(stat_name="sp defense", stat_value=105),
+        PokemonStat(stat_name="speed", stat_value=150)
+    ]
+    machop.stats = [
+        PokemonStat(stat_name="hp", stat_value=70),
+        PokemonStat(stat_name="attack", stat_value=80),
+        PokemonStat(stat_name="defense", stat_value=50),
+        PokemonStat(stat_name="sp attack", stat_value=35),
+        PokemonStat(stat_name="sp defense", stat_value=35),
+        PokemonStat(stat_name="speed", stat_value=35)
+    ]
+    machoke.stats = [
+        PokemonStat(stat_name="hp", stat_value=80),
+        PokemonStat(stat_name="attack", stat_value=100),
+        PokemonStat(stat_name="defense", stat_value=70),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=60),
+        PokemonStat(stat_name="speed", stat_value=45)
+    ]
+    machamp.stats = [
+        PokemonStat(stat_name="hp", stat_value=90),
+        PokemonStat(stat_name="attack", stat_value=130),
+        PokemonStat(stat_name="defense", stat_value=80),
+        PokemonStat(stat_name="sp attack", stat_value=65),
+        PokemonStat(stat_name="sp defense", stat_value=85),
+        PokemonStat(stat_name="speed", stat_value=55)
+    ]
+    bellsprout.stats = [
+        PokemonStat(stat_name="hp", stat_value=50),
+        PokemonStat(stat_name="attack", stat_value=75),
+        PokemonStat(stat_name="defense", stat_value=35),
+        PokemonStat(stat_name="sp attack", stat_value=70),
+        PokemonStat(stat_name="sp defense", stat_value=30),
+        PokemonStat(stat_name="speed", stat_value=40)
+    ]
+    weepinbell.stats = [
+        PokemonStat(stat_name="hp", stat_value=65),
+        PokemonStat(stat_name="attack", stat_value=90),
+        PokemonStat(stat_name="defense", stat_value=50),
+        PokemonStat(stat_name="sp attack", stat_value=85),
+        PokemonStat(stat_name="sp defense", stat_value=45),
+        PokemonStat(stat_name="speed", stat_value=55)
+    ]
+    victreebel.stats = [
+        PokemonStat(stat_name="hp", stat_value=80),
+        PokemonStat(stat_name="attack", stat_value=105),
+        PokemonStat(stat_name="defense", stat_value=65),
+        PokemonStat(stat_name="sp attack", stat_value=100),
+        PokemonStat(stat_name="sp defense", stat_value=70),
+        PokemonStat(stat_name="speed", stat_value=70)
+    ]
+    tentacool.stats = [
+        PokemonStat(stat_name="hp", stat_value=40),
+        PokemonStat(stat_name="attack", stat_value=40),
+        PokemonStat(stat_name="defense", stat_value=35),
+        PokemonStat(stat_name="sp attack", stat_value=50),
+        PokemonStat(stat_name="sp defense", stat_value=100),
+        PokemonStat(stat_name="speed", stat_value=70)
+    ]
 
     db.session.add(bulbasaur)
     db.session.add(ivysaur)
@@ -761,6 +1105,28 @@ def seed_pokemon():
     db.session.add(venomoth)
     db.session.add(diglett)
     db.session.add(dugtrio)
+    db.session.add(meowth)
+    db.session.add(persian)
+    db.session.add(psyduck)
+    db.session.add(golduck)
+    db.session.add(mankey)
+    db.session.add(primeape)
+    db.session.add(growlithe)
+    db.session.add(arcanine)
+    db.session.add(poliwag)
+    db.session.add(poliwhirl)
+    db.session.add(poliwrath)
+    db.session.add(abra)
+    db.session.add(kadabra)
+    db.session.add(alakazam)
+    db.session.add(machop)
+    db.session.add(machoke)
+    db.session.add(machamp)
+    db.session.add(bellsprout)
+    db.session.add(weepinbell)
+    db.session.add(victreebel)
+    db.session.add(tentacool)
+
 
     db.session.commit()
 
