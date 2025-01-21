@@ -1127,7 +1127,6 @@ def seed_pokemon():
     db.session.add(victreebel)
     db.session.add(tentacool)
 
-
     db.session.commit()
 
 def undo_pokemon():
